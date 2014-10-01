@@ -32,4 +32,11 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>Maven Apache</id>
+            <url>http://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
 </project>
