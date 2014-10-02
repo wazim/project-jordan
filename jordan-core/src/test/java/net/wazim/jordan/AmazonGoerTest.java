@@ -5,8 +5,10 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 
+import java.net.URI;
+
 import static net.wazim.jordan.JordanProperties.AMAZON_BASE_URL;
-import static net.wazim.jordan.JordanProperties.AMAZON_BLU_RAY_URL;
+import static net.wazim.jordan.JordanProperties.AMAZON_QUERY_URL;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -22,21 +24,21 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerHitsBadAmazonPageReturnsStatusCode404() {
         AmazonGoer amazonGoer = new AmazonGoer();
-        amazonGoer.go(AMAZON_BASE_URL + "/failed");
+        amazonGoer.go(URI.create(AMAZON_BASE_URL + "/failed"));
         assertEquals(amazonGoer.responseCode(), 404);
     }
 
     @Test
     public void amazonGoerHitsThePageWhichContainsBluRaysThatAreLessThanFivePounds() {
         AmazonGoer amazonGoer = new AmazonGoer();
-        amazonGoer.go(AMAZON_BLU_RAY_URL);
+        amazonGoer.go(AMAZON_QUERY_URL);
         assertThat(amazonGoer.responseBody(), showsBluRaysUnder£5());
     }
 
     @Test
     public void amazonGoerReturnsAListOfBluRaysUnder£5() {
         AmazonGoer amazonGoer = new AmazonGoer();
-        amazonGoer.go(AMAZON_BLU_RAY_URL);
+        amazonGoer.go(AMAZON_QUERY_URL);
 
         assertThat(amazonGoer.bluRays().get(0).name(), is("Dredd (Blu-ray 3D + Blu-ray)"));
         assertThat(amazonGoer.bluRays().get(0).price(), is("£6.00"));

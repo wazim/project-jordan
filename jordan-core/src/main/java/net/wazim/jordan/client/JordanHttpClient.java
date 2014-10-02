@@ -7,6 +7,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.URI;
 
 public class JordanHttpClient {
 
@@ -16,8 +17,9 @@ public class JordanHttpClient {
         httpClient = new HttpClient();
     }
 
-    public JordanHttpResponse getRequest(String requestUrl) {
-        HttpMethod method = new GetMethod(requestUrl);
+    public JordanHttpResponse getRequest(URI requestUrl) {
+        String uri = requestUrl.toString();
+        HttpMethod method = new GetMethod(uri);
         try {
             int responseCode = httpClient.executeMethod(method);
             InputStream responseBody = method.getResponseBodyAsStream();

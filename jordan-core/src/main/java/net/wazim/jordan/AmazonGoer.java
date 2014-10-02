@@ -4,6 +4,7 @@ import net.wazim.jordan.client.JordanHttpClient;
 import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.domain.BluRay;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,7 +23,7 @@ public class AmazonGoer {
         bluRays = new ArrayList<BluRay>();
     }
 
-    public void go(String requestUrl) {
+    public void go(URI requestUrl) {
         JordanHttpClient client = new JordanHttpClient();
         response = client.getRequest(requestUrl);
         log.info(response.getResponseBody());
