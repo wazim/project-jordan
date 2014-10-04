@@ -6,7 +6,6 @@ import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.CSSParseException;
 import org.w3c.css.sac.ErrorHandler;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
