@@ -1,12 +1,12 @@
 package net.wazim.jordan;
 
+import net.wazim.jordan.domain.BluRay;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Test;
-
 import java.net.URI;
-
 import static net.wazim.jordan.JordanProperties.AMAZON_BASE_URL;
 import static net.wazim.jordan.JordanProperties.AMAZON_QUERY_URL;
 import static org.hamcrest.core.Is.is;
@@ -14,35 +14,44 @@ import static org.junit.Assert.*;
 
 public class AmazonGoerTest {
 
+    private AmazonGoer amazonGoer;
+
+    @Before
+    public void setUp() {
+        amazonGoer = new AmazonGoer();
+    }
+
     @Test
     public void amazonGoerHitsAmazonHomepageReturnsStatusCode200() {
-        AmazonGoer amazonGoer = new AmazonGoer();
         amazonGoer.go(AMAZON_BASE_URL);
         assertEquals(amazonGoer.responseCode(), 200);
     }
 
     @Test
     public void amazonGoerHitsBadAmazonPageReturnsStatusCode404() {
-        AmazonGoer amazonGoer = new AmazonGoer();
-        amazonGoer.go(URI.create(AMAZON_BASE_URL + "/failed"));
+        amazonGoer.go(URI.create(AMAZON_BASE_URL + "failed"));
         assertEquals(amazonGoer.responseCode(), 404);
     }
 
     @Test
     public void amazonGoerHitsThePageWhichContainsBluRaysThatAreLessThanFivePounds() {
-        AmazonGoer amazonGoer = new AmazonGoer();
         amazonGoer.go(AMAZON_QUERY_URL);
         assertThat(amazonGoer.responseBody(), showsBluRaysUnder£5());
     }
 
     @Test
     public void amazonGoerReturnsAListOfBluRaysUnder£5() {
-        AmazonGoer amazonGoer = new AmazonGoer();
         amazonGoer.go(AMAZON_QUERY_URL);
 
-        assertThat(amazonGoer.bluRays().get(0).name(), is("Dredd (Blu-ray 3D + Blu-ray)"));
-        assertThat(amazonGoer.bluRays().get(0).price(), is("£6.00"));
-        assertFalse(amazonGoer.bluRays().get(0).isOwned());
+        assertThat(amazonGoer.bluRays().size(), is(24));
+
+        assertThat(theFirstBluRay().name(), is("Transformers: Dark of the Moon [Blu-ray + DVD] [2011] [Region Free]"));
+        assertThat(theFirstBluRay().price(), is("£2.43"));
+        assertThat(theFirstBluRay().isOwned(), is(false));
+    }
+
+    private BluRay theFirstBluRay() {
+        return amazonGoer.bluRays().get(0);
     }
 
     private Matcher<? super String> showsBluRaysUnder£5() {
@@ -52,7 +61,7 @@ public class AmazonGoerTest {
             @Override
             protected boolean matchesSafely(String responseBody) {
                 this.responseBody = responseBody;
-                return responseBody.contains("Blu-ray") && responseBody.contains("Under &pound;5");
+                return responseBody.contains("Blu-ray") && responseBody.contains("Under £5");
             }
 
             @Override

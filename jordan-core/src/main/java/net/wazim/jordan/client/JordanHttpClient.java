@@ -1,34 +1,43 @@
 package net.wazim.jordan.client;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.io.IOUtils;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
+
+import static net.wazim.jordan.client.fixtures.JordanHttpErrorHandler.newJordanCssErrorHandler;
+import static net.wazim.jordan.client.fixtures.JordanHttpErrorHandler.newJordanJavascriptErrorHandler;
 
 public class JordanHttpClient {
 
-    private final HttpClient httpClient;
+    private final WebClient webClient;
 
     public JordanHttpClient() {
-        httpClient = new HttpClient();
+        webClient = new WebClient();
+        webClient.setCssErrorHandler(newJordanCssErrorHandler());
+        webClient.setJavaScriptErrorListener(newJordanJavascriptErrorHandler());
+        webClient.setJavaScriptTimeout(15000);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+
     }
 
     public JordanHttpResponse getRequest(URI requestUrl) {
-        String uri = requestUrl.toString();
-        HttpMethod method = new GetMethod(uri);
+        HtmlPage page;
+        String pageAsXml = null;
+        int responseCode = 0;
         try {
-            int responseCode = httpClient.executeMethod(method);
-            InputStream responseBody = method.getResponseBodyAsStream();
-            StringWriter responseBodyString = new StringWriter();
-            IOUtils.copy(responseBody, responseBodyString);
-            return new JordanHttpResponse(responseCode, responseBodyString.toString());
-        } catch (Exception e) {
-            return new JordanHttpResponse(e);
+            page = webClient.getPage(String.valueOf(requestUrl));
+            pageAsXml = page.asXml();
+            responseCode = page.getWebResponse().getStatusCode();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return new JordanHttpResponse(responseCode, pageAsXml);
     }
 
 }

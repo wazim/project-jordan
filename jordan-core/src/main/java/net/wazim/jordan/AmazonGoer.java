@@ -7,7 +7,6 @@ import net.wazim.jordan.domain.BluRay;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static net.wazim.jordan.utils.BluRayParser.parseIntoBluRays;
@@ -41,4 +40,5 @@ public class AmazonGoer {
     public List<BluRay> bluRays() {
         return bluRays;
     }
+
 }

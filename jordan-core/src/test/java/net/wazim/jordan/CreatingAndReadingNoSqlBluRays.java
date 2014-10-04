@@ -1,9 +1,8 @@
 package net.wazim.jordan;
 
 import net.wazim.jordan.domain.BluRay;
-import net.wazim.jordan.fixtures.TestOnlyPersistableDatabase;
+import net.wazim.jordan.client.fixtures.TestOnlyPersistableDatabase;
 import net.wazim.jordan.persistence.BluRayDatabase;
-import net.wazim.jordan.persistence.MongoBluRayDatabase;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,8 +1,7 @@
-package net.wazim.jordan.fixtures;
+package net.wazim.jordan.client.fixtures;
 
 import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.BluRayDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
