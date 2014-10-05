@@ -14,6 +14,9 @@ import static org.junit.Assert.*;
 
 public class AmazonGoerTest {
 
+    /**
+     * Random test.
+     */
     private AmazonGoer amazonGoer;
 
     @Before
