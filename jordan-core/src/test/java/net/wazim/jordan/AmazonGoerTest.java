@@ -7,8 +7,8 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
 import java.net.URI;
-import static net.wazim.jordan.JordanProperties.AMAZON_BASE_URL;
-import static net.wazim.jordan.JordanProperties.AMAZON_QUERY_URL;
+import static net.wazim.jordan.properties.JordanProductionProperties.AMAZON_BASE_URL;
+import static net.wazim.jordan.properties.JordanProductionProperties.AMAZON_QUERY_URL;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -49,7 +49,7 @@ public class AmazonGoerTest {
         assertThat(amazonGoer.bluRays().size(), is(24));
 
         assertThat(theFirstBluRay().name(), is("Transformers: Dark of the Moon [Blu-ray + DVD] [2011] [Region Free]"));
-        assertThat(theFirstBluRay().price(), is("£2.43"));
+        assertThat(theFirstBluRay().price(), is("£2.34"));
         assertThat(theFirstBluRay().isOwned(), is(false));
     }
 

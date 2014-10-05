@@ -1,7 +1,8 @@
 package net.wazim.jordan.stub;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,14 +12,23 @@ import java.io.IOException;
 
 public class AmazonStub extends HttpServlet {
 
-    public AmazonStub(){
-        Server server = new Server(11511);
-        ServletHandler handler = new ServletHandler();
+    private AmazonServlet servlet;
+    private Server server;
 
-        server.setHandler(handler);
+    public AmazonStub() {
+        server = new Server(11511);
 
-        handler.addServletWithMapping(AmazonStub.class, "/");
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath("/");
+        server.setHandler(context);
 
+        servlet = new AmazonServlet(200, "OK");
+        context.addServlet(new ServletHolder(servlet), "/*");
+
+        startServer();
+    }
+
+    private void startServer() {
         try {
             server.start();
         } catch (Exception e) {
@@ -26,8 +36,38 @@ public class AmazonStub extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+    public void stopServer() {
+        try {
+            server.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void primeResponse(int responseCode, String responseBody) {
+        servlet.primeToRespond(responseCode, responseBody);
+    }
+
+    private static class AmazonServlet extends HttpServlet {
+
+        private int responseCode;
+        private String responseBody;
+
+        public AmazonServlet(int responseCode, String responseBody) {
+            this.responseCode = responseCode;
+            this.responseBody = responseBody;
+        }
+
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            resp.setContentType("text/html");
+            resp.setStatus(responseCode);
+            resp.getWriter().println(responseBody);
+        }
+
+        public void primeToRespond(int responseCode, String responseBody) {
+            this.responseCode = responseCode;
+            this.responseBody = responseBody;
+        }
     }
 }
