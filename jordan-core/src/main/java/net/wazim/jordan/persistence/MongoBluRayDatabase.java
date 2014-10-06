@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.Boolean.getBoolean;
+import static java.lang.Boolean.toString;
 
 public class MongoBluRayDatabase implements BluRayDatabase {
 
@@ -31,7 +32,8 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", name));
         return new BluRay(
                 retrievedObject.get("name").toString(),
-                retrievedObject.get("price").toString(),
+                retrievedObject.get("priceNew").toString(),
+                retrievedObject.get("priceUsed").toString(),
                 getBoolean(retrievedObject.get("isOwned").toString()));
     }
 
@@ -45,7 +47,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         ArrayList<BluRay> myBluRays = new ArrayList<BluRay>();
         DBCursor dbObjects = allBluRays.find();
         for (DBObject dbObject : dbObjects) {
-            myBluRays.add(new BluRay(dbObject.get("name").toString(), dbObject.get("price").toString(), getBoolean(dbObject.get("isOwned").toString())));
+            myBluRays.add(new BluRay(dbObject.get("name").toString(), dbObject.get("priceNew").toString(), dbObject.get("priceUsed").toString(), getBoolean(dbObject.get("isOwned").toString())));
         }
         return myBluRays;
     }
@@ -64,7 +66,8 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     public void saveBluRay(BluRay bluRay) {
         Map<String, String> bluRayMap = new HashMap<String, String>();
         bluRayMap.put("name", bluRay.name());
-        bluRayMap.put("price", bluRay.price());
+        bluRayMap.put("price", bluRay.priceNew());
+        bluRayMap.put("price", bluRay.priceUsed());
         bluRayMap.put("isOwned", String.valueOf(bluRay.isOwned()));
         allBluRays.save(new BasicDBObject(bluRayMap));
     }

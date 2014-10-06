@@ -20,9 +20,10 @@ public class BluRayParser {
                 if (resultPosition > 0 && resultPositionOfNextBluRay > 0) {
                     String result = responseAsString.substring(resultPosition, resultPositionOfNextBluRay);
                     Document parse = Jsoup.parse(result);
+                    System.out.print(parse);
                     Elements bluRayName = parse.select(".bold");
-                    Elements bluRayPrice = parse.select(".bld");
-                    listOfBluRays.add(new BluRay(bluRayName.first().text(), bluRayPrice.first().text(), false));
+                    Elements bluRayPrice = parse.select(".price");
+                    listOfBluRays.add(new BluRay(bluRayName.first().text(), bluRayPrice.first().text(), bluRayPrice.get(1).text(), false));
                 }
             }
         }

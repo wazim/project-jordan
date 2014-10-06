@@ -49,7 +49,8 @@ public class AmazonGoerTest {
         assertThat(amazonGoer.bluRays().size(), is(24));
 
         assertThat(theFirstBluRay().name(), is("Transformers: Dark of the Moon [Blu-ray + DVD] [2011] [Region Free]"));
-        assertThat(theFirstBluRay().price(), is("£2.34"));
+        assertThat(theFirstBluRay().priceNew(), is("£1.64"));
+        assertThat(theFirstBluRay().priceUsed(), is("£2.48"));
         assertThat(theFirstBluRay().isOwned(), is(false));
     }
 
