@@ -14,7 +14,7 @@ public class BluRayParserTest {
     @Test
     public void successfullyParsesBluRays() {
         JordanHttpResponse response = new JordanHttpResponse(200, sampleAmazonResponse());
-        ArrayList<BluRay> bluRays = BluRayParser.parseIntoBluRays(response);
+        ArrayList<BluRay> bluRays = BluRayParser.parseIntoBluRays(response, 1);
         assertThat(bluRays.get(0).name(), is("The Raid [Blu-ray]"));
     }
 
