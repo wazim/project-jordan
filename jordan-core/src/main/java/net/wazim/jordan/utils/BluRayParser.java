@@ -5,7 +5,6 @@ import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.domain.BluRay;
 import org.apache.http.client.utils.URIBuilder;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -19,19 +18,22 @@ public class BluRayParser {
 
     public static ArrayList<BluRay> parseIntoBluRays(JordanHttpResponse response, URI requestUrl) {
         String responseAsString = response.getResponseBody();
-        int currentPage = Integer.parseInt(Jsoup.parse(responseAsString).getElementsByClass("pagnCur").first().text());
-        int lastPage = Integer.parseInt(Jsoup.parse(responseAsString).getElementsByClass("pagnDisabled").first().text());
 
-        createBluRaysFromHtml(responseAsString);
+        if (!Jsoup.parse(responseAsString).getElementsByClass("pagnCur").isEmpty()) {
+            int currentPage = Integer.parseInt(Jsoup.parse(responseAsString).getElementsByClass("pagnCur").first().text());
+            int lastPage = Integer.parseInt(Jsoup.parse(responseAsString).getElementsByClass("pagnDisabled").first().text());
 
-        while (currentPage < lastPage) {
-            JordanHttpResponse nextPageResponse = null;
-            try {
-                nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(requestUrl.toString()).addParameter("page", String.valueOf(currentPage++)).build());
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
+            createBluRaysFromHtml(responseAsString);
+
+            while (currentPage < lastPage) {
+                JordanHttpResponse nextPageResponse = null;
+                try {
+                    nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(requestUrl.toString()).addParameter("page", String.valueOf(currentPage++)).build());
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                createBluRaysFromHtml(nextPageResponse.getResponseBody());
             }
-            createBluRaysFromHtml(nextPageResponse.getResponseBody());
         }
 
         return listOfBluRays;

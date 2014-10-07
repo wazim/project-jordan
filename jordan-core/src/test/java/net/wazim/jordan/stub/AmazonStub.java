@@ -14,16 +14,17 @@ public class AmazonStub extends HttpServlet {
 
     private AmazonServlet servlet;
     private Server server;
+    private final ServletContextHandler context;
 
     public AmazonStub() {
         server = new Server(11511);
 
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         server.setHandler(context);
 
         servlet = new AmazonServlet(200, "OK");
-        context.addServlet(new ServletHolder(servlet), "/*");
+        context.addServlet(new ServletHolder(servlet), "/amazon");
 
         startServer();
     }
@@ -44,8 +45,8 @@ public class AmazonStub extends HttpServlet {
         }
     }
 
-    public void primeResponse(int responseCode, String responseBody) {
-        servlet.primeToRespond(responseCode, responseBody);
+    public void createPageAndPrimeResponse(String path, int primedResponseCode, String primedResponseBody) {
+        context.addServlet(new ServletHolder(new AmazonServlet(primedResponseCode, primedResponseBody)), path);
     }
 
     private static class AmazonServlet extends HttpServlet {

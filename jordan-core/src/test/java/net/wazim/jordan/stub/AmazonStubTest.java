@@ -22,7 +22,8 @@ public class AmazonStubTest {
     @Before
     public void setup() {
         amazonStub = new AmazonStub();
-        amazonStub.primeResponse(HttpStatus.OK_200, "This is the response");
+        amazonStub.createPageAndPrimeResponse("/amazon&page=1", HttpStatus.OK_200, "This is page 1");
+        amazonStub.createPageAndPrimeResponse("/amazon&page=2", HttpStatus.OK_200, "This is page 2");
     }
 
     @After
@@ -33,10 +34,13 @@ public class AmazonStubTest {
     @Test
     public void amazonStubStartsAndReturnsPrimedValue() {
         JordanHttpClient webClient = new JordanHttpClient();
-        JordanHttpResponse response = webClient.getRequest(URI.create("http://localhost:11511/amazon"));
-
-        assertThat(response.getResponseBody(), containsWithinTheBody("This is the response"));
+        JordanHttpResponse response = webClient.getRequest(URI.create("http://localhost:11511/amazon&page=1"));
+        assertThat(response.getResponseBody(), containsWithinTheBody("This is page 1"));
         assertThat(response.getResponseCode(), is(200));
+
+        JordanHttpResponse response2 = webClient.getRequest(URI.create("http://localhost:11511/amazon&page=2"));
+        assertThat(response2.getResponseBody(), containsWithinTheBody("This is page 2"));
+        assertThat(response2.getResponseCode(), is(200));
     }
 
     private Matcher<? super String> containsWithinTheBody(final String response) {
