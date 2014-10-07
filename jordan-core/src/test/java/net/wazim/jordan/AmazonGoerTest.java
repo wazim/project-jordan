@@ -1,17 +1,19 @@
 package net.wazim.jordan;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import net.wazim.jordan.domain.BluRay;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.net.URI;
+
 import static net.wazim.jordan.properties.JordanProductionProperties.AMAZON_BASE_URL;
 import static net.wazim.jordan.properties.JordanProductionProperties.AMAZON_QUERY_URL;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class AmazonGoerTest {
 
@@ -54,10 +56,10 @@ public class AmazonGoerTest {
         assertThat(theFirstBluRay().isOwned(), is(false));
     }
 
-    @Ignore
-    public void amazonGoerReturnsResultsFromTenPages() {
+    @Test
+    public void amazonGoerReturnsResultsFromAllPages() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(240));
+        assertThat(amazonGoer.bluRays().size(), is(8348));
     }
 
     private BluRay theFirstBluRay() {

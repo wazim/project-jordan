@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static net.wazim.jordan.utils.BluRayParser.numberOfPages;
 import static net.wazim.jordan.utils.BluRayParser.parseIntoBluRays;
 
 public class AmazonGoer {
@@ -20,7 +21,7 @@ public class AmazonGoer {
 
     //temporary variable to store the number of pages in our search, need
     //a proper way to figure it out
-    private int pageNo = 1;
+    private int pageNo;
 
     public AmazonGoer() {
         bluRays = new ArrayList<BluRay>();
@@ -29,16 +30,25 @@ public class AmazonGoer {
     public void go(URI requestUrl) {
         JordanHttpClient client = new JordanHttpClient();
 
-        for (int i = 1; i < (pageNo+1); i++) {
+        String address1 = requestUrl.toString();
+        URI newUri1 = requestUrl.resolve(address1);
+        response = client.getRequest(newUri1);
+        log.info(response.getResponseBody());
+        bluRays = parseIntoBluRays(response, 1);
+        pageNo = numberOfPages(response);
+
+        for (int i = 2; i < (pageNo + 1); i++) {
+
             String address = requestUrl.toString();
             String newPage = "sr_pg_" + i;
             String secondNewPage = "page=" + i;
-            address.replace("sr_pg_1", newPage);
-            address.replace("page=1", secondNewPage);
-            requestUrl.resolve(address);
-            response = client.getRequest(requestUrl);
+            String newAddress = address.replace("sr_pg_1", newPage);
+            newAddress = newAddress.replace("page=1", secondNewPage);
+            URI newUri = requestUrl.resolve(newAddress);
+            response = client.getRequest(newUri);
             log.info(response.getResponseBody());
             bluRays = parseIntoBluRays(response, i);
+
         }
     }
 
