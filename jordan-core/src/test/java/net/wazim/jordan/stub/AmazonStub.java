@@ -66,9 +66,5 @@ public class AmazonStub extends HttpServlet {
             resp.getWriter().println(responseBody);
         }
 
-        public void primeToRespond(int responseCode, String responseBody) {
-            this.responseCode = responseCode;
-            this.responseBody = responseBody;
-        }
     }
 }

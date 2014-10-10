@@ -57,18 +57,18 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerReturnsAListOfBluRaysUnder£5() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(14));
+        assertThat(amazonGoer.bluRays().size(), is(20));
 
-        assertThat(theFirstBluRay().name(), is("Django Unchained (Blu-ray + UV Copy) [2013]"));
-        assertThat(theFirstBluRay().priceNew(), is("£7.02"));
-        assertThat(theFirstBluRay().priceUsed(), is("£5.64"));
+        assertThat(theFirstBluRay().name(), is("Dredd (Blu-ray 3D + Blu-ray)"));
+        assertThat(theFirstBluRay().priceNew(), is("£4.51"));
+        assertThat(theFirstBluRay().priceUsed(), is("£3.93"));
         assertThat(theFirstBluRay().isOwned(), is(false));
     }
 
     @Test
     public void amazonGoerReturnsResultsFromAllPages() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(14));
+        assertThat(amazonGoer.bluRays().size(), is(20));
     }
 
     private BluRay theFirstBluRay() {
@@ -164,7 +164,7 @@ public class AmazonGoerTest {
                 "            <li class=\"med grey mkp2\">\n" +
                 "        <a href=\"http://www.x.co.uk/gp/offer-listing/B004BDOEZO/ref=sr_1_2_olp?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2&amp;condition=new\"><span class=\"price bld\">£1.94</span> new <span class=\"grey\">(58 offers)</span></a> </li>\n" +
                 "<li class=\"med grey mkp2\">\n" +
-                "        <a href=\"http://www.x.co.uk/gp/offer-listing/B004BDOEZO/ref=sr_1_2_olp?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2&amp;condition=used\"><span class=\"price bld\">£1.26</span> used <span class=\"grey\">(14 offers)</span></a> </li><li class=\"rvw\">\n" +
+                "        <a href=\"http://www.x.co.uk/gp/offer-listing/B004BDOEZO/ref=sr_1_2_olp?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2&amp;condition=used\"><span class=\"price bld\">£1.24</span> used <span class=\"grey\">(14 offers)</span></a> </li><li class=\"rvw\">\n" +
                 "    <span class=\"a-declarative\" data-action=\"a-popover\" data-a-popover=\"{&quot;position&quot;:&quot;triggerBottom&quot;,&quot;max-width&quot;:&quot;700&quot;,&quot;closeButton&quot;:&quot;false&quot;,&quot;url&quot;:&quot;/review/widgets/average-customer-review/popover/ref=acr_search__popover?ie=UTF8&amp;asin=B004BDOEZO&amp;contextId=search&amp;ref=acr_search__popover&quot;}\"><span name=\"B004BDOEZO\" ref=\"sr_cr_\" class=\"asinReviewsSummary\">\n" +
                 "                        <a href=\"javascript:void(0)\" class=\"a-popover-trigger a-declarative\"><a alt=\"3.9 out of 5 stars\" href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/product-reviews/B004BDOEZO/ref=sr_1_2_cm_cr_acr_img?ie=UTF8&amp;showViewpoints=1\"><i class=\"a-icon a-icon-star a-star-4\"></i></a><i class=\"a-icon a-icon-popover\"></i></a></span>\n" +
                 "                </span><span class=\"rvwCnt\">(<a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/product-reviews/B004BDOEZO/ref=sr_1_2_cm_cr_acr_txt?ie=UTF8&amp;showViewpoints=1\">408</a>)</span>\n" +
@@ -1082,19 +1082,7 @@ public class AmazonGoerTest {
                 "</div>\n" +
                 "\n" +
                 "\n" +
-                "<div id=\"centerBelowMinus\">\n" +
-                "<div class=\"img_header hdr noborder\" id=\"bottomBar\">\n" +
-                "<div id=\"pagn\" class=\"pagnHy\" >\n" +
-                "<span class=\"pagnLA1\"> <span class=\"srSprite firstPageLeftArrow\"></span>\n" +
-                "<span id=\"pagnPrevString\">Previous Page</span></span>\n" +
-                "<span class=\"pagnCur\">2</span>\n" +
-                "<span class=\"pagnDisabled\">2</span>\n" +
-                "<span class=\"pagnRA\"> <a title=\"Next Page\" id=\"pagnNextLink\" class=\"pagnNext\" href=\"no-link\">\n" +
-                "<span id=\"pagnNextString\">Next Page</span>\n" +
-                "<span class=\"srSprite pagnNextArrow\"></span>\n" +
-                "</a></span>\n" +
-                "<br clear=\"all\" />\n" +
-                "</div>\n" +
+
                 "</body>\n" +
                 "</html>\n" +
                 "\n";

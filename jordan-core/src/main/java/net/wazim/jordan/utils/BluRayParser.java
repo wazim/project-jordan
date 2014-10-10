@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BluRayParser {
 
@@ -39,9 +40,22 @@ public class BluRayParser {
         return listOfBluRays;
     }
 
+    //TODO: [Jon] Refactor this as it is ugly the way it concatenates lists.
     private static void createBluRaysFromHtml(String responseAsString) {
-        Elements bluRayElements = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
-        for (Element bluRayElement : bluRayElements) {
+        Elements firstRowBluRayElements = Jsoup.parse(responseAsString).getElementsByClass("fstRowGrid");
+        Elements remainingBluRays = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
+
+        List<Element> allBluRays = new ArrayList<Element>();
+
+        for (Element firstRowBluRayElement : firstRowBluRayElements) {
+            allBluRays.add(firstRowBluRayElement);
+        }
+
+        for (Element remainingBluRay : remainingBluRays) {
+            allBluRays.add(remainingBluRay);
+        }
+
+        for (Element bluRayElement : allBluRays) {
             listOfBluRays.add(new BluRay(
                     getBluRayName(bluRayElement),
                     getBluRayPrice(bluRayElement),

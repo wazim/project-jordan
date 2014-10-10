@@ -20,7 +20,7 @@ public class BluRayParserTest {
     }
 
     private String sampleAmazonResponse() {
-        return "<div id=\"result_116\" class=\"rsltGrid prod celwidget\" name=\"B0019FLTH8\">\n" +
+        return "<div id=\"result_116\" class=\"fstRowGrid prod celwidget\" name=\"B0019FLTH8\">\n" +
                 "    <div class=\"linePlaceholder\"></div><div class=\"image imageContainer\">\n" +
                 "        <a href=\"http://www.amazon.co.uk/Batman-Begins-Blu-ray-Region-Free/dp/B0019FLTH8/ref=sr_1_117?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117\"><div class=\"imageBox\">\n" +
                 "    <img onload=\"viewCompleteImageLoaded(this, new Date().getTime(), 24, false);\" src=\"http://ecx.images-amazon.com/images/I/51DS%2B%2BLIMGL._AA160_.jpg\"  class=\"productImage cfMarker\" alt=\"Product Details\" />\n" +

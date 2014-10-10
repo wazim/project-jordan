@@ -12,6 +12,7 @@
     <modules>
         <module>jordan-core</module>
         <module>jordan-acceptance-test</module>
+        <module>jordan-test-support</module>
     </modules>
 
     <dependencyManagement>
