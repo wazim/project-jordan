@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.Boolean.getBoolean;
-import static java.lang.Boolean.toString;
 
 public class MongoBluRayDatabase implements BluRayDatabase {
 
@@ -24,7 +23,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
             System.out.println("Cannot connect to Mongo " + e.toString());
         }
         DB blurayDb = mongoClient.getDB("blurays");
-        allBluRays = blurayDb.getCollection("allBluRays");
+        allBluRays = blurayDb.getCollection("myBluRays");
     }
 
     @Override
@@ -66,8 +65,8 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     public void saveBluRay(BluRay bluRay) {
         Map<String, String> bluRayMap = new HashMap<String, String>();
         bluRayMap.put("name", bluRay.name());
-        bluRayMap.put("price", bluRay.priceNew());
-        bluRayMap.put("price", bluRay.priceUsed());
+        bluRayMap.put("priceNew", bluRay.priceNew());
+        bluRayMap.put("priceUsed", bluRay.priceUsed());
         bluRayMap.put("isOwned", String.valueOf(bluRay.isOwned()));
         allBluRays.save(new BasicDBObject(bluRayMap));
     }

@@ -12,8 +12,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class BluRayParser {
+
+    private static final Logger log = Logger.getLogger(BluRayParser.class.getName());
 
     public static ArrayList<BluRay> listOfBluRays = new ArrayList<BluRay>();
 
@@ -27,6 +30,7 @@ public class BluRayParser {
             createBluRaysFromHtml(responseAsString);
 
             while (currentPage < lastPage) {
+                log.info(String.format("Page %d of %d", currentPage, lastPage));
                 JordanHttpResponse nextPageResponse = null;
                 try {
                     nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(requestUrl.toString()).addParameter("page", String.valueOf(currentPage++)).build());
@@ -56,28 +60,36 @@ public class BluRayParser {
         }
 
         for (Element bluRayElement : allBluRays) {
+            String bluRayName = getBluRayName(bluRayElement);
+
             listOfBluRays.add(new BluRay(
-                    getBluRayName(bluRayElement),
+                    bluRayName,
                     getBluRayPrice(bluRayElement),
                     getBluRayUsedPrice(bluRayElement),
                     false));
+
+            log.info(String.format("Added %s to the database", bluRayName));
         }
     }
 
     private static String getBluRayUsedPrice(Element bluRayElement) {
-        String price = bluRayElement.getElementsByClass("price").get(1).text();
-        if (price == null) {
+        Elements price = bluRayElement.getElementsByClass("price");
+
+        if (price.isEmpty() || price.size() == 1) {
             return "£0.00";
         }
-        return price;
+
+        return price.get(1).text();
     }
 
     private static String getBluRayPrice(Element bluRayElement) {
-        String price = bluRayElement.getElementsByClass("price").first().text();
-        if (price == null) {
+        Elements price = bluRayElement.getElementsByClass("price");
+
+        if (price.isEmpty() || price.size() == 0) {
             return "£0.00";
         }
-        return price;
+
+        return price.first().text();
     }
 
     private static String getBluRayName(Element bluRayElement) {

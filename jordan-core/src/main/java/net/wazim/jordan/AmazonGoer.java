@@ -29,7 +29,7 @@ public class AmazonGoer {
         JordanHttpClient client = new JordanHttpClient();
 
         response = client.getRequest(requestUrl);
-//        log.info(response.getResponseBody());
+        log.info(response.getResponseBody());
         bluRays = parseIntoBluRays(response, requestUrl);
 
         saveBluRaysInDatabase();
