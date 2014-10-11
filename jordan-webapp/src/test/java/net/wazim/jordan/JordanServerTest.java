@@ -27,6 +27,7 @@ public class JordanServerTest {
     public void setupJordanServer() {
         InMemoryPersistableDatabase database = new InMemoryPersistableDatabase();
         database.saveBluRay(new BluRay("The Godfather", "£1.99", "£2.99", false));
+        database.saveBluRay(new BluRay("Michael Jackson's This Is It", "£0.59", "£0.29", false));
 
         jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
         httpClient = new HttpClient();
@@ -53,7 +54,12 @@ public class JordanServerTest {
 
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("<name>The Godfather</name>"));
+        assertThat(method.getResponseBodyAsString(), containsString("<newPrice>£1.99</newPrice>"));
+        assertThat(method.getResponseBodyAsString(), containsString("<usedPrice>£2.99</usedPrice>"));
 
+        assertThat(method.getResponseBodyAsString(), containsString("<name>Michael Jackson's This Is It</name>"));
+        assertThat(method.getResponseBodyAsString(), containsString("<newPrice>£0.59</newPrice>"));
+        assertThat(method.getResponseBodyAsString(), containsString("<usedPrice>£0.29</usedPrice>"));
     }
 
 }
