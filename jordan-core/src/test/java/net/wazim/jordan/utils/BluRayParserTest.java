@@ -16,7 +16,7 @@ public class BluRayParserTest {
     public void successfullyParsesBluRays() {
         JordanHttpResponse response = new JordanHttpResponse(200, sampleAmazonResponse());
         ArrayList<BluRay> bluRays = BluRayParser.parseIntoBluRays(response, URI.create("x.x"));
-        assertThat(bluRays.get(0).name(), is("Batman Begins [Blu-ray] [2005] [Region Free]"));
+        assertThat(bluRays.get(0).getName(), is("Batman Begins [Blu-ray] [2005] [Region Free]"));
     }
 
     private String sampleAmazonResponse() {

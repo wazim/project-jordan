@@ -12,7 +12,7 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     @Override
     public BluRay findBluRayByName(String name) {
         for (BluRay bluRay : allBluRays) {
-            if(bluRay.name().equals(name)){
+            if(bluRay.getName().equals(name)){
                 return bluRay;
             }
         }

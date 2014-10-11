@@ -13,19 +13,20 @@ public class BluRay {
         this.priceUsed = priceUsed;
         this.isOwned = isOwned;
     }
-    public String name() {
+
+    public String getName() {
         return name;
     }
 
-    public String priceNew() {
+    public String getPriceNew() {
         return priceNew;
     }
 
-    public String priceUsed() {
+    public String getPriceUsed() {
         return priceUsed;
     }
 
-    public boolean isOwned() {
+    public boolean getIsOwned() {
         return isOwned;
     }
 

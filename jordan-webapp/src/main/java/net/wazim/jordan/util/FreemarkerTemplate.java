@@ -1,6 +1,7 @@
 package net.wazim.jordan.util;
 
 import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import net.wazim.jordan.JordanServer;
 
@@ -11,14 +12,14 @@ import java.util.HashMap;
 public class FreemarkerTemplate {
 
     private Template template;
-    private HashMap<String, String> root = new HashMap<String, String>();
+    private HashMap<String, Object> root = new HashMap<String, Object>();
 
     public FreemarkerTemplate(String templateName) {
         Configuration cfg = new Configuration();
-        cfg.setDefaultEncoding("UTF-8");
 
         cfg.setClassForTemplateLoading(JordanServer.class, "/templates");
 
+        cfg.setObjectWrapper(new DefaultObjectWrapper());
 
         try {
             template = cfg.getTemplate(templateName);
@@ -28,7 +29,7 @@ public class FreemarkerTemplate {
         }
     }
 
-    public FreemarkerTemplate with(String key, String value) {
+    public FreemarkerTemplate with(String key, Object value) {
         root.put(key, value);
         return this;
     }

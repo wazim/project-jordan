@@ -1,5 +1,6 @@
 package net.wazim.jordan;
 
+import net.wazim.jordan.controller.JordanApiServlet;
 import net.wazim.jordan.controller.JordanIndexServlet;
 import net.wazim.jordan.controller.JordanStatusPageServlet;
 import net.wazim.jordan.persistence.BluRayDatabase;
@@ -22,6 +23,7 @@ public class JordanServer {
 
         context.addServlet(new ServletHolder(new JordanIndexServlet(database)), "");
         context.addServlet(new ServletHolder(new JordanStatusPageServlet()), "/status");
+        context.addServlet(new ServletHolder(new JordanApiServlet(database)), "/api/all");
 
         try {
             server.start();

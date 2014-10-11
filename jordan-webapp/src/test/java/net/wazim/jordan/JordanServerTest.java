@@ -1,5 +1,6 @@
 package net.wazim.jordan;
 
+import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import net.wazim.jordan.properties.JordanTestSpecificProperties;
 import org.apache.commons.httpclient.HttpClient;
@@ -24,7 +25,10 @@ public class JordanServerTest {
 
     @Before
     public void setupJordanServer() {
-        jordanServer = new JordanServer(new JordanTestSpecificProperties(), new InMemoryPersistableDatabase());
+        InMemoryPersistableDatabase database = new InMemoryPersistableDatabase();
+        database.saveBluRay(new BluRay("The Godfather", "£1.99", "£2.99", false));
+
+        jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
         httpClient = new HttpClient();
         method = new GetMethod("http://localhost:12500/jordan");
     }
@@ -40,6 +44,16 @@ public class JordanServerTest {
 
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("Welcome to Project Jordan"));
+    }
+
+    @Test
+    public void jordanApiServletReturnsValidXml() throws IOException {
+        method = new GetMethod("http://localhost:12500/jordan/api/all");
+        int responseCode = httpClient.executeMethod(method);
+
+        assertThat(responseCode, is(HttpStatus.OK_200));
+        assertThat(method.getResponseBodyAsString(), containsString("<name>The Godfather</name>"));
+
     }
 
 }

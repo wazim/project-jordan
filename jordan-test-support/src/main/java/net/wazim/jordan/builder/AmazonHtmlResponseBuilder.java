@@ -52,13 +52,13 @@ public class AmazonHtmlResponseBuilder {
             htmlBody += "<div class=\"rowDividerGrid entireRowGrid\"></div>\n" +
                     "<div id=\"result_" + i + "\" class=\""+someHtmlClass()+" prod celwidget\" name=\"B008OGHUFK\">\n" +
                     "<h3 class=\"newaps\">\n" +
-                    "<span class=\"lrg bold\">" + bluRays.get(i).name() + "</span>\n" +
+                    "<span class=\"lrg bold\">" + bluRays.get(i).getName() + "</span>\n" +
                     "</h3><ul class=\"rsltGridList grey\">\n" +
                     "<li class=\"newp\">\n" +
                     "<div class=\"\">\n" +
-                    "<span class=\"bld lrg red\">" + bluRays.get(i).priceNew() + "</span>\n" +
-                    "<span class=\"price bld\">" + bluRays.get(i).priceNew() + "</span>" +
-                    "<span class=\"price bld\">" + bluRays.get(i).priceUsed() + "</span>" +
+                    "<span class=\"bld lrg red\">" + bluRays.get(i).getPriceNew() + "</span>\n" +
+                    "<span class=\"price bld\">" + bluRays.get(i).getPriceNew() + "</span>" +
+                    "<span class=\"price bld\">" + bluRays.get(i).getPriceUsed() + "</span>" +
                     "</div></div></div>";
         }
 

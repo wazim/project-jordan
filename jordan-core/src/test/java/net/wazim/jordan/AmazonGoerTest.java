@@ -60,10 +60,10 @@ public class AmazonGoerTest {
         amazonGoer.go(AMAZON_QUERY_URL);
         assertThat(amazonGoer.bluRays().size(), is(20));
 
-        assertThat(theFirstBluRay().name(), is("Dredd (Blu-ray 3D + Blu-ray)"));
-        assertThat(theFirstBluRay().priceNew(), is("£4.51"));
-        assertThat(theFirstBluRay().priceUsed(), is("£3.93"));
-        assertThat(theFirstBluRay().isOwned(), is(false));
+        assertThat(theFirstBluRay().getName(), is("Dredd (Blu-ray 3D + Blu-ray)"));
+        assertThat(theFirstBluRay().getPriceNew(), is("£4.51"));
+        assertThat(theFirstBluRay().getPriceUsed(), is("£3.93"));
+        assertThat(theFirstBluRay().getIsOwned(), is(false));
     }
 
     @Test

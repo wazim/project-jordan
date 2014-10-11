@@ -64,10 +64,10 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     @Override
     public void saveBluRay(BluRay bluRay) {
         Map<String, String> bluRayMap = new HashMap<String, String>();
-        bluRayMap.put("name", bluRay.name());
-        bluRayMap.put("priceNew", bluRay.priceNew());
-        bluRayMap.put("priceUsed", bluRay.priceUsed());
-        bluRayMap.put("isOwned", String.valueOf(bluRay.isOwned()));
+        bluRayMap.put("name", bluRay.getName());
+        bluRayMap.put("priceNew", bluRay.getPriceNew());
+        bluRayMap.put("priceUsed", bluRay.getPriceUsed());
+        bluRayMap.put("isOwned", String.valueOf(bluRay.getIsOwned()));
         allBluRays.save(new BasicDBObject(bluRayMap));
     }
 

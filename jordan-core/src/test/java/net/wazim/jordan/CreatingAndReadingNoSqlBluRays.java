@@ -26,10 +26,10 @@ public class CreatingAndReadingNoSqlBluRays {
         BluRay myBluRay = new BluRay("Kung Fu Hustle", "£5.00", "£4.00", false);
         bluRayDatabase.saveBluRay(myBluRay);
 
-        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").name(), is(myBluRay.name()));
-        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").priceNew(), is(myBluRay.priceNew()));
-        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").priceUsed(), is(myBluRay.priceUsed()));
-        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").isOwned(), is(myBluRay.isOwned()));
+        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").getName(), is(myBluRay.getName()));
+        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").getPriceNew(), is(myBluRay.getPriceNew()));
+        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").getPriceUsed(), is(myBluRay.getPriceUsed()));
+        assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").getIsOwned(), is(myBluRay.getIsOwned()));
 
         assertThat(bluRayDatabase.getAllBluRays().size(), is(1));
     }
