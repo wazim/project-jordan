@@ -1,8 +1,8 @@
 package net.wazim.jordan;
 
 import net.wazim.jordan.domain.BluRay;
-import net.wazim.jordan.client.fixtures.TestOnlyPersistableDatabase;
 import net.wazim.jordan.persistence.BluRayDatabase;
+import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class CreatingAndReadingNoSqlBluRays {
 
-    private BluRayDatabase bluRayDatabase = new TestOnlyPersistableDatabase(); // Use if Mongo isn't running...
+    private BluRayDatabase bluRayDatabase = new InMemoryPersistableDatabase(); // Use if Mongo isn't running...
 //    private BluRayDatabase bluRayDatabase = new MongoBluRayDatabase(); // Use to test the actual Mongo instance...
 
     @Before

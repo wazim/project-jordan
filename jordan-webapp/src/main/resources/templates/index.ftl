@@ -5,6 +5,6 @@
 <body>
 <h1>Welcome to Project Jordan</h1>
 
-We currently have 0 Blu Rays in our library.
+We currently have ${numOfBluRays} Blu Rays in our library.
 </body>
 </html>

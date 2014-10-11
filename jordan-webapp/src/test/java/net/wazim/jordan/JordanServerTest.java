@@ -1,5 +1,7 @@
 package net.wazim.jordan;
 
+import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
+import net.wazim.jordan.properties.JordanTestSpecificProperties;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -22,7 +24,7 @@ public class JordanServerTest {
 
     @Before
     public void setupJordanServer() {
-        jordanServer = new JordanServer();
+        jordanServer = new JordanServer(new JordanTestSpecificProperties(), new InMemoryPersistableDatabase());
         httpClient = new HttpClient();
         method = new GetMethod("http://localhost:12500/jordan");
     }

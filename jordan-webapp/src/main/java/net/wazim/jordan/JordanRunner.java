@@ -18,7 +18,10 @@ public class JordanRunner {
         this.properties = properties;
         this.database = database;
 
-        new JordanServer();
+        AmazonGoer amazonGoer = new AmazonGoer(database);
+        amazonGoer.go(properties.getRequestUrl());
+
+        new JordanServer(properties, database);
     }
 
 }

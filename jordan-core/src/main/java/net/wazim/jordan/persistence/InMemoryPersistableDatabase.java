@@ -1,11 +1,11 @@
-package net.wazim.jordan.client.fixtures;
+package net.wazim.jordan.persistence;
 
 import net.wazim.jordan.domain.BluRay;
-import net.wazim.jordan.persistence.BluRayDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestOnlyPersistableDatabase implements BluRayDatabase {
+public class InMemoryPersistableDatabase implements BluRayDatabase {
 
     private ArrayList<BluRay> allBluRays = new ArrayList<BluRay>();
 

@@ -1,6 +1,7 @@
 package net.wazim.jordan;
 
 import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import net.wazim.jordan.stub.AmazonStub;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -27,7 +28,7 @@ public class AmazonGoerTest {
         stub = new AmazonStub();
         stub.createPageAndPrimeResponse("/amazon/bluray", 200, getSamplePage1());
         stub.createPageAndPrimeResponse("/amazon/bluray?page=2", 200, getSamplePage2());
-        amazonGoer = new AmazonGoer();
+        amazonGoer = new AmazonGoer(new InMemoryPersistableDatabase());
     }
 
     @After

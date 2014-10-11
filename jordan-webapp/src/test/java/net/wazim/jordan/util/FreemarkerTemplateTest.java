@@ -13,19 +13,12 @@ public class FreemarkerTemplateTest {
     @Test
     public void correctlyLoadsTheTemplate() throws IOException, TemplateException {
         FreemarkerTemplate template = new FreemarkerTemplate("index.ftl");
-        String processedTemplate = template.processTemplate();
+        String processedTemplate = template.with("numOfBluRays", "10").processTemplate();
 
         System.out.println("processedTemplate = " + processedTemplate);
-        assertThat(processedTemplate, containsString("We currently have"));
+        assertThat(processedTemplate, containsString("We currently have 10 Blu Rays in our library."));
     }
 
-    @Test
-    public void correctLoadsTemplateAndAddsElementsToTemplate() {
-        FreemarkerTemplate template = new FreemarkerTemplate("test.ftl").with("name", "Karl");
-        String processedTemplate = template.processTemplate();
 
-        System.out.println("processedTemplate = " + processedTemplate);
-        assertThat(processedTemplate, containsString("Name: Karl"));
-    }
 
 }

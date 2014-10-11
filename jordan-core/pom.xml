@@ -50,11 +50,6 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
         </dependency>
-        <dependency>
-            <groupId>net.wazim</groupId>
-            <artifactId>jordan-webapp</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>

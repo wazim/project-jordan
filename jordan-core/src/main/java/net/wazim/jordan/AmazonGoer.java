@@ -3,6 +3,7 @@ package net.wazim.jordan;
 import net.wazim.jordan.client.JordanHttpClient;
 import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.persistence.BluRayDatabase;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -14,11 +15,13 @@ import static net.wazim.jordan.utils.BluRayParser.parseIntoBluRays;
 public class AmazonGoer {
 
     private static final Logger log = Logger.getLogger(AmazonGoer.class.getName());
+    private final BluRayDatabase database;
 
     private JordanHttpResponse response;
     private ArrayList<BluRay> bluRays;
 
-    public AmazonGoer() {
+    public AmazonGoer(BluRayDatabase database) {
+        this.database = database;
         bluRays = new ArrayList<BluRay>();
     }
 
@@ -29,6 +32,13 @@ public class AmazonGoer {
 //        log.info(response.getResponseBody());
         bluRays = parseIntoBluRays(response, requestUrl);
 
+        saveBluRaysInDatabase();
+    }
+
+    private void saveBluRaysInDatabase() {
+        for (BluRay bluRay : bluRays) {
+            database.saveBluRay(bluRay);
+        }
     }
 
     public int responseCode() {
