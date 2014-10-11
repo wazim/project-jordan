@@ -21,6 +21,7 @@ public class JordanHttpClient {
         webClient.setJavaScriptTimeout(15000);
         webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getOptions().setJavaScriptEnabled(false);
 
     }
 
