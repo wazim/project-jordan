@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.math.BigDecimal;
 
 import static java.lang.Boolean.getBoolean;
 
@@ -29,10 +30,13 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     @Override
     public BluRay findBluRayByName(String name) {
         DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", name));
+
+        BigDecimal priceNew = new BigDecimal(retrievedObject.get("priceNew").toString());
+        BigDecimal priceUsed = new BigDecimal(retrievedObject.get("priceUsed").toString());
         return new BluRay(
                 retrievedObject.get("name").toString(),
-                retrievedObject.get("priceNew").toString(),
-                retrievedObject.get("priceUsed").toString(),
+                priceNew,
+                priceUsed,
                 getBoolean(retrievedObject.get("isOwned").toString()));
     }
 
@@ -46,7 +50,9 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         ArrayList<BluRay> myBluRays = new ArrayList<BluRay>();
         DBCursor dbObjects = allBluRays.find();
         for (DBObject dbObject : dbObjects) {
-            myBluRays.add(new BluRay(dbObject.get("name").toString(), dbObject.get("priceNew").toString(), dbObject.get("priceUsed").toString(), getBoolean(dbObject.get("isOwned").toString())));
+            BigDecimal priceNew = new BigDecimal(dbObject.get("priceNew").toString());
+            BigDecimal priceUsed = new BigDecimal(dbObject.get("priceUsed").toString());
+            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, getBoolean(dbObject.get("isOwned").toString())));
         }
         return myBluRays;
     }
@@ -65,8 +71,8 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     public void saveBluRay(BluRay bluRay) {
         Map<String, String> bluRayMap = new HashMap<String, String>();
         bluRayMap.put("name", bluRay.getName());
-        bluRayMap.put("priceNew", bluRay.getPriceNew());
-        bluRayMap.put("priceUsed", bluRay.getPriceUsed());
+        bluRayMap.put("priceNew", bluRay.getPriceNew().toString());
+        bluRayMap.put("priceUsed", bluRay.getPriceUsed().toString());
         bluRayMap.put("isOwned", String.valueOf(bluRay.getIsOwned()));
         allBluRays.save(new BasicDBObject(bluRayMap));
     }

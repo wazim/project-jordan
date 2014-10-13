@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URI;
+import java.math.BigDecimal;
 
 import static net.wazim.jordan.properties.JordanTestSpecificProperties.AMAZON_BASE_URL;
 import static net.wazim.jordan.properties.JordanTestSpecificProperties.AMAZON_QUERY_URL;
@@ -61,8 +62,8 @@ public class AmazonGoerTest {
         assertThat(amazonGoer.bluRays().size(), is(20));
 
         assertThat(theFirstBluRay().getName(), is("Dredd (Blu-ray 3D + Blu-ray)"));
-        assertThat(theFirstBluRay().getPriceNew(), is("£4.51"));
-        assertThat(theFirstBluRay().getPriceUsed(), is("£3.93"));
+        assertThat(theFirstBluRay().getPriceNew(), is(new BigDecimal(4.51)));
+        assertThat(theFirstBluRay().getPriceUsed(), is(new BigDecimal(3.93)));
         assertThat(theFirstBluRay().getIsOwned(), is(false));
     }
 

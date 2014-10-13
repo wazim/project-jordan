@@ -13,6 +13,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.math.BigDecimal;
+
 
 public class BluRayParser {
 
@@ -72,24 +74,28 @@ public class BluRayParser {
         }
     }
 
-    private static String getBluRayUsedPrice(Element bluRayElement) {
+    private static BigDecimal getBluRayUsedPrice(Element bluRayElement) {
         Elements price = bluRayElement.getElementsByClass("price");
+        BigDecimal usedPrice = new BigDecimal(price.get(1).text().replaceAll("£", ""));
 
         if (price.isEmpty() || price.size() == 1) {
-            return "£0.00";
+            BigDecimal nullPrice = new BigDecimal(0.00);
+            return nullPrice;
         }
-
-        return price.get(1).text();
+        return usedPrice;
     }
 
-    private static String getBluRayPrice(Element bluRayElement) {
+    private static BigDecimal getBluRayPrice(Element bluRayElement) {
         Elements price = bluRayElement.getElementsByClass("price");
+        System.out.println("price.first().text() = " + price.first().text());
+        BigDecimal newPrice = new BigDecimal(price.first().text().replaceAll("£", ""));
 
         if (price.isEmpty() || price.size() == 0) {
-            return "£0.00";
+            BigDecimal nullPrice = new BigDecimal(0.00);
+            return nullPrice;
         }
 
-        return price.first().text();
+        return newPrice;
     }
 
     private static String getBluRayName(Element bluRayElement) {
