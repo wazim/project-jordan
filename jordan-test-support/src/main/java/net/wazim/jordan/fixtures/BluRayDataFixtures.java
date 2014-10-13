@@ -5,6 +5,7 @@ import net.wazim.jordan.domain.BluRay;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
+import java.math.BigDecimal;
 
 public class BluRayDataFixtures {
 
@@ -24,11 +25,13 @@ public class BluRayDataFixtures {
         return pickOneOf("fstRowGrid", "rsltGrid");
     }
 
-    private static String somePrice() {
+    private static BigDecimal somePrice() {
         Random random = new Random();
         int pound = random.nextInt(10);
         int pennies = random.nextInt(99-10 + 1) + 10;
-        return "£" + pound + "." + pennies;
+        String stringPrice = pound + "." + pennies;
+        BigDecimal price = new BigDecimal(stringPrice);
+        return price;
     }
 
     public static <T> T pickOneOf(T... choices) {

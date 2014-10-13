@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,8 +27,8 @@ public class JordanServerTest {
     @Before
     public void setupJordanServer() {
         InMemoryPersistableDatabase database = new InMemoryPersistableDatabase();
-        database.saveBluRay(new BluRay("The Godfather", "£1.99", "£2.99", false));
-        database.saveBluRay(new BluRay("Michael Jackson's This Is It", "£0.59", "£0.29", false));
+        database.saveBluRay(new BluRay("The Godfather", new BigDecimal(1.99), new BigDecimal(2.99), false));
+        database.saveBluRay(new BluRay("Michael Jackson's This Is It", new BigDecimal(0.59), new BigDecimal(0.29), false));
 
         jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
         httpClient = new HttpClient();
