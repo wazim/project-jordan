@@ -3,12 +3,12 @@ package net.wazim.jordan.persistence;
 import com.mongodb.*;
 import net.wazim.jordan.domain.BluRay;
 
+import java.math.BigDecimal;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.math.BigDecimal;
 
 import static java.lang.Boolean.getBoolean;
 

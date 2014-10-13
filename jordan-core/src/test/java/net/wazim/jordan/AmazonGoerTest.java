@@ -10,8 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.URI;
 import java.math.BigDecimal;
+import java.net.URI;
 
 import static net.wazim.jordan.properties.JordanTestSpecificProperties.AMAZON_BASE_URL;
 import static net.wazim.jordan.properties.JordanTestSpecificProperties.AMAZON_QUERY_URL;

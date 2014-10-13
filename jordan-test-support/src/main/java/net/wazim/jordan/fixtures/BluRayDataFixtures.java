@@ -2,10 +2,10 @@ package net.wazim.jordan.fixtures;
 
 import net.wazim.jordan.domain.BluRay;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
-import java.math.BigDecimal;
 
 public class BluRayDataFixtures {
 
