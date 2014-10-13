@@ -1,6 +1,5 @@
 package net.wazim.jordan;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import net.wazim.jordan.properties.JordanTestSpecificProperties;
@@ -10,6 +9,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
