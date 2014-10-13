@@ -8,7 +8,6 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -57,14 +56,14 @@ public class AmazonGoerTest {
         assertThat(amazonGoer.responseBody(), showsBluRaysUnder£8());
     }
 
-    @Ignore
+    @Test
     public void amazonGoerReturnsAListOfBluRaysUnder£5() {
         amazonGoer.go(AMAZON_QUERY_URL);
         assertThat(amazonGoer.bluRays().size(), is(20));
 
         assertThat(theFirstBluRay().getName(), is("Dredd (Blu-ray 3D + Blu-ray)"));
-        assertThat(theFirstBluRay().getPriceNew(), is(new BigDecimal(4.51)));
-        assertThat(theFirstBluRay().getPriceUsed(), is(new BigDecimal(3.93)));
+        assertThat(theFirstBluRay().getPriceNew(), is(new BigDecimal("4.51")));
+        assertThat(theFirstBluRay().getPriceUsed(), is(new BigDecimal("3.93")));
         assertThat(theFirstBluRay().getIsOwned(), is(false));
     }
 
