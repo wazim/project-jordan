@@ -4,13 +4,13 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.wazim.jordan.builder.AmazonHtmlResponseBuilder;
+import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import net.wazim.jordan.properties.JordanTestSpecificProperties;
 import net.wazim.jordan.stub.AmazonStub;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 
-import static net.wazim.jordan.fixtures.BluRayDataFixtures.someUnownedBluRay;
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,10 +21,11 @@ public class AmazonStepDefinitions {
     private AmazonGoer amazonGoer;
     private String responseBodyAsString;
     private int httpResponseCode;
+    private AmazonStub stub;
 
     @Given("^Project Jordan is started$")
     public void projectJordanIsStarted() throws Throwable {
-        AmazonStub stub = new AmazonStub();
+        stub = new AmazonStub();
         stub.createPageAndPrimeResponse("/amazon/bluray", 200, getSamplePage1());
         stub.createPageAndPrimeResponse("/amazon/bluray?page=2", 200, getSamplePage2());
 
@@ -52,35 +53,24 @@ public class AmazonStepDefinitions {
     public void iHaveAListOfBluRays(int expectedNumberOfBluRays) throws Throwable {
         assertThat(httpResponseCode, is(OK_200));
         assertThat(responseBodyAsString, containsString("We currently have " + expectedNumberOfBluRays + " Blu Rays in our library."));
+        stub.stopServer();
     }
 
     @Then("^the response is OK$")
     public void the_response_is_OK() throws Throwable {
         assertThat(httpResponseCode, is(OK_200));
+        stub.stopServer();
     }
 
     private String getSamplePage1() {
         return new AmazonHtmlResponseBuilder()
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
+                .with(new BluRay("The Godfather", 1.00, 1.00, false))
                 .withCurrentPageNumber(1)
                 .withTotalPageNumbers(2).build();
     }
 
     private String getSamplePage2() {
         return new AmazonHtmlResponseBuilder()
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
-                .with(someUnownedBluRay())
                 .withCurrentPageNumber(2)
                 .withTotalPageNumbers(2).build();
     }
