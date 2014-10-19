@@ -2,7 +2,6 @@ package net.wazim.jordan.fixtures;
 
 import net.wazim.jordan.domain.BluRay;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -25,13 +24,12 @@ public class BluRayDataFixtures {
         return pickOneOf("fstRowGrid", "rsltGrid");
     }
 
-    private static BigDecimal somePrice() {
+    private static Double somePrice() {
         Random random = new Random();
         int pound = random.nextInt(10);
         int pennies = random.nextInt(99-10 + 1) + 10;
         String stringPrice = pound + "." + pennies;
-        BigDecimal price = new BigDecimal(stringPrice);
-        return price;
+        return Double.parseDouble(stringPrice);
     }
 
     public static <T> T pickOneOf(T... choices) {

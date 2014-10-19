@@ -31,7 +31,7 @@ public class BluRayParserTest {
                 "    \n" +
                 "    <li class=\"newp\">\n" +
                 "    <div class=\"\">\n" +
-                "    <a href=\"http://www.amazon.co.uk/Batman-Begins-Blu-ray-Region-Free/dp/B0019FLTH8/ref=sr_1_117?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117\"><span class=\"bld lrg red\"> £5.48</span>\n" +
+                "    <a href=\"http://www.amazon.co.uk/Batman-Begins-Blu-ray-Region-Free/dp/B0019FLTH8/ref=sr_1_117?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117\"><span class=\"bld lrg red\"> £0.48</span>\n" +
                 "    <span class=\"lrg\">Blu-ray</span>\n" +
                 "                  </a><div class=\"imageBox\">\n" +
                 "    <img  src=\"http://g-ecx.images-amazon.com/images/G/02/nav2/images/gui/prime-check-badge-14._CB370663031_.gif\"  height=\"14\" width=\"45\" class=\"prmImg cfMarker\" alt=\"prime\"  align=\"baseline\"/>\n" +
@@ -44,9 +44,9 @@ public class BluRayParserTest {
                 "    FREE Delivery on orders over £10</span>\n" +
                 "</li><li class=\"sect mbc\">More buying choices - Blu-ray</li>\n" +
                 "            <li class=\"med grey mkp2\">\n" +
-                "        <a href=\"http://www.amazon.co.uk/gp/offer-listing/B0019FLTH8/ref=sr_1_117_olp?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117&amp;condition=new\"><span class=\"price bld\">£2.80</span> new <span class=\"grey\">(48 offers)</span></a> </li>\n" +
+                "        <a href=\"http://www.amazon.co.uk/gp/offer-listing/B0019FLTH8/ref=sr_1_117_olp?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117&amp;condition=new\"><span class=\"price bld\">£0.80</span> new <span class=\"grey\">(48 offers)</span></a> </li>\n" +
                 "<li class=\"med grey mkp2\">\n" +
-                "        <a href=\"http://www.amazon.co.uk/gp/offer-listing/B0019FLTH8/ref=sr_1_117_olp?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117&amp;condition=used\"><span class=\"price bld\">£1.92</span> used <span class=\"grey\">(19 offers)</span></a> </li><li class=\"rvw\">\n" +
+                "        <a href=\"http://www.amazon.co.uk/gp/offer-listing/B0019FLTH8/ref=sr_1_117_olp?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117&amp;condition=used\"><span class=\"price bld\">£0.92</span> used <span class=\"grey\">(19 offers)</span></a> </li><li class=\"rvw\">\n" +
                 "    <span class=\"a-declarative\" data-action=\"a-popover\" data-a-popover=\"{&quot;position&quot;:&quot;triggerBottom&quot;,&quot;max-width&quot;:&quot;700&quot;,&quot;closeButton&quot;:&quot;false&quot;,&quot;url&quot;:&quot;/review/widgets/average-customer-review/popover/ref=acr_search__popover?ie=UTF8&amp;asin=B0019FLTH8&amp;contextId=search&amp;ref=acr_search__popover&quot;}\"><span name=\"B0019FLTH8\" ref=\"sr_cr_\" class=\"asinReviewsSummary\">\n" +
                 "                        <a href=\"javascript:void(0)\" class=\"a-popover-trigger a-declarative\"><a alt=\"4.5 out of 5 stars\" href=\"http://www.amazon.co.uk/Batman-Begins-Blu-ray-Region-Free/product-reviews/B0019FLTH8/ref=sr_1_117_cm_cr_acr_img?ie=UTF8&amp;showViewpoints=1\"><i class=\"a-icon a-icon-star a-star-4-5\"></i></a><i class=\"a-icon a-icon-popover\"></i></a></span>\n" +
                 "                </span><span class=\"rvwCnt\">(<a href=\"http://www.amazon.co.uk/Batman-Begins-Blu-ray-Region-Free/product-reviews/B0019FLTH8/ref=sr_1_117_cm_cr_acr_txt?ie=UTF8&amp;showViewpoints=1\">363</a>)</span>\n" +

@@ -8,7 +8,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -34,11 +33,26 @@ public class BluRayParser {
             while (currentPage < lastPage) {
                 log.info(String.format("Page %d of %d", currentPage, lastPage));
                 JordanHttpResponse nextPageResponse = null;
+
+
+                String address = requestUrl.toString();
+                String newPage = "sr_pg_" + currentPage;
+                String secondNewPage = "page=" + currentPage;
+                address.replace("sr_pg_1", newPage);
+                address.replace("page=1", secondNewPage);
+                requestUrl.resolve(address);
+                String newAddress = address.replace("sr_pg_1", newPage);
+                newAddress = newAddress.replace("page=1", secondNewPage);
+                URI newUri = requestUrl.resolve(newAddress);
+
+
                 try {
-                    nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(requestUrl.toString()).addParameter("page", String.valueOf(currentPage++)).build());
+                    nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(newAddress).addParameter("page", String.valueOf(currentPage++)).build());
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
+
+
                 createBluRaysFromHtml(nextPageResponse.getResponseBody());
             }
         }
@@ -64,38 +78,45 @@ public class BluRayParser {
         for (Element bluRayElement : allBluRays) {
             String bluRayName = getBluRayName(bluRayElement);
 
-            listOfBluRays.add(new BluRay(
-                    bluRayName,
-                    getBluRayPrice(bluRayElement),
-                    getBluRayUsedPrice(bluRayElement),
-                    false));
+            double priceRange = 1.25;
+            double zeroValue = 0.00;
 
-            log.info(String.format("Added %s to the database", bluRayName));
+            if (((Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1) || (Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1)) &&
+                    !(Double.compare(getBluRayPrice(bluRayElement), zeroValue) == 0) && !(Double.compare(getBluRayUsedPrice(bluRayElement), zeroValue) == 0))
+            {
+                listOfBluRays.add(new BluRay(
+                        bluRayName,
+                        getBluRayPrice(bluRayElement),
+                        getBluRayUsedPrice(bluRayElement),
+                        false));
+
+                log.info(String.format("Added %s to the database", bluRayName));
+            }
+            else {
+
+            }
+
         }
     }
 
-    private static BigDecimal getBluRayUsedPrice(Element bluRayElement) {
+    private static double getBluRayUsedPrice(Element bluRayElement) {
         Elements price = bluRayElement.getElementsByClass("price");
 
         if (price.isEmpty() || price.size() == 1) {
-            BigDecimal nullPrice = new BigDecimal(0.00);
-            return nullPrice;
+            return 0.00;
         }
-        BigDecimal usedPrice = new BigDecimal(price.get(1).text().replaceAll("£", ""));
 
-        return usedPrice;
+        return Double.parseDouble(price.get(1).text().replaceAll("£", ""));
     }
 
-    private static BigDecimal getBluRayPrice(Element bluRayElement) {
+    private static double getBluRayPrice(Element bluRayElement) {
         Elements price = bluRayElement.getElementsByClass("price");
 
         if (price.isEmpty() || price.size() == 0) {
-            BigDecimal nullPrice = new BigDecimal(0.00);
-            return nullPrice;
+            return 0.00;
         }
-        BigDecimal newPrice = new BigDecimal(price.first().text().replaceAll("£", ""));
 
-        return newPrice;
+        return Double.parseDouble(price.first().text().replaceAll("£", ""));
     }
 
     private static String getBluRayName(Element bluRayElement) {

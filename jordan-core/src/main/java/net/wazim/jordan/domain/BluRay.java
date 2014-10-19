@@ -1,15 +1,13 @@
 package net.wazim.jordan.domain;
 
-import java.math.BigDecimal;
-
 public class BluRay {
 
     private final String name;
-    private final BigDecimal priceNew;
-    private final BigDecimal priceUsed;
+    private final double priceNew;
+    private final double priceUsed;
     private final boolean isOwned;
 
-    public BluRay(String name, BigDecimal priceNew, BigDecimal priceUsed, boolean isOwned) {
+    public BluRay(String name, double priceNew, double priceUsed, boolean isOwned) {
         this.name = name;
         this.priceNew = priceNew;
         this.priceUsed = priceUsed;
@@ -20,11 +18,11 @@ public class BluRay {
         return name;
     }
 
-    public BigDecimal getPriceNew() {
+    public double getPriceNew() {
         return priceNew;
     }
 
-    public BigDecimal getPriceUsed() {
+    public double getPriceUsed() {
         return priceUsed;
     }
 

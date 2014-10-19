@@ -16,6 +16,7 @@ public class JordanHttpClient {
 
     public JordanHttpClient() {
         webClient = new WebClient();
+        webClient.getCookieManager().setCookiesEnabled(true);
         webClient.setCssErrorHandler(newJordanCssErrorHandler());
         webClient.setJavaScriptErrorListener(newJordanJavascriptErrorHandler());
         webClient.setJavaScriptTimeout(15000);
@@ -31,6 +32,7 @@ public class JordanHttpClient {
         int responseCode = 0;
         try {
             page = webClient.getPage(String.valueOf(requestUrl));
+
             pageAsXml = page.asXml();
             responseCode = page.getWebResponse().getStatusCode();
         } catch (MalformedURLException e) {

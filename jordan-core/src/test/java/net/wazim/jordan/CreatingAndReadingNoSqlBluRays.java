@@ -6,7 +6,6 @@ import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.net.UnknownHostException;
 
 import static org.hamcrest.core.Is.is;
@@ -24,7 +23,7 @@ public class CreatingAndReadingNoSqlBluRays {
 
     @Test
     public void aBluRayIsStoredInTheDatabase() {
-        BluRay myBluRay = new BluRay("Kung Fu Hustle", new BigDecimal(5.00), new BigDecimal(4.00), false);
+        BluRay myBluRay = new BluRay("Kung Fu Hustle", new Double(5.00), new Double(4.00), false);
         bluRayDatabase.saveBluRay(myBluRay);
 
         assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").getName(), is(myBluRay.getName()));
@@ -37,9 +36,9 @@ public class CreatingAndReadingNoSqlBluRays {
 
     @Test
     public void severalBluRaysAreStoredInTheDatabase() {
-        BluRay oneBluRay = new BluRay("Kung Fu Hustle", new BigDecimal(5.00), new BigDecimal(4.00), false);
-        BluRay twoBluRay = new BluRay("King Kong", new BigDecimal(2.00), new BigDecimal(3.00), true);
-        BluRay threeBluRay = new BluRay("The Godfather", new BigDecimal(3.99), new BigDecimal(2.00), false);
+        BluRay oneBluRay = new BluRay("Kung Fu Hustle", new Double(5.00), new Double(4.00), false);
+        BluRay twoBluRay = new BluRay("King Kong", new Double(2.00), new Double(3.00), true);
+        BluRay threeBluRay = new BluRay("The Godfather", new Double(3.99), new Double(2.00), false);
 
         bluRayDatabase.saveBluRay(oneBluRay);
         bluRayDatabase.saveBluRay(twoBluRay);

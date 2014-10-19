@@ -1,9 +1,9 @@
 package net.wazim.jordan;
 
 import net.wazim.jordan.persistence.BluRayDatabase;
-import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
+import net.wazim.jordan.persistence.MongoBluRayDatabase;
+import net.wazim.jordan.properties.JordanProductionProperties;
 import net.wazim.jordan.properties.JordanProperties;
-import net.wazim.jordan.properties.JordanTestSpecificProperties;
 
 public class JordanRunner {
 
@@ -11,7 +11,7 @@ public class JordanRunner {
     private final BluRayDatabase database;
 
     public static void main(String[] args) {
-        new JordanRunner(new JordanTestSpecificProperties(), new InMemoryPersistableDatabase());
+        new JordanRunner(new JordanProductionProperties(), new MongoBluRayDatabase());
     }
 
     public JordanRunner(JordanProperties properties, BluRayDatabase database) {

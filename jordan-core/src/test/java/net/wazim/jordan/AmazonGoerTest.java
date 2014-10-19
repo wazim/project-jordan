@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.net.URI;
 
 import static net.wazim.jordan.properties.JordanTestSpecificProperties.AMAZON_BASE_URL;
@@ -59,18 +58,18 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerReturnsAListOfBluRaysUnder£5() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(20));
+        assertThat(amazonGoer.bluRays().size(), is(2));
 
-        assertThat(theFirstBluRay().getName(), is("Dredd (Blu-ray 3D + Blu-ray)"));
-        assertThat(theFirstBluRay().getPriceNew(), is(new BigDecimal("4.51")));
-        assertThat(theFirstBluRay().getPriceUsed(), is(new BigDecimal("3.93")));
+        assertThat(theFirstBluRay().getName(), is("Transformers: Dark of the Moon [Blu-ray + DVD] [2011] [Region Free]"));
+        assertThat(theFirstBluRay().getPriceNew(), is(new Double("1.94")));
+        assertThat(theFirstBluRay().getPriceUsed(), is(new Double("1.24")));
         assertThat(theFirstBluRay().getIsOwned(), is(false));
     }
 
     @Test
     public void amazonGoerReturnsResultsFromAllPages() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(20));
+        assertThat(amazonGoer.bluRays().size(), is(2));
     }
 
     private BluRay theFirstBluRay() {

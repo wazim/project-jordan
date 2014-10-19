@@ -70,6 +70,10 @@
             <id>Maven Apache</id>
             <url>http://repo.maven.apache.org/maven2</url>
         </repository>
+        <repository>
+            <id>maven2</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
     </repositories>
 
 </project>
