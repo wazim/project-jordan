@@ -15,7 +15,7 @@ public class JordanServer {
     private final Server server;
 
     public JordanServer(JordanProperties properties, BluRayDatabase database) {
-        server = new Server(12500);
+        server = new Server(80);
 
         context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/jordan");

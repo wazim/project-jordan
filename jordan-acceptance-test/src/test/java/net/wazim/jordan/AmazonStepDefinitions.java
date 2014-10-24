@@ -23,6 +23,7 @@ public class AmazonStepDefinitions {
     private int httpResponseCode;
     private AmazonStub stub;
 
+
     @Given("^Project Jordan is started$")
     public void projectJordanIsStarted() throws Throwable {
         stub = new AmazonStub();
@@ -74,5 +75,6 @@ public class AmazonStepDefinitions {
                 .withCurrentPageNumber(2)
                 .withTotalPageNumbers(2).build();
     }
+
 
 }
