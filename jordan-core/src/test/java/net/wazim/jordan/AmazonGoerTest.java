@@ -52,11 +52,11 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerHitsThePageWhichContainsBluRaysThatAreLessThanEightPounds() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.responseBody(), showsBluRaysUnder£8());
+        assertThat(amazonGoer.responseBody(), showsBluRaysUnder8());
     }
 
     @Test
-    public void amazonGoerReturnsAListOfBluRaysUnder£5() {
+    public void amazonGoerReturnsAListOfBluRaysUnder5() {
         amazonGoer.go(AMAZON_QUERY_URL);
         assertThat(amazonGoer.bluRays().size(), is(2));
 
@@ -76,7 +76,7 @@ public class AmazonGoerTest {
         return amazonGoer.bluRays().get(0);
     }
 
-    private Matcher<? super String> showsBluRaysUnder£8() {
+    private Matcher<? super String> showsBluRaysUnder8() {
         return new TypeSafeMatcher<String>() {
             String responseBody;
 
