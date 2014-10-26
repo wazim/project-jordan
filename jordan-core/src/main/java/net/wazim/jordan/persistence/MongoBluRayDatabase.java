@@ -64,7 +64,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         List<BluRay> interestingBluRays = new ArrayList<BluRay>();
         List<BluRay> everyBluRay = getAllBluRays();
         for (BluRay bluRay : everyBluRay) {
-            if(bluRay.getIsInteresting()) {
+            if (bluRay.getIsInteresting()) {
                 interestingBluRays.add(bluRay);
             }
         }
@@ -73,13 +73,18 @@ public class MongoBluRayDatabase implements BluRayDatabase {
 
     @Override
     public void saveBluRay(BluRay bluRay) {
-        Map<String, String> bluRayMap = new HashMap<String, String>();
-        bluRayMap.put("name", bluRay.getName());
-        bluRayMap.put("priceNew", Double.toString(bluRay.getPriceNew()));
-        bluRayMap.put("priceUsed", Double.toString(bluRay.getPriceUsed()));
-        bluRayMap.put("url", bluRay.getUrl());
-        bluRayMap.put("isInteresting", String.valueOf(bluRay.getIsInteresting()));
-        allBluRays.save(new BasicDBObject(bluRayMap));
+        if(allBluRays.find(new BasicDBObject("name", bluRay.getName())).length() > 0) {
+            Map<String, String> bluRayMap = new HashMap<String, String>();
+            bluRayMap.put("name", bluRay.getName());
+            bluRayMap.put("priceNew", Double.toString(bluRay.getPriceNew()));
+            bluRayMap.put("priceUsed", Double.toString(bluRay.getPriceUsed()));
+            bluRayMap.put("url", bluRay.getUrl());
+            bluRayMap.put("isInteresting", String.valueOf(bluRay.getIsInteresting()));
+            allBluRays.save(new BasicDBObject(bluRayMap));
+        }
+        else{
+            updateBluray(bluRay);
+        }
     }
 
     @Override
@@ -94,6 +99,18 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     public void removeInterest(String movie) {
         DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", movie));
         DBObject newDocument = new BasicDBObject("isInteresting", false);
+        allBluRays.update(retrievedObject, newDocument);
+    }
+
+    @Override
+    public void updateBluray(BluRay bluRay) {
+        DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", bluRay.getName()));
+
+        Map<String, String> bluRayMap = new HashMap<String, String>();
+        bluRayMap.put("priceNew", Double.toString(bluRay.getPriceNew()));
+        bluRayMap.put("priceUsed", Double.toString(bluRay.getPriceUsed()));
+        DBObject newDocument = new BasicDBObject(bluRayMap);
+
         allBluRays.update(retrievedObject, newDocument);
     }
 }

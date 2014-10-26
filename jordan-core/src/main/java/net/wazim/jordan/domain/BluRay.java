@@ -3,8 +3,8 @@ package net.wazim.jordan.domain;
 public class BluRay {
 
     private final String name;
-    private final double priceNew;
-    private final double priceUsed;
+    private double priceNew;
+    private double priceUsed;
     private boolean isInteresting;
     private String url;
 
@@ -38,5 +38,13 @@ public class BluRay {
 
     public void setInteresting(boolean interesting) {
         this.isInteresting = interesting;
+    }
+
+    public void setPriceNew(double priceNew) {
+        this.priceNew = priceNew;
+    }
+
+    public void setPriceUsed(double priceUsed) {
+        this.priceUsed = priceUsed;
     }
 }

@@ -12,7 +12,7 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     @Override
     public BluRay findBluRayByName(String name) {
         for (BluRay bluRay : allBluRays) {
-            if(bluRay.getName().equals(name)){
+            if (bluRay.getName().equals(name)) {
                 return bluRay;
             }
         }
@@ -33,7 +33,7 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     public List<BluRay> getAllInterestingBluRays() {
         List<BluRay> interestingBluRays = new ArrayList<BluRay>();
         for (BluRay bluray : allBluRays) {
-            if(bluray.getIsInteresting()){
+            if (bluray.getIsInteresting()) {
                 interestingBluRays.add(bluray);
             }
         }
@@ -42,7 +42,30 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
 
     @Override
     public void saveBluRay(BluRay bluRay) {
-        allBluRays.add(bluRay);
+        if (doesNotExist(bluRay)) {
+            allBluRays.add(bluRay);
+        }
+        else{
+            updateBluray(bluRay);
+        }
+    }
+
+    public void updateBluray(BluRay bluRay) {
+        for (BluRay storedBluray : allBluRays) {
+            if(storedBluray.getName().equals(bluRay.getName())){
+                storedBluray.setPriceNew(bluRay.getPriceNew());
+                storedBluray.setPriceUsed(bluRay.getPriceUsed());
+            }
+        }
+    }
+
+    private boolean doesNotExist(BluRay bluRay) {
+        for (BluRay storedBluray : allBluRays) {
+            if (storedBluray.getName().equals(bluRay.getName())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -53,7 +76,7 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     @Override
     public void removeInterest(String movie) {
         for (BluRay bluRay : allBluRays) {
-            if(bluRay.getName().replace("+", " ").equals(movie)){
+            if (bluRay.getName().replace("+", " ").equals(movie)) {
                 bluRay.setInteresting(false);
             }
         }

@@ -34,17 +34,8 @@ public class BluRayParser {
                 log.info(String.format("Page %d of %d", currentPage, lastPage));
                 JordanHttpResponse nextPageResponse = null;
 
-                String address = requestUrl.toString();
-                String newPage = "sr_pg_" + currentPage;
-                String secondNewPage = "page=" + currentPage;
-                address.replace("sr_pg_1", newPage);
-                address.replace("page=1", secondNewPage);
-                requestUrl.resolve(address);
-                String newAddress = address.replace("sr_pg_1", newPage);
-                newAddress = newAddress.replace("page=1", secondNewPage);
-
                 try {
-                    nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(newAddress).addParameter("page", String.valueOf(currentPage++)).build());
+                    nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(requestUrl.toString()).addParameter("page", String.valueOf(currentPage++)).build());
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
