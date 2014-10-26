@@ -3,7 +3,6 @@ package net.wazim.jordan.utils;
 import net.wazim.jordan.client.JordanHttpClient;
 import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.domain.BluRay;
-import org.apache.http.client.utils.URIBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -35,7 +34,7 @@ public class BluRayParser {
                 JordanHttpResponse nextPageResponse = null;
 
                 try {
-                    nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(requestUrl.toString()).addParameter("page", String.valueOf(currentPage++)).build());
+                    nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page="+currentPage++));
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }

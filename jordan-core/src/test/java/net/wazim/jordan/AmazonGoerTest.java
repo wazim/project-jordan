@@ -59,7 +59,7 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerReturnsAListOfBluRaysUnder5() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(2));
+        assertThat(amazonGoer.bluRays().size(), is(1));
 
         assertThat(theFirstBluRay().getName(), is("Transformers: Dark of the Moon [Blu-ray + DVD] [2011] [Region Free]"));
         assertThat(theFirstBluRay().getUrl(), containsString("http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/"));
@@ -71,7 +71,7 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerReturnsResultsFromAllPages() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(2));
+        assertThat(amazonGoer.bluRays().size(), is(1));
     }
 
     private BluRay theFirstBluRay() {
