@@ -37,7 +37,7 @@
 <center>
 <#list blurays as bluray>
     <#if bluray.isInteresting == true>
-        <p><h3><a href="${bluray.url}">${bluray.name}</a></h3></br>
+        <p><h3><a href="${bluray.url}" target="_blank">${bluray.name}</a></h3></br>
         (<strong>New: </strong>£${bluray.priceNew?c}) - (<strong>Used: </strong>£${bluray.priceUsed?c})</br>
         <a href="not-interested?movie=${bluray.name}">Not Interested?</a>
         </p>
