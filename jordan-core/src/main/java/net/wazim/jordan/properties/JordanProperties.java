@@ -6,4 +6,6 @@ public interface JordanProperties {
 
     URI getRequestUrl();
 
+    int minutesToRefresh();
+
 }

@@ -4,6 +4,8 @@ import net.wazim.jordan.client.JordanHttpClient;
 import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.BluRayDatabase;
+import net.wazim.jordan.properties.JordanProperties;
+import org.quartz.*;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -12,10 +14,10 @@ import java.util.logging.Logger;
 
 import static net.wazim.jordan.utils.BluRayParser.parseIntoBluRays;
 
-public class AmazonGoer {
+public class AmazonGoer implements Job {
 
     private static final Logger log = Logger.getLogger(AmazonGoer.class.getName());
-    private final BluRayDatabase database;
+    private BluRayDatabase database;
 
     private JordanHttpResponse response;
     private ArrayList<BluRay> bluRays;
@@ -23,6 +25,10 @@ public class AmazonGoer {
     public AmazonGoer(BluRayDatabase database) {
         this.database = database;
         bluRays = new ArrayList<BluRay>();
+    }
+
+    public AmazonGoer(){
+        // Only should be used for Quartz.
     }
 
     public void go(URI requestUrl) {
@@ -53,4 +59,20 @@ public class AmazonGoer {
         return bluRays;
     }
 
+    @Override
+    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        try {
+            SchedulerContext schedulerContext = jobExecutionContext.getScheduler().getContext();
+            BluRayDatabase database = (BluRayDatabase) schedulerContext.get("database");
+            JordanProperties properties = (JordanProperties) schedulerContext.get("properties");
+            log.info("Starting schedule. Going to "+properties.getRequestUrl() + " and will refresh in "+properties.minutesToRefresh()+" minutes");
+
+            new AmazonGoer(database)
+                    .go(properties.getRequestUrl());
+
+        } catch (SchedulerException e) {
+            log.info("Scheduler failed to instantiate.");
+            e.printStackTrace();
+        }
+    }
 }

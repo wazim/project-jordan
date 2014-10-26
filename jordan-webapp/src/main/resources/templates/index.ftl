@@ -7,7 +7,7 @@
 
 <style>
     body{
-        background-color: #3498db;
+        background-color: #2ecc71;
         color: black;
         font-family: 'Lato', sans-serif;
         font-weight: 100;

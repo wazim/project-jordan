@@ -13,4 +13,9 @@ public class JordanProductionProperties implements JordanProperties {
     public URI getRequestUrl() {
         return AMAZON_QUERY_URL;
     }
+
+    @Override
+    public int minutesToRefresh() {
+        return 30;
+    }
 }

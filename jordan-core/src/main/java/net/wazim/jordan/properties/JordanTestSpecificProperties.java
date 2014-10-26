@@ -13,4 +13,9 @@ public class JordanTestSpecificProperties implements JordanProperties {
     public URI getRequestUrl() {
         return AMAZON_QUERY_URL;
     }
+
+    @Override
+    public int minutesToRefresh() {
+        return 1;
+    }
 }
