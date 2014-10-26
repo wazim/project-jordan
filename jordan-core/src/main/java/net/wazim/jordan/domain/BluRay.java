@@ -6,11 +6,13 @@ public class BluRay {
     private final double priceNew;
     private final double priceUsed;
     private final boolean isOwned;
+    private String url;
 
-    public BluRay(String name, double priceNew, double priceUsed, boolean isOwned) {
+    public BluRay(String name, double priceNew, double priceUsed, String bluRayUrl, boolean isOwned) {
         this.name = name;
         this.priceNew = priceNew;
         this.priceUsed = priceUsed;
+        this.url = bluRayUrl;
         this.isOwned = isOwned;
     }
 
@@ -30,4 +32,7 @@ public class BluRay {
         return isOwned;
     }
 
+    public String getUrl() {
+        return url;
+    }
 }

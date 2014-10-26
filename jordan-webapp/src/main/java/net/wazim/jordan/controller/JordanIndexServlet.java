@@ -25,6 +25,7 @@ public class JordanIndexServlet extends HttpServlet {
 
         resp.getWriter().println(new FreemarkerTemplate("index.ftl")
                 .with("numOfBluRays", String.valueOf(database.getAllBluRays().size()))
+                .with("blurays", database.getAllBluRays())
                 .processTemplate());
     }
 

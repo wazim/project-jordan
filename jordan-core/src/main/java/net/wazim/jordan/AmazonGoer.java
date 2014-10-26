@@ -29,7 +29,7 @@ public class AmazonGoer {
         JordanHttpClient client = new JordanHttpClient();
 
         response = client.getRequest(requestUrl);
-        log.info(response.getResponseBody());
+//        log.info(response.getResponseBody()); //This logs the entire response body to the console... Is that necessary?
         bluRays = parseIntoBluRays(response, requestUrl);
 
         saveBluRaysInDatabase();

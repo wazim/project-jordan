@@ -38,6 +38,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
                 retrievedObject.get("name").toString(),
                 priceNew,
                 priceUsed,
+                retrievedObject.get("url").toString(),
                 getBoolean(retrievedObject.get("isOwned").toString()));
     }
 
@@ -53,7 +54,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         for (DBObject dbObject : dbObjects) {
             double priceNew = Double.parseDouble(dbObject.get("priceNew").toString());
             double priceUsed = Double.parseDouble(dbObject.get("priceUsed").toString());
-            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, getBoolean(dbObject.get("isOwned").toString())));
+            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, dbObject.get("url").toString(), getBoolean(dbObject.get("isOwned").toString())));
         }
         return myBluRays;
     }
@@ -74,6 +75,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         bluRayMap.put("name", bluRay.getName());
         bluRayMap.put("priceNew", Double.toString(bluRay.getPriceNew()));
         bluRayMap.put("priceUsed", Double.toString(bluRay.getPriceUsed()));
+        bluRayMap.put("url", bluRay.getUrl());
         bluRayMap.put("isOwned", String.valueOf(bluRay.getIsOwned()));
         allBluRays.save(new BasicDBObject(bluRayMap));
     }

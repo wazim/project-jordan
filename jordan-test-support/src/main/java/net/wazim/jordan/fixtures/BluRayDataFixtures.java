@@ -9,11 +9,11 @@ import java.util.Random;
 public class BluRayDataFixtures {
 
     public static BluRay someUnownedBluRay() {
-        return new BluRay(someString(), somePrice(), somePrice(), false);
+        return new BluRay(someString(), somePrice(), somePrice(), someUrl(), false);
     }
 
     public static BluRay someOwnedBluRay() {
-        return new BluRay(someString(), somePrice(), somePrice(), true);
+        return new BluRay(someString(), somePrice(), somePrice(), someUrl(), true);
     }
 
     private static String someString() {
@@ -22,6 +22,10 @@ public class BluRayDataFixtures {
 
     public static String someHtmlClass() {
         return pickOneOf("fstRowGrid", "rsltGrid");
+    }
+
+    private static String someUrl() {
+        return "http://www.amazon.co.uk/"+someString();
     }
 
     private static Double somePrice() {

@@ -52,6 +52,7 @@ public class AmazonHtmlResponseBuilder {
             htmlBody += "<div class=\"rowDividerGrid entireRowGrid\"></div>\n" +
                     "<div id=\"result_" + i + "\" class=\""+someHtmlClass()+" prod celwidget\" name=\"B008OGHUFK\">\n" +
                     "<h3 class=\"newaps\">\n" +
+                    "<a href=\"http://www.amazon.co.uk/" + bluRays.get(i).getName() + "\"></a>" +
                     "<span class=\"lrg bold\">" + bluRays.get(i).getName() + "</span>\n" +
                     "</h3><ul class=\"rsltGridList grey\">\n" +
                     "<li class=\"newp\">\n" +

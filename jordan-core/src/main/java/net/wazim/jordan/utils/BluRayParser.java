@@ -34,7 +34,6 @@ public class BluRayParser {
                 log.info(String.format("Page %d of %d", currentPage, lastPage));
                 JordanHttpResponse nextPageResponse = null;
 
-
                 String address = requestUrl.toString();
                 String newPage = "sr_pg_" + currentPage;
                 String secondNewPage = "page=" + currentPage;
@@ -43,8 +42,6 @@ public class BluRayParser {
                 requestUrl.resolve(address);
                 String newAddress = address.replace("sr_pg_1", newPage);
                 newAddress = newAddress.replace("page=1", secondNewPage);
-                URI newUri = requestUrl.resolve(newAddress);
-
 
                 try {
                     nextPageResponse = new JordanHttpClient().getRequest(new URIBuilder().setPath(newAddress).addParameter("page", String.valueOf(currentPage++)).build());
@@ -82,17 +79,16 @@ public class BluRayParser {
             double zeroValue = 0.00;
 
             if (((Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1) || (Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1)) &&
-                    !(Double.compare(getBluRayPrice(bluRayElement), zeroValue) == 0) && !(Double.compare(getBluRayUsedPrice(bluRayElement), zeroValue) == 0))
-            {
+                    !(Double.compare(getBluRayPrice(bluRayElement), zeroValue) == 0) && !(Double.compare(getBluRayUsedPrice(bluRayElement), zeroValue) == 0)) {
                 listOfBluRays.add(new BluRay(
                         bluRayName,
                         getBluRayPrice(bluRayElement),
                         getBluRayUsedPrice(bluRayElement),
+                        getBluRayUrl(bluRayElement),
                         false));
 
                 log.info(String.format("Added %s to the database", bluRayName));
-            }
-            else {
+            } else {
 
             }
 
@@ -120,7 +116,11 @@ public class BluRayParser {
     }
 
     private static String getBluRayName(Element bluRayElement) {
+        System.out.println("bluRayElement = " + bluRayElement.getElementsByClass("newaps").first().getElementsByClass("bold"));
         return bluRayElement.getElementsByClass("bold").first().text();
     }
 
+    private static String getBluRayUrl(Element bluRayElement) {
+        return bluRayElement.getElementsByClass("newaps").first().getElementsByAttribute("href").attr("href");
+    }
 }

@@ -50,6 +50,14 @@ public class AmazonStepDefinitions {
         responseBodyAsString = getMethod.getResponseBodyAsString();
     }
 
+    @When("^I hit the API page$")
+    public void I_hit_the_API_page() throws Throwable {
+        HttpClient client = new HttpClient();
+        GetMethod getMethod = new GetMethod("http://localhost:12500/jordan/api/all");
+        httpResponseCode = client.executeMethod(getMethod);
+        responseBodyAsString = getMethod.getResponseBodyAsString();
+    }
+
     @Then("^I have a list of (\\d+) Blu Rays$")
     public void iHaveAListOfBluRays(int expectedNumberOfBluRays) throws Throwable {
         assertThat(httpResponseCode, is(OK_200));
@@ -63,9 +71,16 @@ public class AmazonStepDefinitions {
         stub.stopServer();
     }
 
+    @Then("^the response should contain \"([^\"]*)\"$")
+    public void the_response_should_contain(String arg1) throws Throwable {
+        assertThat(responseBodyAsString, containsString(arg1));
+        stub.stopServer();
+    }
+
+
     private String getSamplePage1() {
         return new AmazonHtmlResponseBuilder()
-                .with(new BluRay("The Godfather", 1.00, 1.00, false))
+                .with(new BluRay("The Godfather", 1.00, 1.00, "http://amazon.co.uk/thegodfather", false))
                 .withCurrentPageNumber(1)
                 .withTotalPageNumbers(2).build();
     }
@@ -75,6 +90,4 @@ public class AmazonStepDefinitions {
                 .withCurrentPageNumber(2)
                 .withTotalPageNumbers(2).build();
     }
-
-
 }
