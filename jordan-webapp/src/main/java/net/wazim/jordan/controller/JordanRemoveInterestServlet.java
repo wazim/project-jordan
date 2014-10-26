@@ -1,7 +1,6 @@
 package net.wazim.jordan.controller;
 
 import net.wazim.jordan.persistence.BluRayDatabase;
-import net.wazim.jordan.util.FreemarkerTemplate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +10,11 @@ import java.io.IOException;
 
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
-public class JordanIndexServlet extends HttpServlet {
+public class JordanRemoveInterestServlet extends HttpServlet {
 
     private final BluRayDatabase database;
 
-    public JordanIndexServlet(BluRayDatabase database) {
+    public JordanRemoveInterestServlet(BluRayDatabase database) {
         this.database = database;
     }
 
@@ -23,10 +22,12 @@ public class JordanIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(OK_200);
 
-        resp.getWriter().println(new FreemarkerTemplate("index.ftl")
-                .with("numOfBluRays", String.valueOf(database.getAllInterestingBluRays().size()))
-                .with("blurays", database.getAllBluRays())
-                .processTemplate());
+        String movie = req.getParameter("movie");
+
+        database.removeInterest(movie);
+
+        resp.getWriter().println(movie + " is deemed not interesting");
+        resp.sendRedirect("/jordan");
     }
 
 }

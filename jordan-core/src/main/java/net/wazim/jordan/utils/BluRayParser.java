@@ -85,7 +85,7 @@ public class BluRayParser {
                         getBluRayPrice(bluRayElement),
                         getBluRayUsedPrice(bluRayElement),
                         getBluRayUrl(bluRayElement),
-                        false));
+                        true));
 
                 log.info(String.format("Added %s to the database", bluRayName));
             } else {
@@ -116,7 +116,7 @@ public class BluRayParser {
     }
 
     private static String getBluRayName(Element bluRayElement) {
-        System.out.println("bluRayElement = " + bluRayElement.getElementsByClass("newaps").first().getElementsByClass("bold"));
+//        System.out.println("bluRayElement = " + bluRayElement.getElementsByClass("newaps").first().getElementsByClass("bold"));
         return bluRayElement.getElementsByClass("bold").first().text();
     }
 

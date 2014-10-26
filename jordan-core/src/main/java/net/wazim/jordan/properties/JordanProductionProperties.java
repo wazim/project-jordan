@@ -7,7 +7,7 @@ import static java.net.URI.create;
 public class JordanProductionProperties implements JordanProperties {
 
     public static final URI AMAZON_BASE_URL = create("http://www.amazon.co.uk/");
-    public static final URI AMAZON_QUERY_URL = create("http://www.amazon.co.uk/s/ref=sr_pg_1?rh=n%3A283926%2Cn%3A%21573408%2Cn%3A%21712388%2Cn%3A293962011%2Cp_n_binding_browse-bin%3A383380011%2Cp_36%3A-850&page=1&bbn=293962011&ie=UTF8&qid=1413304845");
+    public static final URI AMAZON_QUERY_URL = create("http://www.amazon.co.uk/s/ref=sr_adv_d?__mk_en_GB=%C5M%C5Z%D5%D1&search-alias=dvd&unfiltered=1&field-keywords=&field-title=&field-actor=&field-director=&field-label=&field-ean=&field-price=0-300&field-intended_use_browse-bin=&field-binding_browse-bin=383380011&node=&field-theme_browse-bin=&field-dvd-region=&emi=&sort=&Adv-Srch-DVD-Submit.x=61&Adv-Srch-DVD-Submit.y=17");
 
     @Override
     public URI getRequestUrl() {

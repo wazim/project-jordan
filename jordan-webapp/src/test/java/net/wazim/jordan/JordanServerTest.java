@@ -26,8 +26,8 @@ public class JordanServerTest {
     @Before
     public void setupJordanServer() {
         InMemoryPersistableDatabase database = new InMemoryPersistableDatabase();
-        database.saveBluRay(new BluRay("The Godfather", new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", false));
-        database.saveBluRay(new BluRay("Michael Jackson's This Is It", new Double(0.59), new Double(0.29), "http://www.amazon.co.uk/mjthisisit", false));
+        database.saveBluRay(new BluRay("The Godfather", new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true));
+        database.saveBluRay(new BluRay("Michael Jackson's This Is It", new Double(0.59), new Double(0.29), "http://www.amazon.co.uk/mjthisisit", true));
 
         jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
         httpClient = new HttpClient();
@@ -61,6 +61,24 @@ public class JordanServerTest {
 
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("The Godfather"));
+    }
+
+    @Test
+    public void bluRayIsRemovedIfItIsNotInteresting() throws IOException {
+        method = new GetMethod("http://localhost:12500/jordan");
+        int responseCode = httpClient.executeMethod(method);
+
+        assertThat(responseCode, is(HttpStatus.OK_200));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have 2 Blu Rays in our library."));
+
+        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=The%20Godfather");
+        httpClient.executeMethod(method);
+
+        method = new GetMethod("http://localhost:12500/jordan");
+        responseCode = httpClient.executeMethod(method);
+
+        assertThat(responseCode, is(HttpStatus.OK_200));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have 1 Blu Rays in our library."));
     }
 
 }

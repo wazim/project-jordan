@@ -30,13 +30,14 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     }
 
     @Override
-    public List<BluRay> getAllOwnedBluRays() {
-        return null;
-    }
-
-    @Override
-    public List<BluRay> getAllUnownedBluRays() {
-        return null;
+    public List<BluRay> getAllInterestingBluRays() {
+        List<BluRay> interestingBluRays = new ArrayList<BluRay>();
+        for (BluRay bluray : allBluRays) {
+            if(bluray.getIsInteresting()){
+                interestingBluRays.add(bluray);
+            }
+        }
+        return interestingBluRays;
     }
 
     @Override
@@ -47,6 +48,15 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     @Override
     public void clearDownDatabase() {
         allBluRays.clear();
+    }
+
+    @Override
+    public void removeInterest(String movie) {
+        for (BluRay bluRay : allBluRays) {
+            if(bluRay.getName().replace("+", " ").equals(movie)){
+                bluRay.setInteresting(false);
+            }
+        }
     }
 
 }

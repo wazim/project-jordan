@@ -5,15 +5,15 @@ public class BluRay {
     private final String name;
     private final double priceNew;
     private final double priceUsed;
-    private final boolean isOwned;
+    private boolean isInteresting;
     private String url;
 
-    public BluRay(String name, double priceNew, double priceUsed, String bluRayUrl, boolean isOwned) {
+    public BluRay(String name, double priceNew, double priceUsed, String bluRayUrl, boolean isInteresting) {
         this.name = name;
         this.priceNew = priceNew;
         this.priceUsed = priceUsed;
         this.url = bluRayUrl;
-        this.isOwned = isOwned;
+        this.isInteresting = isInteresting;
     }
 
     public String getName() {
@@ -28,11 +28,15 @@ public class BluRay {
         return priceUsed;
     }
 
-    public boolean getIsOwned() {
-        return isOwned;
+    public boolean getIsInteresting() {
+        return isInteresting;
     }
 
     public String getUrl() {
         return url;
+    }
+
+    public void setInteresting(boolean interesting) {
+        this.isInteresting = interesting;
     }
 }

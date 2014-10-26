@@ -39,7 +39,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
                 priceNew,
                 priceUsed,
                 retrievedObject.get("url").toString(),
-                getBoolean(retrievedObject.get("isOwned").toString()));
+                getBoolean(retrievedObject.get("isInteresting").toString()));
     }
 
     @Override
@@ -54,19 +54,21 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         for (DBObject dbObject : dbObjects) {
             double priceNew = Double.parseDouble(dbObject.get("priceNew").toString());
             double priceUsed = Double.parseDouble(dbObject.get("priceUsed").toString());
-            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, dbObject.get("url").toString(), getBoolean(dbObject.get("isOwned").toString())));
+            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, dbObject.get("url").toString(), getBoolean(dbObject.get("isInteresting").toString())));
         }
         return myBluRays;
     }
 
     @Override
-    public List<BluRay> getAllOwnedBluRays() {
-        return null;
-    }
-
-    @Override
-    public List<BluRay> getAllUnownedBluRays() {
-        return null;
+    public List<BluRay> getAllInterestingBluRays() {
+        List<BluRay> interestingBluRays = new ArrayList<BluRay>();
+        List<BluRay> everyBluRay = getAllBluRays();
+        for (BluRay bluRay : everyBluRay) {
+            if(bluRay.getIsInteresting()) {
+                interestingBluRays.add(bluRay);
+            }
+        }
+        return interestingBluRays;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         bluRayMap.put("priceNew", Double.toString(bluRay.getPriceNew()));
         bluRayMap.put("priceUsed", Double.toString(bluRay.getPriceUsed()));
         bluRayMap.put("url", bluRay.getUrl());
-        bluRayMap.put("isOwned", String.valueOf(bluRay.getIsOwned()));
+        bluRayMap.put("isInteresting", String.valueOf(bluRay.getIsInteresting()));
         allBluRays.save(new BasicDBObject(bluRayMap));
     }
 
@@ -86,5 +88,12 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         for (DBObject dbObject : dbObjects) {
             allBluRays.remove(dbObject);
         }
+    }
+
+    @Override
+    public void removeInterest(String movie) {
+        DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", movie));
+        DBObject newDocument = new BasicDBObject("isInteresting", false);
+        allBluRays.update(retrievedObject, newDocument);
     }
 }

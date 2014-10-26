@@ -12,12 +12,11 @@ public interface BluRayDatabase {
 
     public List<BluRay> getAllBluRays();
 
-    public List<BluRay> getAllOwnedBluRays();
-
-    public List<BluRay> getAllUnownedBluRays();
+    public List<BluRay> getAllInterestingBluRays();
 
     public void saveBluRay(BluRay bluRay);
 
     public void clearDownDatabase();
 
+    void removeInterest(String movie);
 }

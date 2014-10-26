@@ -638,7 +638,7 @@ public class AmazonStub extends HttpServlet {
                 "    \n" +
                 "    <li class=\"newp\">\n" +
                 "    <div class=\"\">\n" +
-                "    <a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/dp/B004BDOEZO/ref=sr_1_2?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2\"><span class=\"bld lrg red\">£1.43</span>\n" +
+                "    <a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/dp/B004BDOEZO/ref=sr_1_2?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2\"><span class=\"bld lrg red\">£3.93</span>\n" +
                 "    <span class=\"lrg\">Blu-ray</span>\n" +
                 "                  </a><div class=\"imageBox\">\n" +
                 "    <img  src=\"http://g-ecx.images-x.com/images/G/02/nav2/images/gui/prime-check-badge-14._CB370663031_.gif\"  height=\"14\" width=\"45\" class=\"prmImg cfMarker\" alt=\"prime\"  align=\"baseline\"/>\n" +

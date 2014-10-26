@@ -65,7 +65,7 @@ public class AmazonGoerTest {
         assertThat(theFirstBluRay().getUrl(), containsString("http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/"));
         assertThat(theFirstBluRay().getPriceNew(), is(new Double("1.94")));
         assertThat(theFirstBluRay().getPriceUsed(), is(new Double("1.24")));
-        assertThat(theFirstBluRay().getIsOwned(), is(false));
+        assertThat(theFirstBluRay().getIsInteresting(), is(true));
     }
 
     @Test
