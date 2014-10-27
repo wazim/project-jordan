@@ -61,7 +61,7 @@ public class AmazonGoerTest {
         amazonGoer.go(AMAZON_QUERY_URL);
         assertThat(amazonGoer.bluRays().size(), is(1));
 
-        assertThat(theFirstBluRay().getName(), is("Transformers: Dark of the Moon [Blu-ray + DVD] [2011] [Region Free]"));
+        assertThat(theFirstBluRay().getName(), is("Transformers: Dark of the Moon (Blu-ray - DVD) (2011) (Region Free)"));
         assertThat(theFirstBluRay().getUrl(), containsString("http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/"));
         assertThat(theFirstBluRay().getPriceNew(), is(new Double("1.94")));
         assertThat(theFirstBluRay().getPriceUsed(), is(new Double("1.24")));

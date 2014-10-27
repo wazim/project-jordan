@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static net.wazim.jordan.utils.BluRayNameCleaner.cleanName;
+
 
 public class BluRayParser {
 
@@ -106,8 +108,7 @@ public class BluRayParser {
     }
 
     private static String getBluRayName(Element bluRayElement) {
-//        System.out.println("bluRayElement = " + bluRayElement.getElementsByClass("newaps").first().getElementsByClass("bold"));
-        return bluRayElement.getElementsByClass("bold").first().text();
+        return cleanName(bluRayElement.getElementsByClass("bold").first().text());
     }
 
     private static String getBluRayUrl(Element bluRayElement) {
