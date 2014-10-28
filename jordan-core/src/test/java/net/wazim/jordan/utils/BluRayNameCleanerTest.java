@@ -18,4 +18,9 @@ public class BluRayNameCleanerTest {
         assertThat(cleanName("Batman Begins [Blu-ray + DVD]"), is("Batman Begins (Blu-ray - DVD)"));
     }
 
+    @Test
+    public void replacesAmpersandWithAnd() {
+        assertThat(cleanName("BLU-RAY FAST & FURIOUS: NEUES MODELL..."), is("BLU-RAY FAST and FURIOUS: NEUES MODELL..."));
+    }
+
 }

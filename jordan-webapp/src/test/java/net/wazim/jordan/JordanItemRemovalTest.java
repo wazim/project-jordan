@@ -98,6 +98,27 @@ public class JordanItemRemovalTest {
         assertThat(method.getResponseBodyAsString(), containsString("We currently have 0 Blu Rays in our library."));
     }
 
+
+    @Test
+    public void bluRayWithADotIsRemovedIfItIsNotInteresting() throws IOException {
+        database.saveBluRay(newBluRay("BLU-RAY FAST and FURIOUS: NEUES MODELL..."));
+
+        method = new GetMethod("http://localhost:12500/jordan");
+        int responseCode = httpClient.executeMethod(method);
+
+        assertThat(responseCode, is(HttpStatus.OK_200));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have 1 Blu Rays in our library."));
+
+        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=BLU-RAY%20FAST%20and%20FURIOUS:%20NEUES%20MODELL...");
+        httpClient.executeMethod(method);
+
+        method = new GetMethod("http://localhost:12500/jordan");
+        responseCode = httpClient.executeMethod(method);
+
+        assertThat(responseCode, is(HttpStatus.OK_200));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have 0 Blu Rays in our library."));
+    }
+
     private BluRay newBluRay(String name) {
         return new BluRay(name, new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true);
     }

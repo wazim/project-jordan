@@ -7,6 +7,7 @@ public class BluRayNameCleaner {
                 .replace("[", "(")
                 .replace("]", ")")
                 .replace("+", "-")
+                .replace("&", "and")
                 ;
     }
 

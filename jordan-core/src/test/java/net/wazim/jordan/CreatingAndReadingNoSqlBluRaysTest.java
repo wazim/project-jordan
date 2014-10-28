@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class CreatingAndReadingNoSqlBluRays {
+public class CreatingAndReadingNoSqlBluRaysTest {
 
     private BluRayDatabase bluRayDatabase = new InMemoryPersistableDatabase(); // Use if Mongo isn't running...
 //    private BluRayDatabase bluRayDatabase = new MongoBluRayDatabase(); // Use to test the actual Mongo instance...
