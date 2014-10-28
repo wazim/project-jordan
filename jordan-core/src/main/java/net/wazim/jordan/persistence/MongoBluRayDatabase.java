@@ -113,4 +113,11 @@ public class MongoBluRayDatabase implements BluRayDatabase {
 
         allBluRays.update(retrievedObject, newDocument);
     }
+
+    @Override
+    public void deleteBluRay(BluRay bluRay) {
+        DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", bluRay.getName()));
+
+        allBluRays.remove(retrievedObject);
+    }
 }

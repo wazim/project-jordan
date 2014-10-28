@@ -21,4 +21,6 @@ public interface BluRayDatabase {
     void removeInterest(String movie);
 
     void updateBluray(BluRay bluRay);
+
+    void deleteBluRay(BluRay bluRay);
 }

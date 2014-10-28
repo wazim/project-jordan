@@ -27,7 +27,7 @@ public class AmazonGoer implements Job {
         bluRays = new ArrayList<BluRay>();
     }
 
-    public AmazonGoer(){
+    public AmazonGoer() {
         // Only should be used for Quartz.
     }
 
@@ -65,7 +65,10 @@ public class AmazonGoer implements Job {
             SchedulerContext schedulerContext = jobExecutionContext.getScheduler().getContext();
             BluRayDatabase database = (BluRayDatabase) schedulerContext.get("database");
             JordanProperties properties = (JordanProperties) schedulerContext.get("properties");
-            log.info("Starting schedule. Going to "+properties.getRequestUrl() + " and will refresh in "+properties.minutesToRefresh()+" minutes");
+            log.info("Starting schedule. Going to " + properties.getRequestUrl() + " and will refresh in " + properties.minutesToRefresh() + " minutes");
+
+            new JordanListingUpdater(database)
+                    .updateFilms();
 
             new AmazonGoer(database)
                     .go(properties.getRequestUrl());

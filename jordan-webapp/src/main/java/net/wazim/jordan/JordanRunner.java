@@ -19,6 +19,9 @@ public class JordanRunner {
     public JordanRunner(JordanProperties properties, BluRayDatabase database) {
         new JordanServer(properties, database);
 
+        JordanListingUpdater updater = new JordanListingUpdater(database);
+        updater.updateFilms();
+
         AmazonGoer amazonGoer = new AmazonGoer(database);
         amazonGoer.go(properties.getRequestUrl());
     }

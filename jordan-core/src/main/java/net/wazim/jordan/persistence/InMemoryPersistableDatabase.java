@@ -4,10 +4,11 @@ import net.wazim.jordan.domain.BluRay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class InMemoryPersistableDatabase implements BluRayDatabase {
 
-    private ArrayList<BluRay> allBluRays = new ArrayList<BluRay>();
+    private List<BluRay> allBluRays = new CopyOnWriteArrayList<BluRay>();
 
     @Override
     public BluRay findBluRayByName(String name) {
@@ -44,17 +45,25 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     public void saveBluRay(BluRay bluRay) {
         if (doesNotExist(bluRay)) {
             allBluRays.add(bluRay);
-        }
-        else{
+        } else {
             updateBluray(bluRay);
         }
     }
 
     public void updateBluray(BluRay bluRay) {
         for (BluRay storedBluray : allBluRays) {
-            if(storedBluray.getName().equals(bluRay.getName())){
+            if (storedBluray.getName().equals(bluRay.getName())) {
                 storedBluray.setPriceNew(bluRay.getPriceNew());
                 storedBluray.setPriceUsed(bluRay.getPriceUsed());
+            }
+        }
+    }
+
+    @Override
+    public void deleteBluRay(BluRay bluRay) {
+        for (BluRay storedBluray : allBluRays) {
+            if (storedBluray.getName().equals(bluRay.getName())) {
+                allBluRays.remove(storedBluray);
             }
         }
     }
