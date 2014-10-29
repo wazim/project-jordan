@@ -90,7 +90,7 @@
 </br>
 
 <center>
-  <table class="flat-table flat-table-3">
+  <table class="flat-table flat-table-3" id="jordanTable">
   	<thead>
   		<th>Movie Title</th>
   		<th>New Price</th>
@@ -113,5 +113,19 @@
 
 </center>
 
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.3/css/jquery.dataTables.css">
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.js"></script>
+
+<script>
+$(document).ready( function () {
+    $('#jordanTable').DataTable();
+} );
+</script>
 </body>
 </html>
