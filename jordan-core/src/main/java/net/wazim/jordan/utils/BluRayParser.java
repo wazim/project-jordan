@@ -2,6 +2,7 @@ package net.wazim.jordan.utils;
 
 import net.wazim.jordan.client.JordanHttpClient;
 import net.wazim.jordan.client.JordanHttpResponse;
+import net.wazim.jordan.client.MetacriticRatingRetriever;
 import net.wazim.jordan.domain.BluRay;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -31,12 +32,12 @@ public class BluRayParser {
 
             createBluRaysFromHtml(responseAsString);
 
-            while (currentPage < lastPage) {
+            while (currentPage <= lastPage) {
                 log.info(String.format("Page %d of %d", currentPage, lastPage));
                 JordanHttpResponse nextPageResponse = null;
 
                 try {
-                    nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page="+currentPage++));
+                    nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page=" + currentPage++));
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
@@ -77,14 +78,19 @@ public class BluRayParser {
                         getBluRayPrice(bluRayElement),
                         getBluRayUsedPrice(bluRayElement),
                         getBluRayUrl(bluRayElement),
-                        true));
+                        true,
+                        getMetacriticScore(bluRayName)));
 
                 log.info(String.format("Added %s to the database", bluRayName));
             } else {
-
+                //No op
             }
 
         }
+    }
+
+    private static int getMetacriticScore(String bluRayName) {
+        return new MetacriticRatingRetriever().getScoreFor(bluRayName);
     }
 
     private static double getBluRayUsedPrice(Element bluRayElement) {

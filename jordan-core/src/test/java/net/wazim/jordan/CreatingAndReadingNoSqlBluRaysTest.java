@@ -23,7 +23,7 @@ public class CreatingAndReadingNoSqlBluRaysTest {
 
     @Test
     public void aBluRayIsStoredInTheDatabase() {
-        BluRay myBluRay = new BluRay("Kung Fu Hustle", new Double(5.00), new Double(4.00), "http://amazon.co.uk/kungufhustle", false);
+        BluRay myBluRay = new BluRay("Kung Fu Hustle", new Double(5.00), new Double(4.00), "http://amazon.co.uk/kungufhustle", false, 100);
         bluRayDatabase.saveBluRay(myBluRay);
 
         assertThat(bluRayDatabase.findBluRayByName("Kung Fu Hustle").getName(), is(myBluRay.getName()));
@@ -36,9 +36,9 @@ public class CreatingAndReadingNoSqlBluRaysTest {
 
     @Test
     public void severalBluRaysAreStoredInTheDatabase() {
-        BluRay oneBluRay = new BluRay("Kung Fu Hustle", new Double(5.00), new Double(4.00), "http://amazon.co.uk/kungufhustle", false);
-        BluRay twoBluRay = new BluRay("King Kong", new Double(2.00), new Double(3.00), "http://amazon.co.uk/kingkong", true);
-        BluRay threeBluRay = new BluRay("The Godfather", new Double(3.99), new Double(2.00), "http://amazon.co.uk/thegodfather", false);
+        BluRay oneBluRay = new BluRay("Kung Fu Hustle", new Double(5.00), new Double(4.00), "http://amazon.co.uk/kungufhustle", false, 100);
+        BluRay twoBluRay = new BluRay("King Kong", new Double(2.00), new Double(3.00), "http://amazon.co.uk/kingkong", true, 100);
+        BluRay threeBluRay = new BluRay("The Godfather", new Double(3.99), new Double(2.00), "http://amazon.co.uk/thegodfather", false, 100);
 
         bluRayDatabase.saveBluRay(oneBluRay);
         bluRayDatabase.saveBluRay(twoBluRay);

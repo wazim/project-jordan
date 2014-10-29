@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.Boolean.getBoolean;
+import static java.lang.Integer.parseInt;
 
 public class MongoBluRayDatabase implements BluRayDatabase {
 
@@ -39,7 +40,8 @@ public class MongoBluRayDatabase implements BluRayDatabase {
                 priceNew,
                 priceUsed,
                 retrievedObject.get("url").toString(),
-                getBoolean(retrievedObject.get("isInteresting").toString()));
+                getBoolean(retrievedObject.get("isInteresting").toString()),
+                parseInt(retrievedObject.get("rating").toString()));
     }
 
     @Override
@@ -54,7 +56,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         for (DBObject dbObject : dbObjects) {
             double priceNew = Double.parseDouble(dbObject.get("priceNew").toString());
             double priceUsed = Double.parseDouble(dbObject.get("priceUsed").toString());
-            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, dbObject.get("url").toString(), getBoolean(dbObject.get("isInteresting").toString())));
+            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, dbObject.get("url").toString(), getBoolean(dbObject.get("isInteresting").toString()),parseInt(dbObject.get("rating").toString())));
         }
         return myBluRays;
     }
@@ -80,6 +82,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
             bluRayMap.put("priceUsed", Double.toString(bluRay.getPriceUsed()));
             bluRayMap.put("url", bluRay.getUrl());
             bluRayMap.put("isInteresting", String.valueOf(bluRay.getIsInteresting()));
+            bluRayMap.put("rating", String.valueOf(bluRay.getRating()));
             allBluRays.save(new BasicDBObject(bluRayMap));
         }
         else{

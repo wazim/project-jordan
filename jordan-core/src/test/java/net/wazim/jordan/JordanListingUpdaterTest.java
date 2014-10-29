@@ -29,7 +29,7 @@ public class JordanListingUpdaterTest {
     @Test
     public void jordanUpdatesListings() {
         BluRayDatabase database = new InMemoryPersistableDatabase();
-        database.saveBluRay(new BluRay("The Godfather", 1.10, 1.10, "http://localhost:11511/movie/TheGodfather", true));
+        database.saveBluRay(new BluRay("The Godfather", 1.10, 1.10, "http://localhost:11511/movie/TheGodfather", true, 100));
 
         primeAmazonWithNewPrice("The Godfather", 0.99, 0.59);
 
@@ -43,7 +43,7 @@ public class JordanListingUpdaterTest {
     @Test
     public void jordanUpdaterRemovesOutOfRangePriceBluray() {
         BluRayDatabase database = new InMemoryPersistableDatabase();
-        database.saveBluRay(new BluRay("The Godfather", 1.10, 1.15, "http://localhost:11511/movie/TheGodfather", true));
+        database.saveBluRay(new BluRay("The Godfather", 1.10, 1.15, "http://localhost:11511/movie/TheGodfather", true, 100));
 
         primeAmazonWithNewPrice("The Godfather", 5.60, 7.59);
 

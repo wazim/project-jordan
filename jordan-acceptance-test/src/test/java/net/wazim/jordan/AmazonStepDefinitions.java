@@ -18,7 +18,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AmazonStepDefinitions {
 
-    private AmazonGoer amazonGoer;
     private String responseBodyAsString;
     private int httpResponseCode;
     private AmazonStub stub;
@@ -80,7 +79,7 @@ public class AmazonStepDefinitions {
 
     private String getSamplePage1() {
         return new AmazonHtmlResponseBuilder()
-                .with(new BluRay("The Godfather", 1.00, 1.00, "http://amazon.co.uk/thegodfather", false))
+                .with(new BluRay("The Godfather", 1.00, 1.00, "http://amazon.co.uk/thegodfather", false, 100))
                 .withCurrentPageNumber(1)
                 .withTotalPageNumbers(2).build();
     }

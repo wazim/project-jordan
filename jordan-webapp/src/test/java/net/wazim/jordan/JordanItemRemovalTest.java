@@ -120,7 +120,7 @@ public class JordanItemRemovalTest {
     }
 
     private BluRay newBluRay(String name) {
-        return new BluRay(name, new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true);
+        return new BluRay(name, new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true, 100);
     }
 
 }

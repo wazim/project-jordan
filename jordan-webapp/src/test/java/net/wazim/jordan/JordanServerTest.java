@@ -26,8 +26,8 @@ public class JordanServerTest {
     @Before
     public void setupJordanServer() {
         InMemoryPersistableDatabase database = new InMemoryPersistableDatabase();
-        database.saveBluRay(new BluRay("The Godfather", new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true));
-        database.saveBluRay(new BluRay("Michael Jackson's This Is It", new Double(0.59), new Double(0.29), "http://www.amazon.co.uk/mjthisisit", true));
+        database.saveBluRay(new BluRay("The Godfather", new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true, 100));
+        database.saveBluRay(new BluRay("Michael Jackson's This Is It", new Double(0.59), new Double(0.29), "http://www.amazon.co.uk/mjthisisit", true, 100));
 
         jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
         httpClient = new HttpClient();

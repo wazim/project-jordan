@@ -96,6 +96,7 @@
   		<th>New Price</th>
   		<th>Used Price</th>
   		<th>Display</th>
+  		<th>Metacritic Score</th>
   	</thead>
     <tbody>
   <#list blurays as bluray>
@@ -105,6 +106,13 @@
             <td>£${bluray.priceNew?c}</td>
             <td>£${bluray.priceUsed?c}</td>
             <td><a href="not-interested?movie=${bluray.name}">Not Interested</a></td>
+            <td>
+            <#if bluray.rating == 0>
+                -
+            <#else>
+                ${bluray.rating}
+            </#if>
+            </td>
         </tr>
       </#if>
   </#list>

@@ -15,7 +15,7 @@ public class BluRayParserTest {
     @Test
     public void successfullyParsesBluRays() {
         JordanHttpResponse response = new JordanHttpResponse(200, sampleAmazonResponse());
-        ArrayList<BluRay> bluRays = BluRayParser.parseIntoBluRays(response, URI.create("x.x"));
+        ArrayList<BluRay> bluRays = BluRayParser.parseIntoBluRays(response, URI.create("http://x.com"));
         assertThat(bluRays.get(0).getName(), is("Batman Begins (Blu-ray) (2005) (Region Free)"));
     }
 
@@ -407,7 +407,7 @@ public class BluRayParserTest {
                 "                            <span class=\"pagnCur\">5</span>\n" +
                 "                            <span class=\"pagnLink\"><a href=\"/s/ref=sr_pg_6?rh=n%3A283926%2Cn%3A%21573408%2Cn%3A%21712388%2Cn%3A293962011%2Cp_n_binding_browse-bin%3A383380011%2Cp_36%3A-800&amp;page=6&amp;ie=UTF8&amp;qid=1412705118\" >6</a></span>\n" +
                 "                            <span class=\"pagnMore\">...</span>\n" +
-                "                            <span class=\"pagnDisabled\">5</span>\n" +
+                "                            <span class=\"pagnDisabled\">4</span>\n" +
                 "                            <span class=\"pagnRA\"> <a title=\"Next Page\"\n" +
                 "                       id=\"pagnNextLink\"\n" +
                 "                       class=\"pagnNext\"\n" +
@@ -419,6 +419,5 @@ public class BluRayParserTest {
                 "        </div>\n" +
                 "    </div>";
     }
-
 
 }

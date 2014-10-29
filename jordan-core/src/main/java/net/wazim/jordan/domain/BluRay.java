@@ -6,14 +6,16 @@ public class BluRay {
     private double priceNew;
     private double priceUsed;
     private boolean isInteresting;
+    private final int rating;
     private String url;
 
-    public BluRay(String name, double priceNew, double priceUsed, String bluRayUrl, boolean isInteresting) {
+    public BluRay(String name, double priceNew, double priceUsed, String bluRayUrl, boolean isInteresting, int rating) {
         this.name = name;
         this.priceNew = priceNew;
         this.priceUsed = priceUsed;
         this.url = bluRayUrl;
         this.isInteresting = isInteresting;
+        this.rating = rating;
     }
 
     public String getName() {
@@ -30,6 +32,10 @@ public class BluRay {
 
     public boolean getIsInteresting() {
         return isInteresting;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     public String getUrl() {

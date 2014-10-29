@@ -27,8 +27,8 @@ public class MetacriticRatingRetrieverTest {
     }
 
     @Test
-    public void noRatingAvailableFromMetacritic() {
-        assertThat(ratingRetriever.getScoreFor("The Social Network (BluRay)"), is(0));
+    public void ratingAvailableFromMetacritic() {
+        assertThat(ratingRetriever.getScoreFor("The Dark Knight (2 Discs) (Blu-ray) (2008) (Region Free)"), is(82));
     }
 
 }

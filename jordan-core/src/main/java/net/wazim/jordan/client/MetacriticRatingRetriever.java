@@ -6,9 +6,16 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONException;
 
+import java.util.logging.Logger;
+
 public class MetacriticRatingRetriever {
 
+    private static final Logger log = Logger.getLogger(MetacriticRatingRetriever.class.getName());
+
     public int getScoreFor(String movieName) {
+        int characterToCutTo = findFirstBracketIn(movieName);
+        movieName = movieName.substring(0, characterToCutTo).trim();
+
         HttpResponse<JsonNode> response;
         try {
             response = Unirest.post("https://byroredux-metacritic.p.mashape.com/find/movie")
@@ -18,13 +25,25 @@ public class MetacriticRatingRetriever {
                     .field("title", movieName)
                     .asJson();
 
-            return response.getBody().getObject().getJSONObject("result").getInt("score");
+            int score = response.getBody().getObject().getJSONObject("result").getInt("score");
+            log.info(String.format("Metacritic Rating for %s is %d", movieName, score));
+            return score;
         } catch (UnirestException e) {
-            e.printStackTrace();
+            log.warning("Failed to connect to Metacritic");
         } catch (JSONException e) {
-            e.printStackTrace();
+            log.warning("Failed to find a score for " + movieName);
         }
         return 0;
+    }
+
+    private int findFirstBracketIn(String movieName) {
+        int characterToCutTo;
+        if (movieName.contains("(")) {
+            characterToCutTo = movieName.indexOf("(");
+        } else {
+            characterToCutTo = movieName.length();
+        }
+        return characterToCutTo;
     }
 
 }
