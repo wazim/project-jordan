@@ -5,16 +5,17 @@ import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.BluRayDatabase;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.jsoup.Jsoup.parse;
 
 public class JordanListingUpdater {
 
-    private static final Logger log = Logger.getLogger(JordanListingUpdater.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JordanListingUpdater.class);
 
     private final BluRayDatabase database;
 
@@ -43,32 +44,45 @@ public class JordanListingUpdater {
     }
 
     private void deleteBluRayIfOutOfPriceRange(BluRay bluRay, Document document) {
-        double updatedNewPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(1).text().replace("£", ""));
-        double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(2).text().replace("£", ""));
+        try {
+            double updatedNewPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(1).text().replace("£", ""));
+            double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(2).text().replace("£", ""));
 
-        if (updatedNewPrice > 1.24 && updatedUsedPrice > 1.24) {
-            database.deleteBluRay(bluRay);
-            log.info("Deleted " + bluRay.getName());
+            if (updatedNewPrice > 1.24 && updatedUsedPrice > 1.24) {
+                database.deleteBluRay(bluRay);
+                log.info("Deleted " + bluRay.getName());
+            }
+        } catch (Exception e) {
+            log.warn("Could not parse the Amazon Page for " + bluRay.getName());
         }
+
     }
 
     private void updateNewPrice(BluRay bluRay, Document document) {
-        double updatedNewPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(1).text().replace("£", ""));
+        try {
+            double updatedNewPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(1).text().replace("£", ""));
 
-        if (updatedNewPrice < bluRay.getPriceNew()) {
-            bluRay.setPriceNew(updatedNewPrice);
-            database.updateBluray(bluRay);
-            log.info("Updated new price of " + bluRay.getName());
+            if (updatedNewPrice < bluRay.getPriceNew()) {
+                bluRay.setPriceNew(updatedNewPrice);
+                database.updateBluray(bluRay);
+                log.info("Updated new price of " + bluRay.getName());
+            }
+        } catch (Exception e) {
+            log.warn("Could not parse the Amazon Page for " + bluRay.getName());
         }
     }
 
     private void updateUsedPrice(BluRay bluRay, Document document) {
-        double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(2).text().replace("£", ""));
+        try {
+            double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(2).text().replace("£", ""));
 
-        if (updatedUsedPrice < bluRay.getPriceUsed()) {
-            bluRay.setPriceUsed(updatedUsedPrice);
-            database.updateBluray(bluRay);
-            log.info("Updated used price of " + bluRay.getName());
+            if (updatedUsedPrice < bluRay.getPriceUsed()) {
+                bluRay.setPriceUsed(updatedUsedPrice);
+                database.updateBluray(bluRay);
+                log.info("Updated used price of " + bluRay.getName());
+            }
+        } catch (Exception e) {
+            log.warn("Could not parse the Amazon Page for " + bluRay.getName());
         }
     }
 }

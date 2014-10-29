@@ -6,17 +6,19 @@ import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.BluRayDatabase;
 import net.wazim.jordan.properties.JordanProperties;
 import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
 
 import static net.wazim.jordan.utils.BluRayParser.parseIntoBluRays;
 
 public class AmazonGoer implements Job {
 
-    private static final Logger log = Logger.getLogger(AmazonGoer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AmazonGoer.class);
     private BluRayDatabase database;
 
     private JordanHttpResponse response;
@@ -36,9 +38,13 @@ public class AmazonGoer implements Job {
 
         response = client.getRequest(requestUrl);
 //        log.info(response.getResponseBody()); //This logs the entire response body to the console... Is that necessary?
+        long startTime = System.currentTimeMillis();
         bluRays = parseIntoBluRays(response, requestUrl);
 
         saveBluRaysInDatabase();
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        log.info("Process took " + TimeUnit.MILLISECONDS.toMinutes(duration) +" minutes to complete...");
     }
 
     private void saveBluRaysInDatabase() {

@@ -5,12 +5,11 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONException;
-
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MetacriticRatingRetriever {
 
-    private static final Logger log = Logger.getLogger(MetacriticRatingRetriever.class.getName());
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(MetacriticRatingRetriever.class);
 
     public int getScoreFor(String movieName) {
         int characterToCutTo = findFirstBracketIn(movieName);
@@ -29,9 +28,9 @@ public class MetacriticRatingRetriever {
             log.info(String.format("Metacritic Rating for %s is %d", movieName, score));
             return score;
         } catch (UnirestException e) {
-            log.warning("Failed to connect to Metacritic");
+            log.warn("Failed to connect to Metacritic");
         } catch (JSONException e) {
-            log.warning("Failed to find a score for " + movieName);
+            log.warn("Failed to find a score for " + movieName);
         }
         return 0;
     }

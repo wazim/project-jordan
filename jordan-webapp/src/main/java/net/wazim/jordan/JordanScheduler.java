@@ -5,6 +5,8 @@ import net.wazim.jordan.properties.JordanProperties;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.util.Date;
+
 public class JordanScheduler {
 
     public JordanScheduler(JordanProperties properties, BluRayDatabase database) throws SchedulerException {
@@ -19,6 +21,7 @@ public class JordanScheduler {
                         SimpleScheduleBuilder.simpleSchedule()
                                 .withIntervalInMinutes(properties.minutesToRefresh())
                                 .repeatForever())
+                                .startAt(nowPlusMinutesOf(15))
                 .build();
 
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
@@ -27,5 +30,9 @@ public class JordanScheduler {
 
         scheduler.start();
         scheduler.scheduleJob(job, trigger);
+    }
+
+    private Date nowPlusMinutesOf(int numberOfMinutes) {
+        return new Date(System.currentTimeMillis()+numberOfMinutes*60*1000);
     }
 }

@@ -53,6 +53,19 @@ public class JordanListingUpdaterTest {
         assertThat(database.getAllBluRays().size(), is(0));
     }
 
+    @Test
+    public void jordanDoesNotDoAnythingIfThePageIsInvalid() {
+        BluRayDatabase database = new InMemoryPersistableDatabase();
+        database.saveBluRay(new BluRay("The Godfather", 1.10, 1.15, "http://localhost:11511/movie/TheGodfather", true, 100));
+
+        stub.createPageAndPrimeResponse("/movie/TheGodfather", 200, "Cant find your page matey.");
+
+        JordanListingUpdater updater = new JordanListingUpdater(database);
+        updater.updateFilms();
+
+        assertThat(database.getAllBluRays().size(), is(1));
+    }
+
     private void primeAmazonWithNewPrice(String blurayName, double newPrice, double usedPrice) {
         stub.createPageAndPrimeResponse("/movie/" + blurayName.replace(" ", ""), 200,
                 new AmazonIndividualPageBuilder()

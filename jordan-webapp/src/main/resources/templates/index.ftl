@@ -52,7 +52,6 @@
 		font-size: 1.5em;
 	}
 	.flat-table td {
-		color: #f7f7f7;
 		padding: 0.7em 1em 0.7em 1.15em;
 		text-shadow: 0 0 1px rgba(255,255,255,0.1);
 		font-size: 1.4em;
