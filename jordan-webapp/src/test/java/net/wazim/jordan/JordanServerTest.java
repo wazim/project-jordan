@@ -69,7 +69,7 @@ public class JordanServerTest {
         int responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 2 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">2</span> Blu Rays in our library."));
 
         method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=The%20Godfather");
         httpClient.executeMethod(method);
@@ -78,7 +78,7 @@ public class JordanServerTest {
         responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 1 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
     }
 
 }

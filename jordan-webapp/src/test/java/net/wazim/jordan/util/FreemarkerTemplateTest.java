@@ -16,7 +16,7 @@ public class FreemarkerTemplateTest {
         String processedTemplate = template.with("numOfBluRays", "10").processTemplate();
 
         System.out.println("processedTemplate = " + processedTemplate);
-        assertThat(processedTemplate, containsString("We currently have 10 Blu Rays in our library."));
+        assertThat(processedTemplate, containsString("We currently have <span class=\"librarySize\">10</span> Blu Rays in our library."));
     }
 
 

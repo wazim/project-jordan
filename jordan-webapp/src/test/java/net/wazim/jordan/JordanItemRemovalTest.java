@@ -46,7 +46,7 @@ public class JordanItemRemovalTest {
         int responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 1 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
         method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=The%20Godfather%20-");
         httpClient.executeMethod(method);
@@ -55,7 +55,7 @@ public class JordanItemRemovalTest {
         responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 0 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">0</span> Blu Rays in our library."));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class JordanItemRemovalTest {
         int responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 1 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
         method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=The%20Godfather%20(Hi)");
         httpClient.executeMethod(method);
@@ -75,7 +75,7 @@ public class JordanItemRemovalTest {
         responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 0 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">0</span> Blu Rays in our library."));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class JordanItemRemovalTest {
         int responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 1 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
         method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=Fast%20And%20Furious%205");
         httpClient.executeMethod(method);
@@ -95,7 +95,7 @@ public class JordanItemRemovalTest {
         responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 0 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">0</span> Blu Rays in our library."));
     }
 
 
@@ -107,7 +107,7 @@ public class JordanItemRemovalTest {
         int responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 1 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
         method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=BLU-RAY%20FAST%20and%20FURIOUS:%20NEUES%20MODELL...");
         httpClient.executeMethod(method);
@@ -116,7 +116,7 @@ public class JordanItemRemovalTest {
         responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
-        assertThat(method.getResponseBodyAsString(), containsString("We currently have 0 Blu Rays in our library."));
+        assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">0</span> Blu Rays in our library."));
     }
 
     private BluRay newBluRay(String name) {

@@ -60,7 +60,7 @@ public class AmazonStepDefinitions {
     @Then("^I have a list of (\\d+) Blu Rays$")
     public void iHaveAListOfBluRays(int expectedNumberOfBluRays) throws Throwable {
         assertThat(httpResponseCode, is(OK_200));
-        assertThat(responseBodyAsString, containsString("We currently have " + expectedNumberOfBluRays + " Blu Rays in our library."));
+        assertThat(responseBodyAsString, containsString("We currently have <span class=\"librarySize\">" + expectedNumberOfBluRays + "</span> Blu Rays in our library."));
         stub.stopServer();
     }
 

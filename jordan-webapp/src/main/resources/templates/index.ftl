@@ -84,7 +84,7 @@
 </head>
 <body>
 <center><h1>Project Jordan</h1></center>
-<center><h2>We currently have ${numOfBluRays} Blu Rays in our library.<h2></center>
+<center><h2>We currently have <span class="librarySize">${numOfBluRays}</span> Blu Rays in our library.<h2></center>
 
 </br>
 
@@ -100,11 +100,21 @@
     <tbody>
   <#list blurays as bluray>
       <#if bluray.isInteresting == true>
-         <tr>
+
+        <#assign rowId = bluray.name?replace(" ", "")
+                                    ?replace(")", "")
+                                    ?replace("(", "")
+                                    ?replace(":", "")
+                                    ?replace("'", "")
+                                    ?replace(",","")
+                                    ?replace("!","")
+                                    >
+
+         <tr id="${rowId}">
             <td><a href="${bluray.url}" target="_blank">${bluray.name}</a></td>
             <td>£${bluray.priceNew?c}</td>
             <td>£${bluray.priceUsed?c}</td>
-            <td><a href="not-interested?movie=${bluray.name}">Not Interested</a></td>
+            <td><a href="#" onclick='removeInterestFor("${bluray.name}", "${rowId}")'>Not Interested</a></td>
             <td>
             <#if bluray.rating == 0>
                 -
@@ -130,9 +140,23 @@
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.js"></script>
 
 <script>
+var dataTable;
+
 $(document).ready( function () {
-    $('#jordanTable').DataTable();
+    dataTable = $('#jordanTable').DataTable();
 } );
+
+function removeInterestFor(movieName, rowId) {
+    $.ajax({
+      type: "GET",
+      url: "not-interested",
+      data: { movie: movieName }
+    })
+    .done(function( msg ) {
+        $('#'+rowId).remove();
+        $(".librarySize").text($(".librarySize").text()-1)
+    });
+}
 </script>
 </body>
 </html>
