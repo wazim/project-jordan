@@ -16,6 +16,8 @@ import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
 public class JordanIndexServlet extends HttpServlet {
 
+    public static final String ALL = "ALL";
+    private static final String SELECT = "ONLY INTERESTED";
     private final BluRayDatabase database;
 
     public JordanIndexServlet(BluRayDatabase database) {
@@ -26,13 +28,26 @@ public class JordanIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(OK_200);
 
-        List<BluRay> allBluRays = database.getAllBluRays();
 //        allBluRays.sort(compareNamesAlphabetically());
 
+        List<BluRay> allBluRays;
+        String displaying;
+
+        if(ALL.equalsIgnoreCase(req.getParameter("include"))){
+            allBluRays = database.getAllBluRays();
+            displaying = ALL;
+        }
+        else {
+            allBluRays = database.getAllInterestingBluRays();
+            displaying = SELECT;
+        }
+
         resp.getWriter().println(new FreemarkerTemplate("index.ftl")
-                .with("numOfBluRays", String.valueOf(database.getAllInterestingBluRays().size()))
+                .with("numOfBluRays", String.valueOf(allBluRays.size()))
                 .with("blurays", allBluRays)
+                .with("displaying", displaying)
                 .processTemplate());
+
     }
 
     private Comparator<BluRay> compareNamesAlphabetically() {

@@ -32,7 +32,6 @@ public class AmazonStepDefinitions {
         new JordanRunner(new JordanTestSpecificProperties(), new InMemoryPersistableDatabase());
     }
 
-
     @When("^I go to the Web App$")
     public void goToJordanWebApp() throws Throwable {
         HttpClient client = new HttpClient();

@@ -84,7 +84,17 @@
 </head>
 <body>
 <center><h1>Project Jordan</h1></center>
-<center><h2>We currently have <span class="librarySize">${numOfBluRays}</span> Blu Rays in our library.<h2></center>
+<center><h2>We currently have <span class="librarySize">${numOfBluRays}</span> Blu Rays in our library.<h2>
+<h4>Currently displaying <em>
+
+<#if displaying == "ALL" >
+<a href="?include=select" title="Click to see Only Interested">${displaying}</a>
+<#else>
+<a href="?include=all" title="Click to see All">${displaying}</a>
+</#if>
+
+</em></br></h4>
+</center>
 
 </br>
 
@@ -99,8 +109,6 @@
   	</thead>
     <tbody>
   <#list blurays as bluray>
-      <#if bluray.isInteresting == true>
-
         <#assign rowId = bluray.name?replace(" ", "")
                                     ?replace(")", "")
                                     ?replace("(", "")
@@ -114,7 +122,13 @@
             <td><a href="${bluray.url}" target="_blank">${bluray.name}</a></td>
             <td>£${bluray.priceNew?c}</td>
             <td>£${bluray.priceUsed?c}</td>
-            <td><a href="#" onclick='removeInterestFor("${bluray.name}", "${rowId}")'>Not Interested</a></td>
+
+            <#if bluray.isInteresting == true>
+                <td><a href="#" onclick='removeInterestFor("${bluray.name}", "${rowId}")'>Not Interested</a></td>
+            <#else>
+                <td>Marked</td>
+            </#if>
+
             <td>
             <#if bluray.rating == 0>
                 -
@@ -123,7 +137,6 @@
             </#if>
             </td>
         </tr>
-      </#if>
   </#list>
   	</tbody>
 </table>
