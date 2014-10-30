@@ -1,6 +1,8 @@
 package net.wazim.jordan.persistence;
 
 import net.wazim.jordan.domain.BluRay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class InMemoryPersistableDatabase implements BluRayDatabase {
 
     private List<BluRay> allBluRays = new CopyOnWriteArrayList<BluRay>();
+    private static final Logger log = LoggerFactory.getLogger(InMemoryPersistableDatabase.class);
 
     @Override
     public BluRay findBluRayByName(String name) {
@@ -45,6 +48,7 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     public void saveBluRay(BluRay bluRay) {
         if (doesNotExist(bluRay)) {
             allBluRays.add(bluRay);
+            log.info(String.format("Added %s to the database", bluRay.getName()));
         } else {
             updateBluray(bluRay);
         }

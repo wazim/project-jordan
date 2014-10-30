@@ -2,6 +2,8 @@ package net.wazim.jordan.persistence;
 
 import com.mongodb.*;
 import net.wazim.jordan.domain.BluRay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import static java.lang.Integer.parseInt;
 public class MongoBluRayDatabase implements BluRayDatabase {
 
     private final DBCollection allBluRays;
+    private static final Logger log = LoggerFactory.getLogger(InMemoryPersistableDatabase.class);
 
     public MongoBluRayDatabase() {
         MongoClient mongoClient = null;
@@ -56,7 +59,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         for (DBObject dbObject : dbObjects) {
             double priceNew = Double.parseDouble(dbObject.get("priceNew").toString());
             double priceUsed = Double.parseDouble(dbObject.get("priceUsed").toString());
-            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, dbObject.get("url").toString(), getBoolean(dbObject.get("isInteresting").toString()),parseInt(dbObject.get("rating").toString())));
+            myBluRays.add(new BluRay(dbObject.get("name").toString(), priceNew, priceUsed, dbObject.get("url").toString(), getBoolean(dbObject.get("isInteresting").toString()), parseInt(dbObject.get("rating").toString())));
         }
         return myBluRays;
     }
@@ -75,7 +78,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
 
     @Override
     public void saveBluRay(BluRay bluRay) {
-        if(allBluRays.find(new BasicDBObject("name", bluRay.getName())).length() > 0) {
+        if (allBluRays.find(new BasicDBObject("name", bluRay.getName())).length() > 0) {
             Map<String, String> bluRayMap = new HashMap<String, String>();
             bluRayMap.put("name", bluRay.getName());
             bluRayMap.put("priceNew", Double.toString(bluRay.getPriceNew()));
@@ -84,8 +87,8 @@ public class MongoBluRayDatabase implements BluRayDatabase {
             bluRayMap.put("isInteresting", String.valueOf(bluRay.getIsInteresting()));
             bluRayMap.put("rating", String.valueOf(bluRay.getRating()));
             allBluRays.save(new BasicDBObject(bluRayMap));
-        }
-        else{
+            log.info(String.format("Added %s to the database", bluRay.getName()));
+        } else {
             updateBluray(bluRay);
         }
     }

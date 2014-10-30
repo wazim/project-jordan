@@ -2,7 +2,6 @@ package net.wazim.jordan;
 
 import net.wazim.jordan.client.JordanHttpClient;
 import net.wazim.jordan.client.JordanHttpResponse;
-import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.BluRayDatabase;
 import net.wazim.jordan.properties.JordanProperties;
 import org.quartz.*;
@@ -10,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static net.wazim.jordan.utils.BluRayParser.parseIntoBluRays;
@@ -22,35 +19,22 @@ public class AmazonGoer implements Job {
     private BluRayDatabase database;
 
     private JordanHttpResponse response;
-    private ArrayList<BluRay> bluRays;
 
     public AmazonGoer(BluRayDatabase database) {
         this.database = database;
-        bluRays = new ArrayList<BluRay>();
-    }
-
-    public AmazonGoer() {
-        // Only should be used for Quartz.
     }
 
     public void go(URI requestUrl) {
         JordanHttpClient client = new JordanHttpClient();
 
         response = client.getRequest(requestUrl);
-//        log.info(response.getResponseBody()); //This logs the entire response body to the console... Is that necessary?
+        log.debug(response.getResponseBody());
         long startTime = System.currentTimeMillis();
-        bluRays = parseIntoBluRays(response, requestUrl);
+        parseIntoBluRays(response, requestUrl, database);
 
-        saveBluRaysInDatabase();
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
         log.info("Process took " + TimeUnit.MILLISECONDS.toMinutes(duration) +" minutes to complete...");
-    }
-
-    private void saveBluRaysInDatabase() {
-        for (BluRay bluRay : bluRays) {
-            database.saveBluRay(bluRay);
-        }
     }
 
     public int responseCode() {
@@ -59,10 +43,6 @@ public class AmazonGoer implements Job {
 
     public String responseBody() {
         return response.getResponseBody();
-    }
-
-    public List<BluRay> bluRays() {
-        return bluRays;
     }
 
     @Override
@@ -80,8 +60,14 @@ public class AmazonGoer implements Job {
                     .go(properties.getRequestUrl());
 
         } catch (SchedulerException e) {
-            log.info("Scheduler failed to instantiate.");
+            log.error("Scheduler failed to instantiate." + e);
             e.printStackTrace();
         }
     }
+
+    @SuppressWarnings("unused")
+    public AmazonGoer() {
+        // Only should be used for Quartz.
+    }
+
 }

@@ -1,11 +1,10 @@
 package net.wazim.jordan.utils;
 
 import net.wazim.jordan.client.JordanHttpResponse;
-import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import org.junit.Test;
 
 import java.net.URI;
-import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -15,8 +14,10 @@ public class BluRayParserTest {
     @Test
     public void successfullyParsesBluRays() {
         JordanHttpResponse response = new JordanHttpResponse(200, sampleAmazonResponse());
-        ArrayList<BluRay> bluRays = BluRayParser.parseIntoBluRays(response, URI.create("http://x.com"));
-        assertThat(bluRays.get(0).getName(), is("Batman Begins (Blu-ray) (2005) (Region Free)"));
+        InMemoryPersistableDatabase database = new InMemoryPersistableDatabase();
+
+        BluRayParser.parseIntoBluRays(response, URI.create("http://x.com"), database);
+        assertThat(database.getFirstBluRay().getName(), is("Batman Begins (Blu-ray) (2005) (Region Free)"));
     }
 
     private String sampleAmazonResponse() {

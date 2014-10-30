@@ -23,18 +23,20 @@ public class AmazonGoerTest {
 
     private AmazonGoer amazonGoer;
     private AmazonStub stub;
+    private InMemoryPersistableDatabase database;
 
     @Before
     public void setUp() {
         stub = new AmazonStub();
         stub.createPageAndPrimeResponse("/amazon/bluray", 200, getSamplePage1());
         stub.createPageAndPrimeResponse("/amazon/bluray?page=2", 200, getSamplePage2());
-        amazonGoer = new AmazonGoer(new InMemoryPersistableDatabase());
+        database = new InMemoryPersistableDatabase();
+        amazonGoer = new AmazonGoer(database);
     }
 
     @After
     public void shutDown() {
-        amazonGoer.bluRays().clear();
+        database.clearDownDatabase();
         stub.stopServer();
     }
 
@@ -59,7 +61,7 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerReturnsAListOfBluRaysUnder5() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(1));
+        assertThat(database.getAllBluRays().size(), is(1));
 
         assertThat(theFirstBluRay().getName(), is("Transformers: Dark of the Moon (Blu-ray - DVD) (2011) (Region Free)"));
         assertThat(theFirstBluRay().getUrl(), containsString("http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/"));
@@ -71,11 +73,11 @@ public class AmazonGoerTest {
     @Test
     public void amazonGoerReturnsResultsFromAllPages() {
         amazonGoer.go(AMAZON_QUERY_URL);
-        assertThat(amazonGoer.bluRays().size(), is(1));
+        assertThat(database.getAllBluRays().size(), is(1));
     }
 
     private BluRay theFirstBluRay() {
-        return amazonGoer.bluRays().get(0);
+        return database.getFirstBluRay();
     }
 
     private Matcher<? super String> showsBluRaysUnder8() {

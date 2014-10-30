@@ -18,7 +18,7 @@ public class AmazonStub extends HttpServlet {
 
     public static void main(String[] args) {
         AmazonStub amazonStub = new AmazonStub();
-        amazonStub.createPageAndPrimeResponse("/amazon/bluray", 200, amazonStub.getSamplePage1());
+        amazonStub.createPageAndPrimeResponse("/amazon/*", 200, amazonStub.getSamplePage1());
         amazonStub.createPageAndPrimeResponse("/amazon/bluray?page=2", 200, amazonStub.getSamplePage2());
     }
 

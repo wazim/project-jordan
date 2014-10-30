@@ -4,6 +4,7 @@ import net.wazim.jordan.client.JordanHttpClient;
 import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.client.MetacriticRatingRetriever;
 import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.persistence.BluRayDatabase;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -21,37 +22,29 @@ public class BluRayParser {
 
     private static final Logger log = LoggerFactory.getLogger(BluRayParser.class);
 
-    public static ArrayList<BluRay> listOfBluRays = new ArrayList<BluRay>();
-
-    public static ArrayList<BluRay> parseIntoBluRays(JordanHttpResponse response, URI requestUrl) {
+    public static void parseIntoBluRays(JordanHttpResponse response, URI requestUrl, BluRayDatabase database) {
         String responseAsString = response.getResponseBody();
 
         if (!Jsoup.parse(responseAsString).getElementsByClass("pagnCur").isEmpty()) {
             int currentPage = Integer.parseInt(Jsoup.parse(responseAsString).getElementsByClass("pagnCur").first().text());
             int lastPage = Integer.parseInt(Jsoup.parse(responseAsString).getElementsByClass("pagnDisabled").first().text());
 
-            createBluRaysFromHtml(responseAsString);
+            createBluRaysFromHtml(responseAsString, database);
 
             while (currentPage <= lastPage) {
                 log.info(String.format("Page %d of %d", currentPage, lastPage));
-                JordanHttpResponse nextPageResponse = null;
 
                 try {
-                    nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page=" + currentPage++));
+                    JordanHttpResponse nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page=" + currentPage++));
+                    createBluRaysFromHtml(nextPageResponse.getResponseBody(), database);
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
-
-
-                createBluRaysFromHtml(nextPageResponse.getResponseBody());
             }
         }
-
-        return listOfBluRays;
     }
 
-    //TODO: [Jon] Refactor this as it is ugly the way it concatenates lists.
-    private static void createBluRaysFromHtml(String responseAsString) {
+    private static void createBluRaysFromHtml(String responseAsString, BluRayDatabase database) {
         Elements firstRowBluRayElements = Jsoup.parse(responseAsString).getElementsByClass("fstRowGrid");
         Elements remainingBluRays = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
 
@@ -73,17 +66,17 @@ public class BluRayParser {
 
             if (((Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1) || (Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1)) &&
                     !(Double.compare(getBluRayPrice(bluRayElement), zeroValue) == 0) && !(Double.compare(getBluRayUsedPrice(bluRayElement), zeroValue) == 0)) {
-                listOfBluRays.add(new BluRay(
+                BluRay newBluRay = new BluRay(
                         bluRayName,
                         getBluRayPrice(bluRayElement),
                         getBluRayUsedPrice(bluRayElement),
                         getBluRayUrl(bluRayElement),
                         true,
-                        getMetacriticScore(bluRayName)));
+                        getMetacriticScore(bluRayName));
 
-                log.info(String.format("Added %s to the database", bluRayName));
+                database.saveBluRay(newBluRay);
             } else {
-                //No op
+                log.debug(String.format("Could not add Blu ray from response: %s", responseAsString));
             }
 
         }

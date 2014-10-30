@@ -50,7 +50,8 @@ public class JordanListingUpdater {
 
             if (updatedNewPrice > 1.24 && updatedUsedPrice > 1.24) {
                 database.deleteBluRay(bluRay);
-                log.info("Deleted " + bluRay.getName());
+                log.info("Deleted " + bluRay.getName() +"\n" +
+                        "Reason: New Price: " + updatedNewPrice + " & Used Price: "+updatedUsedPrice);
             }
         } catch (Exception e) {
             log.warn("Could not parse the Amazon Page for " + bluRay.getName());
