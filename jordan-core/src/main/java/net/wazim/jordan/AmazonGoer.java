@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.util.concurrent.TimeUnit;
 
 import static net.wazim.jordan.utils.BluRayParser.parseIntoBluRays;
 
@@ -29,12 +28,7 @@ public class AmazonGoer implements Job {
 
         response = client.getRequest(requestUrl);
         log.debug(response.getResponseBody());
-        long startTime = System.currentTimeMillis();
         parseIntoBluRays(response, requestUrl, database);
-
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
-        log.info("Process took " + TimeUnit.MILLISECONDS.toMinutes(duration) +" minutes to complete...");
     }
 
     public int responseCode() {

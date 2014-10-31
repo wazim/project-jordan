@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class FreemarkerTemplate {
 
     private Template template;
-    private HashMap<String, Object> root = new HashMap<String, Object>();
+    private HashMap<String, Object> root = new HashMap<>();
 
     public FreemarkerTemplate(String templateName) {
         Configuration cfg = new Configuration();

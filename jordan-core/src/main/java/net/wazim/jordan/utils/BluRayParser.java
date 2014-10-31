@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static net.wazim.jordan.utils.BluRayNameCleaner.cleanName;
 
@@ -32,53 +32,59 @@ public class BluRayParser {
             createBluRaysFromHtml(responseAsString, database);
 
             while (currentPage <= lastPage) {
-                log.info(String.format("Page %d of %d", currentPage, lastPage));
+                log.debug(String.format("Page %d of %d", currentPage, lastPage));
+                createABluRay(requestUrl, database, currentPage + 1);
+                currentPage++;
+            }
+        }
+    }
 
+    private static int createABluRay(final URI requestUrl, final BluRayDatabase database, final int currentPage) {
+        new Thread("" + currentPage) {
+            public void run() {
                 try {
-                    JordanHttpResponse nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page=" + currentPage++));
+                    JordanHttpResponse nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page=" + currentPage));
                     createBluRaysFromHtml(nextPageResponse.getResponseBody(), database);
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
             }
-        }
+        }.start();
+        return currentPage;
     }
 
     private static void createBluRaysFromHtml(String responseAsString, BluRayDatabase database) {
-        Elements firstRowBluRayElements = Jsoup.parse(responseAsString).getElementsByClass("fstRowGrid");
-        Elements remainingBluRays = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
+        try {
+            Elements firstRowBluRayElements = Jsoup.parse(responseAsString).getElementsByClass("fstRowGrid");
+            Elements remainingBluRays = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
 
-        List<Element> allBluRays = new ArrayList<Element>();
+            List<Element> allBluRays = firstRowBluRayElements.stream().collect(Collectors.toList());
 
-        for (Element firstRowBluRayElement : firstRowBluRayElements) {
-            allBluRays.add(firstRowBluRayElement);
-        }
+            allBluRays.addAll(remainingBluRays.stream().collect(Collectors.toList()));
 
-        for (Element remainingBluRay : remainingBluRays) {
-            allBluRays.add(remainingBluRay);
-        }
+            for (Element bluRayElement : allBluRays) {
+                String bluRayName = getBluRayName(bluRayElement);
 
-        for (Element bluRayElement : allBluRays) {
-            String bluRayName = getBluRayName(bluRayElement);
+                double priceRange = 1.25;
+                double zeroValue = 0.00;
 
-            double priceRange = 1.25;
-            double zeroValue = 0.00;
+                if (((Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1) || (Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1)) &&
+                        !(Double.compare(getBluRayPrice(bluRayElement), zeroValue) == 0) && !(Double.compare(getBluRayUsedPrice(bluRayElement), zeroValue) == 0)) {
+                    BluRay newBluRay = new BluRay(
+                            bluRayName,
+                            getBluRayPrice(bluRayElement),
+                            getBluRayUsedPrice(bluRayElement),
+                            getBluRayUrl(bluRayElement),
+                            true,
+                            100);
 
-            if (((Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1) || (Double.compare(getBluRayUsedPrice(bluRayElement), priceRange) == -1)) &&
-                    !(Double.compare(getBluRayPrice(bluRayElement), zeroValue) == 0) && !(Double.compare(getBluRayUsedPrice(bluRayElement), zeroValue) == 0)) {
-                BluRay newBluRay = new BluRay(
-                        bluRayName,
-                        getBluRayPrice(bluRayElement),
-                        getBluRayUsedPrice(bluRayElement),
-                        getBluRayUrl(bluRayElement),
-                        true,
-                        getMetacriticScore(bluRayName));
-
-                database.saveBluRay(newBluRay);
-            } else {
-                log.debug(String.format("Could not add Blu ray from response: %s", responseAsString));
+                    database.saveBluRay(newBluRay);
+                } else {
+                    log.debug(String.format("Could not add Blu ray from response: %s", responseAsString));
+                }
             }
-
+        } catch (Exception e) {
+            log.error("Could not parse content " + responseAsString);
         }
     }
 

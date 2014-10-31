@@ -21,7 +21,7 @@ public class JordanScheduler {
                         SimpleScheduleBuilder.simpleSchedule()
                                 .withIntervalInMinutes(properties.minutesToRefresh())
                                 .repeatForever())
-                                .startAt(nowPlusMinutesOf(15))
+                                .startAt(nowPlusMinutesOf(properties.minutesToRefresh()))
                 .build();
 
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();

@@ -24,10 +24,10 @@ public class JordanListingUpdater {
     }
 
     public void updateFilms() {
+        log.info("Running Jordan Updater");
         List<BluRay> allBluRays = database.getAllBluRays();
-        for (BluRay bluRay : allBluRays) {
-            updateBluRay(bluRay);
-        }
+        allBluRays.forEach(this::updateBluRay);
+        log.info("Jordan updater completed.");
     }
 
     private void updateBluRay(BluRay bluRay) {
@@ -45,12 +45,12 @@ public class JordanListingUpdater {
 
     private void deleteBluRayIfOutOfPriceRange(BluRay bluRay, Document document) {
         try {
-            double updatedNewPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(1).text().replace("£", ""));
-            double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(2).text().replace("£", ""));
+            double updatedNewPrice = Double.parseDouble(document.getElementsByClass("olp-padding-right").get(0).getElementsByClass("a-color-price").get(0).text().replace("£", ""));
+            double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("olp-padding-right").get(1).getElementsByClass("a-color-price").get(0).text().replace("£", ""));
 
             if (updatedNewPrice > 1.24 && updatedUsedPrice > 1.24) {
                 database.deleteBluRay(bluRay);
-                log.info("Deleted " + bluRay.getName() +"\n" +
+                log.info("Deleted " + bluRay.getName() + " ("+bluRay.getUrl()+") - " +
                         "Reason: New Price: " + updatedNewPrice + " & Used Price: "+updatedUsedPrice);
             }
         } catch (Exception e) {

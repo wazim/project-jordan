@@ -16,6 +16,6 @@ public class JordanProductionProperties implements JordanProperties {
 
     @Override
     public int minutesToRefresh() {
-        return 30;
+        return 35;
     }
 }
