@@ -39,7 +39,7 @@ public class JordanListingUpdater {
             updateNewPrice(bluRay, document);
             deleteBluRayIfOutOfPriceRange(bluRay, document);
         } else {
-            log.info("Failed to connect to Amazon on this occasion");
+            log.info("Did not update " +bluRay.getName());
         }
     }
 
