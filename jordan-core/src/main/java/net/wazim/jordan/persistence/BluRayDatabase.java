@@ -8,6 +8,8 @@ public interface BluRayDatabase {
 
     public BluRay findBluRayByName(String name);
 
+    public BluRay findBluRayById(int id);
+
     public BluRay getFirstBluRay();
 
     public List<BluRay> getAllBluRays();
@@ -18,7 +20,7 @@ public interface BluRayDatabase {
 
     public void clearDownDatabase();
 
-    void removeInterest(String movie);
+    void removeInterest(int movieId);
 
     void updateBluray(BluRay bluRay);
 

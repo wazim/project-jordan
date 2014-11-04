@@ -1,5 +1,6 @@
 package net.wazim.jordan.controller;
 
+import net.wazim.jordan.domain.BluRay;
 import net.wazim.jordan.persistence.BluRayDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,12 @@ public class JordanRemoveInterestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(OK_200);
 
-        String movie = req.getParameter("movie");
+        int movieId = Integer.parseInt(req.getParameter("movie"));
+        BluRay bluRay = database.findBluRayById(movieId);
+        database.removeInterest(movieId);
 
-        database.removeInterest(movie);
-
-        log.info(String.format("User has marked %s as not interesting", movie));
-        resp.getWriter().println(movie + " is deemed not interesting");
+        log.info(String.format("User has marked %s as not interesting (%s)", bluRay.getName(), movieId));
+        resp.getWriter().println(bluRay.getName() + " is deemed not interesting");
         resp.sendRedirect("/jordan");
     }
 

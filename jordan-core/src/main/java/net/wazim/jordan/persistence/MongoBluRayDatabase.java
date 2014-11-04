@@ -48,6 +48,22 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     }
 
     @Override
+    public BluRay findBluRayById(int id) {
+        DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("id", id));
+
+        double priceNew = Double.parseDouble(retrievedObject.get("priceNew").toString());
+        double priceUsed = Double.parseDouble(retrievedObject.get("priceUsed").toString());
+
+        return new BluRay(
+                retrievedObject.get("name").toString(),
+                priceNew,
+                priceUsed,
+                retrievedObject.get("url").toString(),
+                getBoolean(retrievedObject.get("isInteresting").toString()),
+                parseInt(retrievedObject.get("rating").toString()));
+    }
+
+    @Override
     public BluRay getFirstBluRay() {
         return null;
     }
@@ -86,6 +102,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
             bluRayMap.put("url", bluRay.getUrl());
             bluRayMap.put("isInteresting", String.valueOf(bluRay.getIsInteresting()));
             bluRayMap.put("rating", String.valueOf(bluRay.getRating()));
+            bluRayMap.put("id", String.valueOf(bluRay.getId()));
             allBluRays.save(new BasicDBObject(bluRayMap));
             log.info(String.format("Added %s to the database", bluRay.getName()));
         } else {
@@ -102,8 +119,8 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     }
 
     @Override
-    public void removeInterest(String movie) {
-        DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", movie));
+    public void removeInterest(int movieId) {
+        DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("id", movieId));
         DBObject newDocument = new BasicDBObject("isInteresting", false);
         allBluRays.update(retrievedObject, newDocument);
     }

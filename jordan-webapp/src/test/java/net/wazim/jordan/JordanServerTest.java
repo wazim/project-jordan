@@ -22,11 +22,14 @@ public class JordanServerTest {
     private JordanServer jordanServer;
     private HttpClient httpClient;
     private HttpMethod method;
+    private int id;
 
     @Before
     public void setupJordanServer() {
         InMemoryPersistableDatabase database = new InMemoryPersistableDatabase();
-        database.saveBluRay(new BluRay("The Godfather", new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true, 100));
+        BluRay bluRay = new BluRay("The Godfather", new Double(1.99), new Double(2.99), "http://amazon.co.uk/thegodfather", true, 100);
+        id = bluRay.getId();
+        database.saveBluRay(bluRay);
         database.saveBluRay(new BluRay("Michael Jackson's This Is It", new Double(0.59), new Double(0.29), "http://www.amazon.co.uk/mjthisisit", true, 100));
 
         jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
@@ -71,7 +74,7 @@ public class JordanServerTest {
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">2</span> Blu Rays in our library."));
 
-        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=The%20Godfather");
+        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie="+id);
         httpClient.executeMethod(method);
 
         method = new GetMethod("http://localhost:12500/jordan");

@@ -109,22 +109,13 @@
   	</thead>
     <tbody>
   <#list blurays as bluray>
-        <#assign rowId = bluray.name?replace(" ", "")
-                                    ?replace(")", "")
-                                    ?replace("(", "")
-                                    ?replace(":", "")
-                                    ?replace("'", "")
-                                    ?replace(",","")
-                                    ?replace("!","")
-                                    >
-
-         <tr id="${rowId}">
+         <tr id="${bluray.id?c}">
             <td><a href="${bluray.url}" target="_blank">${bluray.name}</a></td>
             <td>£${bluray.priceNew?c}</td>
             <td>£${bluray.priceUsed?c}</td>
 
             <#if bluray.isInteresting == true>
-                <td><a href="#" onclick='removeInterestFor("${bluray.name}", "${rowId}")'>Not Interested</a></td>
+                <td><a href="#" onclick='removeInterestFor("${bluray.id?c}")'>Not Interested</a></td>
             <#else>
                 <td>Marked</td>
             </#if>
@@ -159,14 +150,14 @@ $(document).ready( function () {
     dataTable = $('#jordanTable').DataTable();
 } );
 
-function removeInterestFor(movieName, rowId) {
+function removeInterestFor(movieId) {
     $.ajax({
       type: "GET",
       url: "not-interested",
-      data: { movie: movieName }
+      data: { movie: movieId }
     })
     .done(function( msg ) {
-        $('#'+rowId).remove();
+        $('#'+movieId).remove();
         $(".librarySize").text($(".librarySize").text()-1)
     });
 }

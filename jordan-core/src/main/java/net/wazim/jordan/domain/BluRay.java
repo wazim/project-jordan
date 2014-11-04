@@ -8,6 +8,7 @@ public class BluRay {
     private boolean isInteresting;
     private final int rating;
     private String url;
+    private int id;
 
     public BluRay(String name, double priceNew, double priceUsed, String bluRayUrl, boolean isInteresting, int rating) {
         this.name = name;
@@ -16,6 +17,7 @@ public class BluRay {
         this.url = bluRayUrl;
         this.isInteresting = isInteresting;
         this.rating = rating;
+        this.id = name.hashCode();
     }
 
     public String getName() {
@@ -52,5 +54,9 @@ public class BluRay {
 
     public void setPriceUsed(double priceUsed) {
         this.priceUsed = priceUsed;
+    }
+
+    public int getId() {
+        return id;
     }
 }

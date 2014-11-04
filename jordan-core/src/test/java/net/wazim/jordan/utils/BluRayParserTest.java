@@ -18,6 +18,7 @@ public class BluRayParserTest {
 
         BluRayParser.parseIntoBluRays(response, URI.create("http://x.com"), database);
         assertThat(database.getFirstBluRay().getName(), is("Batman Begins (Blu-ray) (2005) (Region Free)"));
+        assertThat(database.getFirstBluRay().getId(), is(-903014007));
     }
 
     private String sampleAmazonResponse() {

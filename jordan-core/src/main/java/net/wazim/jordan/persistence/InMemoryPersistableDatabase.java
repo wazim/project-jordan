@@ -24,6 +24,16 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     }
 
     @Override
+    public BluRay findBluRayById(int id) {
+        for (BluRay bluRay : allBluRays) {
+            if(bluRay.getId() == id) {
+                return bluRay;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public BluRay getFirstBluRay() {
         return allBluRays.get(0);
     }
@@ -87,9 +97,9 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     }
 
     @Override
-    public void removeInterest(String movie) {
+    public void removeInterest(int movieId) {
         for (BluRay bluRay : allBluRays) {
-            if (bluRay.getName().equals(movie)) {
+            if (bluRay.getId() == movieId) {
                 bluRay.setInteresting(false);
             }
         }

@@ -40,7 +40,8 @@ public class JordanItemRemovalTest {
 
     @Test
     public void bluRayWithAMinusSymbolIsRemovedIfItIsNotInteresting() throws IOException {
-        database.saveBluRay(newBluRay("The Godfather -"));
+        BluRay bluRay = newBluRay("The Godfather -");
+        database.saveBluRay(bluRay);
 
         method = new GetMethod("http://localhost:12500/jordan");
         int responseCode = httpClient.executeMethod(method);
@@ -48,7 +49,7 @@ public class JordanItemRemovalTest {
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
-        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=The%20Godfather%20-");
+        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie="+bluRay.getId());
         httpClient.executeMethod(method);
 
         method = new GetMethod("http://localhost:12500/jordan");
@@ -60,7 +61,8 @@ public class JordanItemRemovalTest {
 
     @Test
     public void bluRayWithRoundBracketSymbolIsRemovedIfItIsNotInteresting() throws IOException {
-        database.saveBluRay(newBluRay("The Godfather (Hi)"));
+        BluRay bluRay = newBluRay("The Godfather (Hi)");
+        database.saveBluRay(bluRay);
 
         method = new GetMethod("http://localhost:12500/jordan");
         int responseCode = httpClient.executeMethod(method);
@@ -68,7 +70,7 @@ public class JordanItemRemovalTest {
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
-        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=The%20Godfather%20(Hi)");
+        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie="+bluRay.getId());
         httpClient.executeMethod(method);
 
         method = new GetMethod("http://localhost:12500/jordan");
@@ -80,7 +82,8 @@ public class JordanItemRemovalTest {
 
     @Test
     public void bluRayWithoutAnAmpersandSymbolIsRemovedIfItIsNotInteresting() throws IOException {
-        database.saveBluRay(newBluRay("Fast And Furious 5"));
+        BluRay bluRay = newBluRay("Fast And Furious 5");
+        database.saveBluRay(bluRay);
 
         method = new GetMethod("http://localhost:12500/jordan");
         int responseCode = httpClient.executeMethod(method);
@@ -88,7 +91,7 @@ public class JordanItemRemovalTest {
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
-        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=Fast%20And%20Furious%205");
+        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie="+bluRay.getId());
         httpClient.executeMethod(method);
 
         method = new GetMethod("http://localhost:12500/jordan");
@@ -101,7 +104,8 @@ public class JordanItemRemovalTest {
 
     @Test
     public void bluRayWithADotIsRemovedIfItIsNotInteresting() throws IOException {
-        database.saveBluRay(newBluRay("BLU-RAY FAST and FURIOUS: NEUES MODELL..."));
+        BluRay bluRay = newBluRay("BLU-RAY FAST and FURIOUS: NEUES MODELL...");
+        database.saveBluRay(bluRay);
 
         method = new GetMethod("http://localhost:12500/jordan");
         int responseCode = httpClient.executeMethod(method);
@@ -109,7 +113,7 @@ public class JordanItemRemovalTest {
         assertThat(responseCode, is(HttpStatus.OK_200));
         assertThat(method.getResponseBodyAsString(), containsString("We currently have <span class=\"librarySize\">1</span> Blu Rays in our library."));
 
-        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie=BLU-RAY%20FAST%20and%20FURIOUS:%20NEUES%20MODELL...");
+        method = new GetMethod("http://localhost:12500/jordan/not-interested?movie="+bluRay.getId());
         httpClient.executeMethod(method);
 
         method = new GetMethod("http://localhost:12500/jordan");
