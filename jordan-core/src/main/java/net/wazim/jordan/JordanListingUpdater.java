@@ -33,7 +33,7 @@ public class JordanListingUpdater {
     private void updateBluRay(BluRay bluRay) {
         JordanHttpClient client = new JordanHttpClient();
         JordanHttpResponse response = client.getRequest(URI.create(bluRay.getUrl()));
-        if (response.getResponseCode() == 200) {
+        if (response.getResponseCode() == 200 && bluRay.getIsInteresting()) {
             Document document = parse(response.getResponseBody());
             updateUsedPrice(bluRay, document);
             updateNewPrice(bluRay, document);

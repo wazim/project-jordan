@@ -66,6 +66,22 @@ public class JordanListingUpdaterTest {
         assertThat(database.getAllBluRays().size(), is(1));
     }
 
+    @Test
+    public void jordanDoesNotUpdateIfTheProductIsNotInteresting() {
+        BluRayDatabase database = new InMemoryPersistableDatabase();
+        database.saveBluRay(new BluRay("The Godfather", 1.10, 1.15, "http://localhost:11511/movie/TheGodfather", false, 100));
+
+        primeAmazonWithNewPrice("The Godfather", 0.10, 0.10);
+
+        JordanListingUpdater updater = new JordanListingUpdater(database);
+        updater.updateFilms();
+
+        assertThat(database.getAllBluRays().size(), is(1));
+        assertThat(database.findBluRayByName("The Godfather").getPriceNew(), is(1.10));
+        assertThat(database.findBluRayByName("The Godfather").getPriceUsed(), is(1.15));
+        assertThat(database.findBluRayByName("The Godfather").getIsInteresting(), is(false));
+    }
+
     private void primeAmazonWithNewPrice(String blurayName, double newPrice, double usedPrice) {
         stub.createPageAndPrimeResponse("/movie/" + blurayName.replace(" ", ""), 200,
                 new AmazonIndividualPageBuilder()
