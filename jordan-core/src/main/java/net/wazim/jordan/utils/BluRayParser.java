@@ -55,12 +55,12 @@ public class BluRayParser {
 
     private static void createBluRaysFromHtml(String responseAsString, BluRayDatabase database) {
         try {
-            Elements firstRowBluRayElements = Jsoup.parse(responseAsString).getElementsByClass("fstRowGrid");
-            Elements remainingBluRays = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
+            Elements firstRowBluRayElements = Jsoup.parse(responseAsString).getElementsByClass("s-item-container");
+//            Elements remainingBluRays = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
 
             List<Element> allBluRays = firstRowBluRayElements.stream().collect(Collectors.toList());
 
-            allBluRays.addAll(remainingBluRays.stream().collect(Collectors.toList()));
+//            allBluRays.addAll(remainingBluRays.stream().collect(Collectors.toList()));
 
             for (Element bluRayElement : allBluRays) {
                 String bluRayName = getBluRayName(bluRayElement);
@@ -80,11 +80,12 @@ public class BluRayParser {
 
                     database.saveBluRay(newBluRay);
                 } else {
-                    log.debug(String.format("Could not add Blu ray from response: %s", responseAsString));
+                    log.debug(String.format("Could not add Blu ray from response"));
                 }
             }
         } catch (Exception e) {
-            log.error("Could not parse content " + responseAsString);
+            e.printStackTrace();
+            log.error("Could not parse content");
         }
     }
 
@@ -93,30 +94,38 @@ public class BluRayParser {
     }
 
     private static double getBluRayUsedPrice(Element bluRayElement) {
-        Elements price = bluRayElement.getElementsByClass("price");
+        Elements price = bluRayElement.getElementsByClass("a-color-price");
 
-        if (price.isEmpty() || price.size() == 1) {
+        if (price.isEmpty() || price.size() < 3) {
             return 0.00;
         }
 
-        return Double.parseDouble(price.get(1).text().replaceAll("£", ""));
+        try {
+            return Double.parseDouble(price.get(3).text().replaceAll("£", ""));
+        } catch (Exception e) {
+            return 0.00;
+        }
     }
 
     private static double getBluRayPrice(Element bluRayElement) {
-        Elements price = bluRayElement.getElementsByClass("price");
+        Elements price = bluRayElement.getElementsByClass("a-color-price");
 
-        if (price.isEmpty() || price.size() == 0) {
+        if (price.isEmpty() || price.size() < 2) {
             return 0.00;
         }
 
-        return Double.parseDouble(price.first().text().replaceAll("£", ""));
+        try {
+            return Double.parseDouble(price.get(2).text().replaceAll("£", ""));
+        } catch (Exception e) {
+            return 0.00;
+        }
     }
 
     private static String getBluRayName(Element bluRayElement) {
-        return cleanName(bluRayElement.getElementsByClass("bold").first().text());
+        return cleanName(bluRayElement.getElementsByClass("s-access-title").first().text());
     }
 
     private static String getBluRayUrl(Element bluRayElement) {
-        return bluRayElement.getElementsByClass("newaps").first().getElementsByAttribute("href").attr("href");
+        return bluRayElement.getElementsByClass("a-spacing-none").first().getElementsByAttribute("href").attr("href");
     }
 }

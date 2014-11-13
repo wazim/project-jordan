@@ -21,7 +21,7 @@ public class BluRayDataFixtures {
     }
 
     public static String someHtmlClass() {
-        return pickOneOf("fstRowGrid", "rsltGrid");
+        return pickOneOf("s-item-container", "s-item-container");
     }
 
     private static String someUrl() {

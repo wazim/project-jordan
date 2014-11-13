@@ -53,13 +53,13 @@ public class AmazonHtmlResponseBuilder {
                     "<div id=\"result_" + i + "\" class=\""+someHtmlClass()+" prod celwidget\" name=\"B008OGHUFK\">\n" +
                     "<h3 class=\"newaps\">\n" +
                     "<a href=\"http://www.amazon.co.uk/" + bluRays.get(i).getName() + "\"></a>" +
-                    "<span class=\"lrg bold\">" + bluRays.get(i).getName() + "</span>\n" +
+                    "<span class=\"s-access-title\">" + bluRays.get(i).getName() + "</span>\n" +
                     "</h3><ul class=\"rsltGridList grey\">\n" +
                     "<li class=\"newp\">\n" +
                     "<div class=\"\">\n" +
-                    "<span class=\"bld lrg red\">" + bluRays.get(i).getPriceNew() + "</span>\n" +
-                    "<span class=\"price bld\">" + bluRays.get(i).getPriceNew() + "</span>" +
-                    "<span class=\"price bld\">" + bluRays.get(i).getPriceUsed() + "</span>" +
+                    "<span class=\"a-color-price\">" + bluRays.get(i).getPriceNew() + "</span>\n" +
+                    "<span class=\"a-color-price\">" + bluRays.get(i).getPriceNew() + "</span>" +
+                    "<span class=\"a-color-price\">" + bluRays.get(i).getPriceUsed() + "</span>" +
                     "</div></div></div>";
         }
 
