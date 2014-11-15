@@ -56,11 +56,7 @@ public class BluRayParser {
     private static void createBluRaysFromHtml(String responseAsString, BluRayDatabase database) {
         try {
             Elements firstRowBluRayElements = Jsoup.parse(responseAsString).getElementsByClass("s-item-container");
-//            Elements remainingBluRays = Jsoup.parse(responseAsString).getElementsByClass("rsltGrid");
-
             List<Element> allBluRays = firstRowBluRayElements.stream().collect(Collectors.toList());
-
-//            allBluRays.addAll(remainingBluRays.stream().collect(Collectors.toList()));
 
             for (Element bluRayElement : allBluRays) {
                 String bluRayName = getBluRayName(bluRayElement);
@@ -101,7 +97,7 @@ public class BluRayParser {
         }
 
         try {
-            return Double.parseDouble(price.get(3).text().replaceAll("£", ""));
+            return Double.parseDouble(price.get(2).text().replaceAll("£", ""));
         } catch (Exception e) {
             return 0.00;
         }
@@ -115,7 +111,7 @@ public class BluRayParser {
         }
 
         try {
-            return Double.parseDouble(price.get(2).text().replaceAll("£", ""));
+            return Double.parseDouble(price.get(1).text().replaceAll("£", ""));
         } catch (Exception e) {
             return 0.00;
         }

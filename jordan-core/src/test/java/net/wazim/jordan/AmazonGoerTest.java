@@ -8,7 +8,6 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URI;
@@ -19,7 +18,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-@Ignore
 public class AmazonGoerTest {
 
     private AmazonGoer amazonGoer;
@@ -110,11 +108,11 @@ public class AmazonGoerTest {
                 "    <link rel=\"dns-prefetch\" href=\"z-ecx.images-x.com\" />\n" +
                 "\n" +
                 "<body>\n" +
-                "div class=\"s-item-container\"> "+
                 "<div class=\"rowDividerGrid entireRowGrid\"></div>\n" +
                 "    <div id=\"result_0\" class=\"fstRowGrid prod celwidget\" name=\"B008OGHUFK\">\n" +
+                "<div class=\"s-item-container\">"+
                 "    <div class=\"linePlaceholder\"></div><div class=\"image imageContainer\">\n" +
-                "        <a href=\"http://www.x.co.uk/Dredd-Blu-ray-3D-Karl-Urban/dp/B008OGHUFK/ref=sr_1_1?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-1\"><div class=\"imageBox\">\n" +
+                "        <span class=\"a-spacing-none\"><a href=\"http://www.x.co.uk/Dredd-Blu-ray-3D-Karl-Urban/dp/B008OGHUFK/ref=sr_1_1?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-1\"></span><div class=\"imageBox\">\n" +
                 "    <img onload=\"viewCompleteImageLoaded(this, new Date().getTime(), 24, false);\" src=\"http://ecx.images-x.com/images/I/51AvOH64ZpL._AA160_.jpg\"  class=\"productImage cfMarker\" alt=\"Product Details\" />\n" +
                 "        </div></a></div>\n" +
                 "<h3 class=\"newaps\">\n" +
@@ -148,18 +146,20 @@ public class AmazonGoerTest {
                 "<br clear=\"all\">\n" +
                 "\n" +
                 "</div>\n" +
+                "</div>\n" +
                 "<div id=\"result_1\" class=\"fstRowGrid prod celwidget\" name=\"B004BDOEZO\">\n" +
+                "<div class=\"s-item-container\">"+
                 "    <div class=\"linePlaceholder\"></div><div class=\"image imageContainer\">\n" +
-                "        <a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/dp/B004BDOEZO/ref=sr_1_2?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2\"><div class=\"imageBox\">\n" +
+                "        <span class=\"a-spacing-none\"><a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/dp/B004BDOEZO/ref=sr_1_2?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2\"></span<<div class=\"imageBox\">\n" +
                 "    <img onload=\"viewCompleteImageLoaded(this, new Date().getTime(), 24, false);\" src=\"http://ecx.images-x.com/images/I/510WI2HML9L._AA160_.jpg\"  class=\"productImage cfMarker\" alt=\"Product Details\" />\n" +
-                "        </div></a></div>\n" +
+                "        </div></a>\n" +
                 "<h3 class=\"newaps\">\n" +
                 "    <a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/dp/B004BDOEZO/ref=sr_1_2?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2\"><span class=\"s-access-title\">Transformers: Dark of the Moon [Blu-ray + DVD] [2011] [Region Free]</span></a> <span class=\"med reg\">(2001) <span class=\"starring\">Starring Shia LaBeouf,&#32;Josh Duhamel,&#32;Hugo Weaving and John Malkovich</span></span>\n" +
                 "        </h3><ul class=\"rsltGridList grey\">\n" +
                 "    \n" +
                 "    <li class=\"newp\">\n" +
                 "    <div class=\"\">\n" +
-                "    <a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/dp/B004BDOEZO/ref=sr_1_2?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2\"><span class=\"bld lrg red\"> £2.43</span>\n" +
+                "    <a href=\"http://www.x.co.uk/Transformers-Dark-Moon-Blu-ray-Region/dp/B004BDOEZO/ref=sr_1_2?s=dvd&amp;ie=UTF8&amp;qid=1412710559&amp;sr=1-2\"><span class=\"a-color-price\">£1.94</span>\n" +
                 "    <span class=\"lrg\">Blu-ray</span>\n" +
                 "                  </a><div class=\"imageBox\">\n" +
                 "    <img  src=\"http://g-ecx.images-x.com/images/G/02/nav2/images/gui/prime-check-badge-14._CB370663031_.gif\"  height=\"14\" width=\"45\" class=\"prmImg cfMarker\" alt=\"prime\"  align=\"baseline\"/>\n" +
@@ -180,6 +180,7 @@ public class AmazonGoerTest {
                 "  \n" +
                 "<br clear=\"all\">\n" +
                 "\n" +
+                "</div>\n" +
                 "</div>\n" +
                 "<div id=\"result_2\" class=\"fstRowGrid prod celwidget\" name=\"B00AW9MB4W\">\n" +
                 "    <div class=\"linePlaceholder\"></div><div class=\"image imageContainer\">\n" +

@@ -50,9 +50,9 @@ public class AmazonHtmlResponseBuilder {
 
         for (int i = 0; i < bluRays.size(); i++) {
             htmlBody += "<div class=\"rowDividerGrid entireRowGrid\"></div>\n" +
-                    "<div id=\"result_" + i + "\" class=\""+someHtmlClass()+" prod celwidget\" name=\"B008OGHUFK\">\n" +
+                    "<div id=\"result_" + i + "\" class=\""+someHtmlClass()+" prod celwidget\" name=\"B008OGHUFK\">\n <div class=\"s-item-container\">" +
                     "<h3 class=\"newaps\">\n" +
-                    "<a href=\"http://www.amazon.co.uk/" + bluRays.get(i).getName() + "\"></a>" +
+                    "<span class=\"a-spacing-none\"><a href=\"http://www.amazon.co.uk/" + bluRays.get(i).getName() + "\"></a></span>" +
                     "<span class=\"s-access-title\">" + bluRays.get(i).getName() + "</span>\n" +
                     "</h3><ul class=\"rsltGridList grey\">\n" +
                     "<li class=\"newp\">\n" +
@@ -60,7 +60,7 @@ public class AmazonHtmlResponseBuilder {
                     "<span class=\"a-color-price\">" + bluRays.get(i).getPriceNew() + "</span>\n" +
                     "<span class=\"a-color-price\">" + bluRays.get(i).getPriceNew() + "</span>" +
                     "<span class=\"a-color-price\">" + bluRays.get(i).getPriceUsed() + "</span>" +
-                    "</div></div></div>";
+                    "</div></div></div></div>";
         }
 
         String htmlFooter =  "<div id=\"centerBelowMinus\">\n" +
@@ -75,6 +75,7 @@ public class AmazonHtmlResponseBuilder {
                 "<span class=\"srSprite pagnNextArrow\"></span>\n" +
                 "</a></span>\n" +
                 "<br clear=\"all\" />\n" +
+                "</div>\n" +
                 "</div>\n" +
                 "</body></html>";
 

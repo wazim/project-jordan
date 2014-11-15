@@ -2,7 +2,6 @@ package net.wazim.jordan.utils;
 
 import net.wazim.jordan.client.JordanHttpResponse;
 import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URI;
@@ -12,7 +11,6 @@ import static org.hamcrest.core.Is.is;
 
 public class BluRayParserTest {
 
-    @Ignore
     @Test
     public void successfullyParsesBluRays() {
         JordanHttpResponse response = new JordanHttpResponse(200, sampleAmazonResponse());
@@ -25,8 +23,9 @@ public class BluRayParserTest {
 
     private String sampleAmazonResponse() {
         return "<div id=\"result_116\" class=\"s-item-container prod celwidget\" name=\"B0019FLTH8\">\n" +
+                "<div class=\"s-item-container\">" +
                 "    <div class=\"linePlaceholder\"></div><div class=\"image imageContainer\">\n" +
-                "        <a href=\"http://www.amazon.co.uk/Batman-Begins-Blu-ray-Region-Free/dp/B0019FLTH8/ref=sr_1_117?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117\"><div class=\"imageBox\">\n" +
+                "        <span class=\"a-spacing-none\"><a href=\"http://www.amazon.co.uk/Batman-Begins-Blu-ray-Region-Free/dp/B0019FLTH8/ref=sr_1_117?s=dvd&amp;ie=UTF8&amp;qid=1412705118&amp;sr=1-117\"></span><div class=\"imageBox\">\n" +
                 "    <img onload=\"viewCompleteImageLoaded(this, new Date().getTime(), 24, false);\" src=\"http://ecx.images-amazon.com/images/I/51DS%2B%2BLIMGL._AA160_.jpg\"  class=\"productImage cfMarker\" alt=\"Product Details\" />\n" +
                 "        </div></a></div>\n" +
                 "<h3 class=\"newaps\">\n" +
@@ -59,6 +58,7 @@ public class BluRayParserTest {
                 "  \n" +
                 "<br clear=\"all\">\n" +
                 "\n" +
+                "</div>\n" +
                 "</div>\n" +
                 "<br class=\"unfloat\" />\n" +
                 "<div class=\"rowDividerGrid entireRowGrid\"></div>\n" +
