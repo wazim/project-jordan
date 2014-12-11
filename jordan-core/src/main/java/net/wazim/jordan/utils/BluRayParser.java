@@ -40,16 +40,12 @@ public class BluRayParser {
     }
 
     private static int createABluRay(final URI requestUrl, final BluRayDatabase database, final int currentPage) {
-        new Thread("" + currentPage) {
-            public void run() {
-                try {
-                    JordanHttpResponse nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page=" + currentPage));
-                    createBluRaysFromHtml(nextPageResponse.getResponseBody(), database);
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        try {
+            JordanHttpResponse nextPageResponse = new JordanHttpClient().getRequest(new URI(requestUrl + "&page=" + currentPage));
+            createBluRaysFromHtml(nextPageResponse.getResponseBody(), database);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         return currentPage;
     }
 
