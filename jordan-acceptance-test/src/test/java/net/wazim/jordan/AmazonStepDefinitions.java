@@ -29,7 +29,7 @@ public class AmazonStepDefinitions {
         stub.createPageAndPrimeResponse("/amazon/bluray", 200, getSamplePage1());
         stub.createPageAndPrimeResponse("/amazon/bluray?page=2", 200, getSamplePage2());
 
-        new JordanRunner(new JordanTestSpecificProperties(), new InMemoryPersistableDatabase());
+        new JordanRunner(new JordanTestSpecificProperties(), new InMemoryPersistableDatabase(), 12500);
     }
 
     @When("^I go to the Web App$")

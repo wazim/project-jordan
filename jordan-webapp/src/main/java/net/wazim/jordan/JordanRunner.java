@@ -18,11 +18,11 @@ public class JordanRunner {
         JordanProperties properties = new JordanProductionProperties();
 
         new JordanScheduler(properties, database);
-        new JordanRunner(properties, database);
+        new JordanRunner(properties, database, Integer.parseInt(System.getenv("PORT")));
     }
 
-    public JordanRunner(JordanProperties properties, BluRayDatabase database) {
-        new JordanServer(properties, database);
+    public JordanRunner(JordanProperties properties, BluRayDatabase database, int port) {
+        new JordanServer(properties, database, port);
 
         JordanListingUpdater updater = new JordanListingUpdater(database);
         updater.updateFilms();

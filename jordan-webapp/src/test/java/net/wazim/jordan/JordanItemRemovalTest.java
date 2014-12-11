@@ -28,7 +28,7 @@ public class JordanItemRemovalTest {
     public void setupJordanServer() {
         database = new InMemoryPersistableDatabase();
 
-        jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
+        jordanServer = new JordanServer(new JordanTestSpecificProperties(), database, 12500);
         httpClient = new HttpClient();
         method = new GetMethod("http://localhost:12500/jordan");
     }

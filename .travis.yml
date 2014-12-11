@@ -3,3 +3,7 @@ notifications:
   email: false
 jdk:
   - oraclejdk8
+deploy:
+  provider: heroku
+  api_key: 9b3e23d0-37e5-4f0d-8097-eb7dfa84ca57
+  app: project-jordan

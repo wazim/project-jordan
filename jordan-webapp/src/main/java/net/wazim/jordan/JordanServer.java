@@ -15,8 +15,8 @@ public class JordanServer {
     private final ServletContextHandler context;
     private final Server server;
 
-    public JordanServer(JordanProperties properties, BluRayDatabase database) {
-        server = new Server(12500);
+    public JordanServer(JordanProperties properties, BluRayDatabase database, int port) {
+        server = new Server(port);
 
         context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/jordan");

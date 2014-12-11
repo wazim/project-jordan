@@ -32,7 +32,7 @@ public class JordanServerTest {
         database.saveBluRay(bluRay);
         database.saveBluRay(new BluRay("Michael Jackson's This Is It", new Double(0.59), new Double(0.29), "http://www.amazon.co.uk/mjthisisit", true, 100));
 
-        jordanServer = new JordanServer(new JordanTestSpecificProperties(), database);
+        jordanServer = new JordanServer(new JordanTestSpecificProperties(), database, 12500);
         httpClient = new HttpClient();
         method = new GetMethod("http://localhost:12500/jordan");
     }
