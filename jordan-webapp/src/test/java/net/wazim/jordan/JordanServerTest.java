@@ -58,6 +58,15 @@ public class JordanServerTest {
     }
 
     @Test
+    public void jordanApiReturnsValidJson() throws IOException {
+        method = new GetMethod("http://localhost:12500/jordan/api/all?format=json");
+        int responseCode = httpClient.executeMethod(method);
+        assertThat(responseCode, is(HttpStatus.OK_200));
+        System.out.println("method = " + method.getResponseBodyAsString());
+        assertThat(method.getResponseBodyAsString(), containsString("The Godfather"));
+    }
+
+    @Test
     public void jordanIndexServletReturnsANiceCleanPage() throws IOException {
         method = new GetMethod("http://localhost:12500/jordan");
         int responseCode = httpClient.executeMethod(method);
