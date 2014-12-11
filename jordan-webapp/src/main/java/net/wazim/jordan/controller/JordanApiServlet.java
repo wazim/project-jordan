@@ -27,33 +27,32 @@ public class JordanApiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<BluRay> allBluRays = database.getAllBluRays();
 
-        String response;
         String format = req.getParameter("format");
-        if(format == null) {
+        if (format == null) {
             format = "xml";
         }
 
-        if("json".equals(format.toLowerCase())){
+        if ("json".equals(format.toLowerCase())) {
             resp.setContentType("application/json");
-            response = getJson(allBluRays);
+            resp.getWriter().println(getJson(allBluRays).toString());
         } else {
             resp.setContentType("application/xml");
-            response = getXml(allBluRays).asXML();
+            resp.getWriter().println(getXml(allBluRays).asXML());
         }
 
-        resp.getWriter().println(response);
     }
 
-    private String getJson(List<BluRay> allBluRays) {
+    private JSONArray getJson(List<BluRay> allBluRays) {
         JSONArray allMovies = new JSONArray();
         for (BluRay bluRay : allBluRays) {
             JSONObject movie = new JSONObject();
             movie.put("name", bluRay.getName());
             movie.put("usedPrice", bluRay.getPriceUsed());
             movie.put("newPrice", bluRay.getPriceNew());
+            movie.put("url", bluRay.getUrl());
             allMovies.put(movie.toString());
         }
-        return allMovies.toString();
+        return allMovies;
     }
 
     private Document getXml(List<BluRay> allBluRays) {
