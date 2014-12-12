@@ -62,6 +62,12 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
         } else {
             updateBluray(bluRay);
         }
+        try {
+            LocalStorage localStorage = new LocalStorage(this);
+            localStorage.writeToFile();
+        } catch (Exception e) {
+            log.info("Failed to write to file "+e);
+        }
     }
 
     public void updateBluray(BluRay bluRay) {
@@ -82,15 +88,6 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
         }
     }
 
-    private boolean doesNotExist(BluRay bluRay) {
-        for (BluRay storedBluray : allBluRays) {
-            if (storedBluray.getName().equals(bluRay.getName())) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override
     public void clearDownDatabase() {
         allBluRays.clear();
@@ -103,6 +100,15 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
                 bluRay.setInteresting(false);
             }
         }
+    }
+
+    private boolean doesNotExist(BluRay bluRay) {
+        for (BluRay storedBluray : allBluRays) {
+            if (storedBluray.getName().equals(bluRay.getName())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

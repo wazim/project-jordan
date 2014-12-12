@@ -2,6 +2,7 @@ package net.wazim.jordan;
 
 import net.wazim.jordan.persistence.BluRayDatabase;
 import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
+import net.wazim.jordan.persistence.LocalStorage;
 import net.wazim.jordan.properties.JordanProductionProperties;
 import net.wazim.jordan.properties.JordanProperties;
 import org.quartz.SchedulerException;
@@ -15,6 +16,9 @@ public class JordanRunner {
     public static void main(String[] args) throws SchedulerException {
         log.info("Welcome to Project Jordan!");
         BluRayDatabase database = new InMemoryPersistableDatabase();
+
+        readTitlesFromLocalStorage(database);
+
         JordanProperties properties = new JordanProductionProperties();
 
         new JordanScheduler(properties, database);
@@ -29,6 +33,15 @@ public class JordanRunner {
 
         AmazonGoer amazonGoer = new AmazonGoer(database);
         amazonGoer.go(properties.getRequestUrl());
+    }
+
+    private static void readTitlesFromLocalStorage(BluRayDatabase database) {
+        LocalStorage localStorage = new LocalStorage(database);
+        try {
+            localStorage.readFromFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
