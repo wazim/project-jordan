@@ -13,6 +13,10 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     private List<BluRay> allBluRays = new CopyOnWriteArrayList<BluRay>();
     private static final Logger log = LoggerFactory.getLogger(InMemoryPersistableDatabase.class);
 
+    public InMemoryPersistableDatabase() {
+        log.info("Using InMemory database");
+    }
+
     @Override
     public BluRay findBluRayByName(String name) {
         for (BluRay bluRay : allBluRays) {

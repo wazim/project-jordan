@@ -22,8 +22,8 @@ public class JordanRunner {
         JordanProperties properties = new JordanProductionProperties();
 
         int port = (System.getenv("PORT") != null) ? Integer.parseInt(System.getenv("PORT")) : 12500;
-        BluRayDatabase database = (System.getenv("MONGOLAB_URI") != null)
-                ? new MongoBluRayDatabase(System.getenv("MONGOLAB_URI"))
+        BluRayDatabase database = (System.getenv("MONGOLAB_URL") != null)
+                ? new MongoBluRayDatabase(System.getenv("MONGOLAB_URL"))
                 : new InMemoryPersistableDatabase();
 
         new JordanScheduler(properties, database);
