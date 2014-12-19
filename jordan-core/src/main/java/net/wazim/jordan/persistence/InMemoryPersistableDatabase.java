@@ -66,12 +66,6 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
         } else {
             updateBluray(bluRay);
         }
-        try {
-            LocalStorage localStorage = new LocalStorage(this);
-            localStorage.writeToFile();
-        } catch (Exception e) {
-            log.info("Failed to write to file "+e);
-        }
     }
 
     public void updateBluray(BluRay bluRay) {
