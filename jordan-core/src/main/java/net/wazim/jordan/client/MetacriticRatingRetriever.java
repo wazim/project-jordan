@@ -3,8 +3,6 @@ package net.wazim.jordan.client;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONException;
 import org.slf4j.LoggerFactory;
 
 public class MetacriticRatingRetriever {
@@ -27,10 +25,8 @@ public class MetacriticRatingRetriever {
             int score = response.getBody().getObject().getJSONObject("result").getInt("score");
             log.info(String.format("Metacritic Rating for %s is %d", movieName, score));
             return score;
-        } catch (UnirestException e) {
+        } catch (Exception e) {
             log.warn("Failed to connect to Metacritic");
-        } catch (JSONException e) {
-            log.warn("Failed to find a score for " + movieName);
         }
         return 0;
     }

@@ -3,6 +3,7 @@ package net.wazim.jordan;
 import net.wazim.jordan.persistence.BluRayDatabase;
 import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import net.wazim.jordan.persistence.LocalStorage;
+import net.wazim.jordan.persistence.MongoBluRayDatabase;
 import net.wazim.jordan.properties.JordanProductionProperties;
 import net.wazim.jordan.properties.JordanProperties;
 import org.quartz.SchedulerException;
@@ -15,14 +16,18 @@ public class JordanRunner {
 
     public static void main(String[] args) throws SchedulerException {
         log.info("Welcome to Project Jordan!");
-        BluRayDatabase database = new InMemoryPersistableDatabase();
 
-        readTitlesFromLocalStorage(database);
+//        readTitlesFromLocalStorage(database);
 
         JordanProperties properties = new JordanProductionProperties();
 
+        int port = (System.getenv("PORT") != null) ? Integer.parseInt(System.getenv("PORT")) : 12500;
+        BluRayDatabase database = (System.getenv("MONGOLAB_URI") != null)
+                ? new MongoBluRayDatabase(System.getenv("MONGOLAB_URI"))
+                : new InMemoryPersistableDatabase();
+
         new JordanScheduler(properties, database);
-        new JordanRunner(properties, database, Integer.parseInt(System.getenv("PORT")));
+        new JordanRunner(properties, database, port);
     }
 
     public JordanRunner(JordanProperties properties, BluRayDatabase database, int port) {

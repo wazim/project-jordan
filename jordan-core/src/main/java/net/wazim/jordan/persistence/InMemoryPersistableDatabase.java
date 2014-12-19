@@ -94,9 +94,9 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     }
 
     @Override
-    public void removeInterest(int movieId) {
+    public void removeInterest(String name) {
         for (BluRay bluRay : allBluRays) {
-            if (bluRay.getId() == movieId) {
+            if (bluRay.getName().equals(name)) {
                 bluRay.setInteresting(false);
             }
         }

@@ -28,7 +28,7 @@ public class JordanRemoveInterestServlet extends HttpServlet {
 
         int movieId = Integer.parseInt(req.getParameter("movie"));
         BluRay bluRay = database.findBluRayById(movieId);
-        database.removeInterest(movieId);
+        database.removeInterest(bluRay.getName());
 
         log.info(String.format("User has marked %s as not interesting (%s)", bluRay.getName(), movieId));
         resp.getWriter().println(bluRay.getName() + " is deemed not interesting");

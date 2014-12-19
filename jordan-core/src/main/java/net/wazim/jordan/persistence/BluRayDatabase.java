@@ -20,7 +20,7 @@ public interface BluRayDatabase {
 
     public void clearDownDatabase();
 
-    void removeInterest(int movieId);
+    void removeInterest(String name);
 
     void updateBluray(BluRay bluRay);
 

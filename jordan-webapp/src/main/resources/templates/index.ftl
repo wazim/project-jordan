@@ -111,8 +111,8 @@
   <#list blurays as bluray>
          <tr id="${bluray.id?c}">
             <td><a href="${bluray.url}" target="_blank">${bluray.name}</a></td>
-            <td>£${bluray.priceNew?c}</td>
-            <td>£${bluray.priceUsed?c}</td>
+            <td>&#163;${bluray.priceNew?c}</td>
+            <td>&#163;${bluray.priceUsed?c}</td>
 
             <#if bluray.isInteresting == true>
                 <td><a href="#" onclick='removeInterestFor("${bluray.id?c}")'>Not Interested</a></td>
