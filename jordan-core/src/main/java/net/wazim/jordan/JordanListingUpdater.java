@@ -16,7 +16,6 @@ import static org.jsoup.Jsoup.parse;
 public class JordanListingUpdater {
 
     private static final Logger log = LoggerFactory.getLogger(JordanListingUpdater.class);
-
     private final BluRayDatabase database;
 
     public JordanListingUpdater(BluRayDatabase database) {
@@ -39,7 +38,7 @@ public class JordanListingUpdater {
             updateNewPrice(bluRay, document);
             deleteBluRayIfOutOfPriceRange(bluRay, document);
         } else {
-            log.info("Did not update " +bluRay.getName());
+            log.info(String.format("Did not update %s. Http response status was [%s]",bluRay.getName(),response.getResponseCode()));
         }
     }
 
@@ -54,7 +53,7 @@ public class JordanListingUpdater {
                         "Reason: New Price: " + updatedNewPrice + " & Used Price: "+updatedUsedPrice);
             }
         } catch (Exception e) {
-            log.warn("Could not parse the Amazon Page for " + bluRay.getName());
+            log.warn(String.format("Could not parse the Amazon Page for %s (%s)", bluRay.getName(), bluRay.getUrl()));
         }
 
     }
@@ -69,7 +68,7 @@ public class JordanListingUpdater {
                 log.info("Updated new price of " + bluRay.getName());
             }
         } catch (Exception e) {
-            log.warn("Could not parse the Amazon Page for " + bluRay.getName());
+            log.warn(String.format("Could not parse the Amazon Page for %s (%s)", bluRay.getName(), bluRay.getUrl()));
         }
     }
 
@@ -83,7 +82,7 @@ public class JordanListingUpdater {
                 log.info("Updated used price of " + bluRay.getName());
             }
         } catch (Exception e) {
-            log.warn("Could not parse the Amazon Page for " + bluRay.getName());
+            log.warn(String.format("Could not parse the Amazon Page for %s (%s)", bluRay.getName(), bluRay.getUrl()));
         }
     }
 }
