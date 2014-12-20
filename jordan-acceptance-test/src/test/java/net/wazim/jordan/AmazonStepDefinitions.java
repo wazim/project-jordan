@@ -22,7 +22,6 @@ public class AmazonStepDefinitions {
     private int httpResponseCode;
     private AmazonStub stub;
 
-
     @Given("^Project Jordan is started$")
     public void projectJordanIsStarted() throws Throwable {
         stub = new AmazonStub();
