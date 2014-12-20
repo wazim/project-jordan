@@ -10,7 +10,7 @@ import static net.wazim.jordan.fixtures.BluRayDataFixtures.someHtmlClass;
 
 public class AmazonHtmlResponseBuilder {
 
-    private List<BluRay> bluRays = new ArrayList<BluRay>();
+    private List<BluRay> bluRays = new ArrayList<>();
     private int belowPrice;
     private int pageNumber;
     private int totalPageNumber;
