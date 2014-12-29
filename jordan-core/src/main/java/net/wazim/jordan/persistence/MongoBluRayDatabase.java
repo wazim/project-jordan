@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
+import static net.wazim.jordan.utils.StringUtils.stripPunctuation;
 
 public class MongoBluRayDatabase implements BluRayDatabase {
 
@@ -118,7 +119,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     private void notifyUsersIfNecessary(BluRay bluRay) {
         DBCursor dbObjects = filmsToEmail.find();
         for (DBObject dbObject : dbObjects) {
-            if(dbObject.get("title").toString().toLowerCase().equals(bluRay.getName().toLowerCase())) {
+            if(stripPunctuation(bluRay.getName().toLowerCase()).startsWith(stripPunctuation(dbObject.get("title").toString().toLowerCase()))) {
                 mailSender.send(dbObject.get("address").toString(), bluRay);
             }
         }

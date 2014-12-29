@@ -163,9 +163,9 @@ public class MongoBluRayDatabaseTest {
 
     @Test
     public void canRegisterInterestOfABluRay() {
-        database.registerEmailAddressForBluRay("dances with wolves", "test@email.com");
+        database.registerEmailAddressForBluRay("the lord of the rings the fellowship of the ring", "test@email.com");
         SimpleSmtpServer emailServer = SimpleSmtpServer.start(1500);
-        database.saveBluRay(new BluRay("Dances With Wolves", 0.10, 0.10, "http://amazon.com/dances", true, 100));
+        database.saveBluRay(new BluRay("The Lord of the Rings: The Fellowship of the Ring [Triple Play] (Blu Ray)", 0.10, 0.10, "http://amazon.com/dances", true, 100));
         assertThat(emailServer.getReceivedEmailSize(), is(1));
         emailServer.stop();
     }

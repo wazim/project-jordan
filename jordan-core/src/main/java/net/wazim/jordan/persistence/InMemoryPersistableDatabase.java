@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static net.wazim.jordan.utils.StringUtils.stripPunctuation;
+
 public class InMemoryPersistableDatabase implements BluRayDatabase {
 
     private List<BluRay> allBluRays = new CopyOnWriteArrayList<BluRay>();
@@ -75,7 +77,7 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
     }
 
     private void notifyUsersIfNecessary(BluRay bluRay) {
-        filmsToEmail.keySet().stream().filter(film -> bluRay.getName().toLowerCase().equals(film.toLowerCase())).forEach(film -> {
+        filmsToEmail.keySet().stream().filter(film -> stripPunctuation(bluRay.getName().toLowerCase()).startsWith(stripPunctuation(film.toLowerCase()))).forEach(film -> {
             mailSender.send(filmsToEmail.get(film), bluRay);
         });
     }
