@@ -2,6 +2,7 @@ package net.wazim.jordan.persistence;
 
 import com.mongodb.*;
 import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.mail.JordanMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,9 @@ import static java.lang.Integer.parseInt;
 public class MongoBluRayDatabase implements BluRayDatabase {
 
     private final DBCollection allBluRays;
+    private final DBCollection filmsToEmail;
     private static final Logger log = LoggerFactory.getLogger(MongoBluRayDatabase.class);
+    private JordanMailSender mailSender;
 
     public MongoBluRayDatabase(String mongoUri) {
         MongoClient mongoClient = null;
@@ -28,6 +31,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         }
         DB blurayDb = mongoClient.getDB("blurays");
         allBluRays = blurayDb.getCollection("myBluRays");
+        filmsToEmail = blurayDb.getCollection("filmsToEmail");
         log.info("Successfully connected to Mongo");
     }
 
@@ -104,9 +108,19 @@ public class MongoBluRayDatabase implements BluRayDatabase {
             bluRayMap.put("rating", String.valueOf(bluRay.getRating()));
             bluRayMap.put("id", String.valueOf(bluRay.getId()));
             allBluRays.save(new BasicDBObject(bluRayMap));
+            notifyUsersIfNecessary(bluRay);
             log.info(String.format("Added %s to the database", bluRay.getName()));
         } else {
             updateBluray(bluRay);
+        }
+    }
+
+    private void notifyUsersIfNecessary(BluRay bluRay) {
+        DBCursor dbObjects = filmsToEmail.find();
+        for (DBObject dbObject : dbObjects) {
+            if(dbObject.get("title").toString().toLowerCase().equals(bluRay.getName().toLowerCase())) {
+                mailSender.send(dbObject.get("address").toString(), bluRay);
+            }
         }
     }
 
@@ -116,6 +130,15 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         for (DBObject dbObject : dbObjects) {
             allBluRays.remove(dbObject);
         }
+    }
+
+    @Override
+    public void registerEmailAddressForBluRay(String bluRayTitle, String emailAddress) {
+        Map<String, String> bluRayMap = new HashMap<>();
+        bluRayMap.put("title", bluRayTitle);
+        bluRayMap.put("address", emailAddress);
+        filmsToEmail.save(new BasicDBObject(bluRayMap));
+        log.info(String.format("%s wants to be notified when %s becomes available", emailAddress, bluRayTitle));
     }
 
     @Override
@@ -150,5 +173,10 @@ public class MongoBluRayDatabase implements BluRayDatabase {
         DBObject retrievedObject = allBluRays.findOne(new BasicDBObject("name", bluRay.getName()));
 
         allBluRays.remove(retrievedObject);
+    }
+
+    @Override
+    public void setMailSender(JordanMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 }

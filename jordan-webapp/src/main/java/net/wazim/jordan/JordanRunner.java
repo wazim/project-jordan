@@ -1,5 +1,6 @@
 package net.wazim.jordan;
 
+import net.wazim.jordan.mail.JordanMailSender;
 import net.wazim.jordan.persistence.BluRayDatabase;
 import net.wazim.jordan.persistence.InMemoryPersistableDatabase;
 import net.wazim.jordan.persistence.MongoBluRayDatabase;
@@ -9,11 +10,16 @@ import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.mail.MessagingException;
+
 public class JordanRunner {
 
     private static final Logger log = LoggerFactory.getLogger(AmazonGoer.class);
+    private final AmazonGoer amazonGoer;
+    private final JordanProperties properties;
+    private final JordanServer jordanServer;
 
-    public static void main(String[] args) throws SchedulerException {
+    public static void main(String[] args) throws SchedulerException, MessagingException {
         log.info("Welcome to Project Jordan!");
 
         JordanProperties properties = new JordanProductionProperties();
@@ -24,17 +30,28 @@ public class JordanRunner {
                 : new InMemoryPersistableDatabase();
 
         new JordanScheduler(properties, database);
-        new JordanRunner(properties, database, port);
+        new JordanRunner(properties, database, new JordanMailSender("smtp.gmail.com"), port);
     }
 
-    public JordanRunner(JordanProperties properties, BluRayDatabase database, int port) {
-        new JordanServer(properties, database, port);
+    public JordanRunner(JordanProperties properties, BluRayDatabase database, JordanMailSender mailSender, int port) {
+        this.properties = properties;
+
+        database.setMailSender(mailSender);
+        jordanServer = new JordanServer(this.properties, database, port);
 
         JordanListingUpdater updater = new JordanListingUpdater(database);
         updater.updateFilms();
 
-        AmazonGoer amazonGoer = new AmazonGoer(database);
+        amazonGoer = new AmazonGoer(database);
         amazonGoer.go(properties.getRequestUrl());
+    }
+
+    public void refresh() {
+        amazonGoer.go(properties.getRequestUrl());
+    }
+
+    public void stopServer() {
+        jordanServer.stopServer();
     }
 
 }

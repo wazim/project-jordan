@@ -1,5 +1,6 @@
 package net.wazim.jordan.persistence;
 
+import com.dumbster.smtp.SimpleSmtpServer;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -9,11 +10,13 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.mail.JordanMailSender;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 
 import static net.wazim.jordan.fixtures.BluRayDataFixtures.someOwnedBluRay;
@@ -42,8 +45,9 @@ public class MongoBluRayDatabaseTest {
     }
 
     @Before
-    public void clearDownDatabaseBeforeEachTest() {
+    public void clearDownDatabaseBeforeEachTest() throws MessagingException {
         database.clearDownDatabase();
+        database.setMailSender(new JordanMailSender("localhost", "1500"));
     }
 
     @AfterClass
@@ -155,6 +159,15 @@ public class MongoBluRayDatabaseTest {
         }
 
         assertThat(database.getAllInterestingBluRays().size(), is(10));
+    }
+
+    @Test
+    public void canRegisterInterestOfABluRay() {
+        database.registerEmailAddressForBluRay("dances with wolves", "test@email.com");
+        SimpleSmtpServer emailServer = SimpleSmtpServer.start(1500);
+        database.saveBluRay(new BluRay("Dances With Wolves", 0.10, 0.10, "http://amazon.com/dances", true, 100));
+        assertThat(emailServer.getReceivedEmailSize(), is(1));
+        emailServer.stop();
     }
 
 }

@@ -1,6 +1,7 @@
 package net.wazim.jordan.persistence;
 
 import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.mail.JordanMailSender;
 
 import java.util.List;
 
@@ -25,4 +26,8 @@ public interface BluRayDatabase {
     void updateBluray(BluRay bluRay);
 
     void deleteBluRay(BluRay bluRay);
+
+    void registerEmailAddressForBluRay(String bluRayTitle, String emailAddress);
+
+    void setMailSender(JordanMailSender mailSender);
 }

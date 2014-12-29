@@ -1,17 +1,22 @@
 package net.wazim.jordan.persistence;
 
 import net.wazim.jordan.domain.BluRay;
+import net.wazim.jordan.mail.JordanMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class InMemoryPersistableDatabase implements BluRayDatabase {
 
     private List<BluRay> allBluRays = new CopyOnWriteArrayList<BluRay>();
+    private Map<String, String> filmsToEmail = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(InMemoryPersistableDatabase.class);
+    private JordanMailSender mailSender;
 
     public InMemoryPersistableDatabase() {
         log.info("Using InMemory database");
@@ -63,9 +68,16 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
         if (doesNotExist(bluRay)) {
             allBluRays.add(bluRay);
             log.info(String.format("Added %s to the database", bluRay.getName()));
+            notifyUsersIfNecessary(bluRay);
         } else {
             updateBluray(bluRay);
         }
+    }
+
+    private void notifyUsersIfNecessary(BluRay bluRay) {
+        filmsToEmail.keySet().stream().filter(film -> bluRay.getName().toLowerCase().equals(film.toLowerCase())).forEach(film -> {
+            mailSender.send(filmsToEmail.get(film), bluRay);
+        });
     }
 
     public void updateBluray(BluRay bluRay) {
@@ -84,6 +96,16 @@ public class InMemoryPersistableDatabase implements BluRayDatabase {
                 allBluRays.remove(storedBluray);
             }
         }
+    }
+
+    @Override
+    public void registerEmailAddressForBluRay(String bluRayTitle, String emailAddress) {
+        filmsToEmail.put(bluRayTitle, emailAddress);
+    }
+
+    @Override
+    public void setMailSender(JordanMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
     @Override

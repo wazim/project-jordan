@@ -1,9 +1,6 @@
 package net.wazim.jordan;
 
-import net.wazim.jordan.controller.JordanApiServlet;
-import net.wazim.jordan.controller.JordanIndexServlet;
-import net.wazim.jordan.controller.JordanRemoveInterestServlet;
-import net.wazim.jordan.controller.JordanStatusPageServlet;
+import net.wazim.jordan.controller.*;
 import net.wazim.jordan.persistence.BluRayDatabase;
 import net.wazim.jordan.properties.JordanProperties;
 import org.eclipse.jetty.server.Server;
@@ -25,6 +22,7 @@ public class JordanServer {
         context.addServlet(new ServletHolder(new JordanIndexServlet(database)), "");
         context.addServlet(new ServletHolder(new JordanStatusPageServlet()), "/status");
         context.addServlet(new ServletHolder(new JordanApiServlet(database)), "/api/all");
+        context.addServlet(new ServletHolder(new JordanEmailServlet(database)), "/email");
         context.addServlet(new ServletHolder(new JordanRemoveInterestServlet(database)), "/not-interested");
 
         try {

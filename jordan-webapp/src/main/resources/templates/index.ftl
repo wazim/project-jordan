@@ -80,6 +80,17 @@
 	.flat-table-3 tr:hover {
 		background: rgba(0,0,0,0.1);
 	}
+	#email {
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 25%;
+		background-color: white;
+		color: black;
+		box-shadow: 10px 10px 5px #888888;
+		border: 2px solid;
+        border-radius: 10px;
+	}
 </style>
 </head>
 <body>
@@ -92,6 +103,18 @@
 <#else>
 <a href="?include=all" title="Click to see All">${displaying}</a>
 </#if>
+
+<div id="email">
+<form action="email" method="POST">
+	Movie Name:<br>
+	<input type="text" name="title">
+	<br>
+	Email Address:<br>
+	<input type="text" name="address">
+	<br><br>
+	<input type="submit" value="Submit">
+</form>
+</div>
 
 </em></br></h4>
 </center>
