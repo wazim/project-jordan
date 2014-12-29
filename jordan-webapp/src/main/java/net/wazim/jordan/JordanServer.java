@@ -24,6 +24,7 @@ public class JordanServer {
         context.addServlet(new ServletHolder(new JordanApiServlet(database)), "/api/all");
         context.addServlet(new ServletHolder(new JordanEmailServlet(database)), "/email");
         context.addServlet(new ServletHolder(new JordanRemoveInterestServlet(database)), "/not-interested");
+        context.addServlet(new ServletHolder(new JordanManualRefreshServlet(database)), "/manual-update");
 
         try {
             server.start();

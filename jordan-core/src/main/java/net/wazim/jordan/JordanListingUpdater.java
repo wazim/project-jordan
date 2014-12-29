@@ -29,7 +29,7 @@ public class JordanListingUpdater {
         log.info("Jordan updater completed.");
     }
 
-    private void updateBluRay(BluRay bluRay) {
+    public void updateBluRay(BluRay bluRay) {
         JordanHttpClient client = new JordanHttpClient();
         JordanHttpResponse response = client.getRequest(URI.create(bluRay.getUrl()));
         if (response.getResponseCode() == 200 && bluRay.getIsInteresting()) {

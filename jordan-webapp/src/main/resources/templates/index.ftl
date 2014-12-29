@@ -55,6 +55,7 @@
 		padding: 0.7em 1em 0.7em 1.15em;
 		text-shadow: 0 0 1px rgba(255,255,255,0.1);
 		font-size: 1.4em;
+		text-align: center;
 	}
 	.flat-table tr {
 		-webkit-transition: background 0.3s, box-shadow 0.3s;
@@ -128,7 +129,8 @@
   		<th>New Price</th>
   		<th>Used Price</th>
   		<th>Display</th>
-  		<th>Metacritic Score</th>
+  		<!--<th>Metacritic Score</th>-->
+  		<th>Manual Update</th>
   	</thead>
     <tbody>
   <#list blurays as bluray>
@@ -143,13 +145,14 @@
                 <td>Marked</td>
             </#if>
 
-            <td>
+            <!--<td>
             <#if bluray.rating == 0>
                 -
             <#else>
                 ${bluray.rating}
             </#if>
-            </td>
+            </td> -->
+            <td><span class="manualupdate${bluray.id?c}"><a href="#" onclick='manuallyUpdate("${bluray.id?c}")'>Update</a></span></td>
         </tr>
   </#list>
   	</tbody>
@@ -182,6 +185,22 @@ function removeInterestFor(movieId) {
     .done(function( msg ) {
         $('#'+movieId).remove();
         $(".librarySize").text($(".librarySize").text()-1)
+    });
+}
+
+function manuallyUpdate(movieId) {
+	$(".manualupdate"+movieId).html("<img src='http://media.giphy.com/media/tEK2DZzAgY1l6/giphy.gif' border='0' align='center' />");
+    $.ajax({
+      type: "GET",
+      url: "manual-update",
+      data: { movie: movieId }
+    })
+    .done(function( msg ) {
+    	$(".manualupdate"+movieId).html("<img src='http://cdn.flaticon.com/png/16/60778.png' border='0' align='center' />");
+        if(msg.length > 1) {
+        	alert(msg);
+        	location.reload();
+        }
     });
 }
 </script>
