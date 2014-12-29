@@ -60,7 +60,7 @@ public class JordanListingUpdater {
 
     private void updateNewPrice(BluRay bluRay, Document document) {
         try {
-            double updatedNewPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(1).text().replace("£", ""));
+            double updatedNewPrice = Double.parseDouble(document.getElementsByClass("olp-padding-right").get(0).getElementsByClass("a-color-price").get(0).text().replace("£", ""));
 
             if (updatedNewPrice < bluRay.getPriceNew()) {
                 bluRay.setPriceNew(updatedNewPrice);
@@ -74,7 +74,7 @@ public class JordanListingUpdater {
 
     private void updateUsedPrice(BluRay bluRay, Document document) {
         try {
-            double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("a-color-price").get(2).text().replace("£", ""));
+            double updatedUsedPrice = Double.parseDouble(document.getElementsByClass("olp-padding-right").get(1).getElementsByClass("a-color-price").get(0).text().replace("£", ""));
 
             if (updatedUsedPrice < bluRay.getPriceUsed()) {
                 bluRay.setPriceUsed(updatedUsedPrice);
