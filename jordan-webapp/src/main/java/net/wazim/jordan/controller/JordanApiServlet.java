@@ -25,7 +25,14 @@ public class JordanApiServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<BluRay> allBluRays = database.getAllInterestingBluRays();
+        List<BluRay> allBluRays;
+        String limit = req.getParameter("limit");
+
+        if ("INTERESTED".equals(limit != null ? limit.toUpperCase() : limit)) {
+            allBluRays = database.getAllInterestingBluRays();
+        } else {
+            allBluRays = database.getAllBluRays();
+        }
 
         String format = req.getParameter("format");
         if (format == null) {

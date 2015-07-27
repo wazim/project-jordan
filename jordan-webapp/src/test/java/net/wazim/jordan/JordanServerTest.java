@@ -49,7 +49,7 @@ public class JordanServerTest {
 
     @Test
     public void jordanApiServletReturnsValidXml() throws IOException {
-        method = new GetMethod("http://localhost:12500/jordan/api/all");
+        method = new GetMethod("http://localhost:12500/jordan/api");
         int responseCode = httpClient.executeMethod(method);
 
         assertThat(responseCode, is(HttpStatus.OK_200));
@@ -64,7 +64,7 @@ public class JordanServerTest {
 
     @Test
     public void jordanApiReturnsValidJson() throws IOException {
-        method = new GetMethod("http://localhost:12500/jordan/api/all?format=json");
+        method = new GetMethod("http://localhost:12500/jordan/api?format=json&limit=all");
         int responseCode = httpClient.executeMethod(method);
         assertThat(responseCode, is(HttpStatus.OK_200));
         System.out.println("method = " + method.getResponseBodyAsString());

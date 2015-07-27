@@ -67,7 +67,7 @@ public class AmazonStepDefinitions {
     @When("^I hit the API page$")
     public void I_hit_the_API_page() throws Throwable {
         HttpClient client = new HttpClient();
-        GetMethod getMethod = new GetMethod("http://localhost:12500/jordan/api/all");
+        GetMethod getMethod = new GetMethod("http://localhost:12500/jordan/api");
         httpResponseCode = client.executeMethod(getMethod);
         responseBodyAsString = getMethod.getResponseBodyAsString();
     }
