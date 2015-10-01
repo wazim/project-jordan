@@ -23,13 +23,7 @@ public class MongoBluRayDatabase implements BluRayDatabase {
     private JordanMailSender mailSender;
 
     public MongoBluRayDatabase(String mongoUri) {
-        MongoClient mongoClient = null;
-        try {
-            mongoClient = new MongoClient(new MongoClientURI(mongoUri));
-        } catch (UnknownHostException e) {
-            System.out.println("Cannot connect to Mongo " + e.toString());
-            log.error(String.format("Failed to connect to Mongo URI(%s)", mongoUri), e.toString());
-        }
+        MongoClient mongoClient = new MongoClient(new MongoClientURI(mongoUri));
         DB blurayDb = mongoClient.getDB("blurays");
         allBluRays = blurayDb.getCollection("myBluRays");
         filmsToEmail = blurayDb.getCollection("filmsToEmail");
