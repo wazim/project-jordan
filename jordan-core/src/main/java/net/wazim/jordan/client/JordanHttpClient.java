@@ -2,6 +2,7 @@ package net.wazim.jordan.client;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +15,7 @@ public class JordanHttpClient {
 
     public JordanHttpClient() {
         webClient = new RestTemplate();
+        webClient.setRequestFactory(new SimpleClientHttpRequestFactory());
         webClient.setErrorHandler(new JordanResponseErrorHandler());
     }
 
