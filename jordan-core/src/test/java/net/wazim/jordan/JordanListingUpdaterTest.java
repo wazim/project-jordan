@@ -7,11 +7,13 @@ import net.wazim.jordan.stub.AmazonIndividualPageBuilder;
 import net.wazim.jordan.stub.AmazonStub;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+@Ignore
 public class JordanListingUpdaterTest {
 
     private AmazonStub stub;
