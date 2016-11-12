@@ -30,15 +30,17 @@ public class JordanListingUpdater {
     }
 
     public void updateBluRay(BluRay bluRay) {
-        JordanHttpClient client = new JordanHttpClient();
-        JordanHttpResponse response = client.getRequest(URI.create(bluRay.getUrl()));
-        if (response.getResponseCode() == 200 && bluRay.getIsInteresting()) {
-            Document document = parse(response.getResponseBody());
-            updateUsedPrice(bluRay, document);
-            updateNewPrice(bluRay, document);
-            deleteBluRayIfOutOfPriceRange(bluRay, document);
-        } else {
-            log.info(String.format("Did not update %s. Http response status was [%s]",bluRay.getName(),response.getResponseCode()));
+        if (bluRay.getIsInteresting()) {
+            JordanHttpClient client = new JordanHttpClient();
+            JordanHttpResponse response = client.getRequest(URI.create(bluRay.getUrl()));
+            if (response.getResponseCode() == 200 && bluRay.getIsInteresting()) {
+                Document document = parse(response.getResponseBody());
+                updateUsedPrice(bluRay, document);
+                updateNewPrice(bluRay, document);
+                deleteBluRayIfOutOfPriceRange(bluRay, document);
+            } else {
+                log.info(String.format("Did not update %s. Http response status was [%s]", bluRay.getName(), response.getResponseCode()));
+            }
         }
     }
 
