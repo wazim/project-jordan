@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Project Jordan - inactive</title>
+<title>Project Jordan</title>
 <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" type="image/png" href="http://icons.iconarchive.com/icons/miniartx/drinks/96/Beer-icon.png"/>

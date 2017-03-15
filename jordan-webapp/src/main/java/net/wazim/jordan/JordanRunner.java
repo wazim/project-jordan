@@ -29,7 +29,7 @@ public class JordanRunner {
                 ? new MongoBluRayDatabase(System.getenv("MONGOLAB_URL"))
                 : new InMemoryPersistableDatabase();
 
-        //new JordanScheduler(properties, database);
+        new JordanScheduler(properties, database);
         new JordanRunner(properties, database, new JordanMailSender("smtp.gmail.com"), port);
     }
 
